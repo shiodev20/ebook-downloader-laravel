@@ -14,13 +14,10 @@
     <ul class="navbar-nav navbar-nav-right">
       <li class="nav-item nav-profile dropdown">
 
-        <a class="nav-link dropdown-toggle mr-1" href="#" data-toggle="dropdown" id="profileDropdown">
+        <a class="nav-link dropdown-toggle mr-2" href="#" data-toggle="dropdown" id="profileDropdown">
           <img src="https://github.com/mdo.png" alt="profile" width="32" height="32" class="rounded-circle"/>
-        </a>
-
-        <div>
           {{ session('currentUser')['username'] }}
-        </div> 
+        </a>
 
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
           <a class="dropdown-item">

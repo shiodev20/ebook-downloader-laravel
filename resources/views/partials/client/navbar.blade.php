@@ -6,7 +6,7 @@
 
         <div class="header_logo me-3">
           <a href="/views/home.html">
-            <img src="{{ asset('images/waka-logo.png') }}" alt="">
+            <img src="{{ asset('images/logo-waka.png') }}" alt="">
           </a>
         </div>
 
@@ -66,10 +66,6 @@
           </div>
         @endif
 
-
-
-
-
       </div>
 
     </div>
@@ -117,8 +113,7 @@
 
               <div class="header_catalogue_body">
                 <ul>
-                  <li class="header_catalogue_item"><a href="/" class="header_catalogue_link">Kỹ
-                      năng sống</a></li>
+                  <li class="header_catalogue_item"><a href="/" class="header_catalogue_link">Kỹ năng sống</a></li>
                   <li class="header_catalogue_item"><a href="/" class="header_catalogue_link">Kinh tế</a></li>
                   <li class="header_catalogue_item"><a href="/" class="header_catalogue_link">Tiểu thuyết</a></li>
                   <li class="header_catalogue_item"><a href="/" class="header_catalogue_link">Văn học</a></li>

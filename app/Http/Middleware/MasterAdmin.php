@@ -16,8 +16,6 @@ class MasterAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        dd(session('currentUser')['role'] === RoleEnum::MASTER_ADMIN->value);
-        
         if(session('currentUser')['role'] === RoleEnum::MASTER_ADMIN->value) return $next($request);
         else return response()->view('errors.403', [], 403);
     }
