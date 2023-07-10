@@ -1,0 +1,50 @@
+
+.quote {
+  position: relative;
+  // padding: 5rem 0;
+  color: $light-color;
+  text-align: center;
+
+  &_ico {
+    position: absolute;
+    font-size: $medium-size;
+
+    &--left {
+      top: 5%;
+      left: 5%;
+    }
+
+    &--right {
+      bottom: 5%;
+      right: 5%;
+    }
+  }
+
+  &_item {
+    padding: 5rem 0;
+  }
+
+  &_text {
+    font-size: $subicon-size;
+  }
+
+  &_author {
+    font-size: $text-size;
+  }
+
+  @include media-breakpoint-down(md)  {
+    // padding: 2.5rem 5rem;
+
+    &_ico {
+      font-size: $subicon-size;
+    }
+
+    &_text {
+      font-size: $text-size;
+    }
+
+    &_author {
+      font-size: 1.2rem;
+    }
+  }
+}

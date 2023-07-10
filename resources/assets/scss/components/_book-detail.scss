@@ -1,0 +1,92 @@
+
+.book-detail {
+  padding: 4rem 2rem;
+
+  &_cover {
+    text-align: center;
+    margin: auto;
+
+    img {
+      width: 100% - 40;
+      height: 100% - 10;
+      border-radius: $radius;
+      box-shadow: $box-shadow-darker;
+    }
+  }
+
+  &_info {
+    
+    &_title {
+      color: $dark-color;
+      font-size: $title-size;
+      font-weight: 500;
+
+      @include media-breakpoint-down(sm)  {
+        font-size: $subicon-size;
+      }
+    }
+
+    &_rating {
+      color: $gray-color;
+      font-size: $text-size;
+
+      span {
+        color: $pink-color;
+        font-weight: 700;
+      }
+
+    }
+
+    &_meta {
+      margin-top: 1rem;
+      font-size: 1.4rem;
+
+      &_item {
+        margin-top: .5rem;
+
+        span {
+          // color: $gray-color;
+
+          a {
+            color: $main-color;
+            font-style: italic;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+
+      &_description {
+        margin-top: 2rem;
+        color: $gray-color;
+      }
+    }
+
+    &_download {
+      margin-top: 2rem;
+      font-size: $text-size;
+      
+      &_text {
+        font-size: 1.4rem;
+      }
+      
+      &_item {
+        display: inline-block;
+        padding: .5rem 1rem;
+        margin-right: .5rem;
+        color: $light-color;
+        border-radius: $radius;
+
+        &--pdf { background-color: $pdf-color;}
+        &--epub { background-color: $epub-color;}
+        &--mobi { background-color: $mobi-color;}
+        &--awz3 { background-color: $awz3-color;}
+        
+        &:hover {
+          color: $light-color;
+        }
+      }
+    }
+  }
+}

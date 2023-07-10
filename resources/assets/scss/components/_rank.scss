@@ -1,0 +1,16 @@
+
+.rank {
+  &_item {
+    padding: 1rem 0;
+
+    &_num {
+      font-size: $subtitle-size; 
+    }
+
+    &_title,
+    &_minute {
+      font-size: 1.3rem;
+    }
+  }
+
+}

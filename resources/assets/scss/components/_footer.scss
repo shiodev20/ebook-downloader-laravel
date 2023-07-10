@@ -1,0 +1,13 @@
+.footer {
+  margin-top: 5rem;
+  padding: 3rem 0;
+  text-align: center;
+  color: $gray-color;
+  font-size: 1.2rem;
+  opacity: $opacity;
+  
+  a {
+    color: $main-color;
+    font-weight: bold;
+  }
+}

@@ -1,0 +1,81 @@
+
+.book-review {
+
+  &_rating {
+
+    &_avg {
+      font-size: $icon-size;
+      color: $pink-color;
+      font-weight: 600;
+    }
+
+    &_review-count {
+      font-size: $text-size;
+      color: $gray-color;
+    }
+  }
+
+  &_form {
+
+    &_review {
+      textarea {
+        font-size: $text-size;
+      }
+    }
+
+    &_rating {
+
+      &_item {
+        position: relative;
+        width: 20px;
+        height: 20px;
+        margin-right: .5rem;
+
+        &:hover {
+          i {
+            color: $pink-color;
+          }
+        }
+
+        input {
+          position: absolute;
+          top: 0;
+          left: 0;
+          opacity: 0;
+        }
+
+        label {
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+
+        i {
+          font-size: 2rem;
+          color: $gray-color;   
+          cursor: pointer;
+        }
+      }
+
+    }
+  }
+
+  &_review {
+
+    &_author {
+      &_item {
+        font-size: 1.2rem;
+        color: $gray-color;
+      }
+    }
+
+    &_rating {
+      font-size: $text-size;
+      color: $pink-color;
+    }
+
+    &_content {
+      font-size: $text-size;
+    }
+  }
+}

@@ -1,0 +1,217 @@
+.book-card {
+  position: relative;
+  margin: auto;
+  width: 150px;
+  text-align: center;
+  box-shadow: $box-shadow;
+
+  &:hover {
+    .book-card_info {
+      border: 1px solid $main-color;
+    }
+
+    .book-card_info_title {
+      color: $main-color;
+    }
+
+    .book-card_labels {
+      opacity: 1;
+    }
+  }
+
+  &_labels {
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0;
+    transition: $transition;
+  }
+
+  &_label {
+    padding: .5rem;
+    color: white; 
+
+    &--pdf {
+      background-color: $pdf-color;
+    }
+
+    &--epub {
+      background-color: $epub-color;
+    }
+
+    &--mobi {
+      background-color: $mobi-color;
+    }
+
+    &--awz3 {
+      background-color: $awz3-color;
+    }
+  }
+
+  &_image {
+    img {
+      width: 100%;
+    }
+  }
+  
+  &_info {
+    padding: .5rem;
+    text-align: left;
+    border: 1px solid #fff;
+    transition: $transition;
+
+    &_title {
+      height: 4rem;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: $dark-color;
+      overflow: hidden;
+    }
+  
+    &_meta {
+      font-size: 1.2rem;
+      color: $gray-color;
+    }
+  }
+
+}
+
+
+.most-download-book_card {
+  margin-top: 5rem;
+  padding: 1rem 1.5rem;
+  border-radius: $radius;
+  border: 1px solid $light-color;
+  transition: $transition;
+  box-shadow: $box-shadow;
+
+  &:hover {
+    border: 1px solid $main-color;
+
+    .most-download-book_card_title {
+      color: $main-color;  
+    }
+
+    .most-download-book_card_cover {
+      transform: rotate(-5deg);
+    }
+  }
+
+  &_cover {
+    position: relative;
+    top: -3rem;
+    width: 110px;
+    box-shadow: $box-shadow;
+    border-radius: $radius;
+    transition: $transition;
+  }
+
+  &_title {
+    font-size: $text-size;
+    color: $dark-color;
+    font-weight: 600;
+  }
+
+  &_meta {
+    margin-top: .1rem;
+    color: $gray-color;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  &_review {
+    font-weight: 600;
+    color: $pdf-color;
+  }
+
+  &_labels {
+    margin-top: .5rem;
+  }
+
+  &_label {
+    font-size: 1rem;
+    padding: .5rem;
+    color: white; 
+
+    &--pdf {
+      background-color: $pdf-color;
+    }
+
+    &--epub {
+      background-color: $epub-color;
+    }
+
+    &--mobi {
+      background-color: $mobi-color;
+    }
+
+    &--awz3 {
+      background-color: $awz3-color;
+    }
+  }
+}
+
+
+.search-book_card {
+  margin: 1rem 0;
+  padding: .5rem;
+  border: 1px solid #fff;
+  border-radius: $radius;
+  transition: $transition;
+  
+  &:hover {
+    box-shadow: $box-shadow;
+    border: 1px solid $main-color;
+
+    .search-book_card_title {
+      color: $main-color;
+    }
+  }
+
+  &_cover {
+    width: 70px;
+    height: 100px;
+    border-radius: $radius;
+  }
+
+  &_title {
+    font-size: 1.3rem;
+    color: $dark-color;
+    font-weight: 600;
+    transition: $transition;
+  }
+
+  &_meta {
+    margin-top: .1rem;
+    color: $gray-color;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  &_review {
+    color: $pdf-color;
+  }
+
+  &_label {
+    font-size: 1rem;
+    padding: .2rem .5rem;
+    color: white; 
+
+    &--pdf {
+      background-color: $pdf-color;
+    }
+
+    &--epub {
+      background-color: $epub-color;
+    }
+
+    &--mobi {
+      background-color: $mobi-color;
+    }
+
+    &--awz3 {
+      background-color: $awz3-color;
+    }
+  }
+}
+

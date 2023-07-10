@@ -1,0 +1,145 @@
+
+.modal {
+  
+  &#searchModal {
+    .modal-dialog {
+      max-width: 600px;
+    } 
+   
+    .modal-content {
+      width: 100%;
+      height: 600px;
+      border-radius: $radius;
+    }
+  
+    .search-form {
+      
+      &_header {
+        position: relative;
+        color: $main-color;
+        
+        .search-form_input {
+          width: 100%;
+          padding: 1rem 4.5rem;
+          font-size: 1.3rem;
+          font-weight: 600;
+          border: 2px solid $main-color;
+          border-radius: 5px;
+      
+          &:focus {
+            outline: none;
+          }
+        }
+      
+        .search-form_icon {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+      
+          i {
+            font-size: $subtitle-size;
+          }
+      
+          &--search {
+            left: 1.5rem;
+          }
+      
+          &--close {
+            right: 1.5rem;
+            color: $gray-color;
+            opacity:$opacity;
+          }
+        }
+      }
+     
+      &_body {
+        height: 100%;
+        max-height: 520px;
+        overflow-y: scroll;
+      }
+  
+    } 
+    
+  }
+
+  &#loginModal {
+
+    .modal-content {
+      padding: 1rem;
+    }
+    
+    .login-form {
+  
+      input {
+        font-size: $text-size;
+        padding: 1rem;
+      }
+
+      &_forgot {
+        font-size: 1.3rem;
+        color: $main-color;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      &_divider {
+        position: relative;
+        padding: 2rem;
+
+        hr {
+          margin: 0;
+        }
+
+        div {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          padding: 0 1rem;
+          background-color: $light-color;
+          font-size: 1.3rem;
+          transform: translate(-50%, -50%);
+          z-index: 10;
+        }
+      }
+
+      &_btn {
+        padding: 1rem;
+        color: $light-color;
+        font-size: $text-size;
+        font-weight: 600;
+
+        i {
+          position: relative;
+          top: .2rem;
+          font-size: $text-size + 0.2;
+        }
+
+        &--facebook {
+          background-color: #3b5998;
+        }
+
+        &--google {
+          background-color: #dd4b39;
+        }
+      }
+
+      &_bottom {
+        font-size: 1.3rem;
+
+        a {
+          color: $main-color;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+    }
+
+  }
+  
+}
+

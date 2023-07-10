@@ -1,0 +1,22 @@
+.notification {
+  position: fixed;
+  bottom: 10px;
+  left: -600px;
+  max-width: 500px;
+  padding: 30px;
+  font-size: 1.3rem;
+  color: $light-color;
+  border-radius: 5px;
+  transition: left .5s ease;
+  z-index: 99;
+
+  .close {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    background: none;
+    color: $light-color;
+    font-size: $text-size;
+    border: none;
+  }
+}

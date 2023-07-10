@@ -1,0 +1,27 @@
+
+.read-most_nav {
+  border: none;
+
+  &_item {
+    font-size: $text-size;
+    border: none;
+
+    &:hover {
+      .read-most_nav_link {
+        color: $main-color;
+      }
+    }
+
+  }
+
+  &_link {
+    padding: .5rem 1.5rem;
+    color: $dark-color;
+
+    &.active {
+      background-color: $main-color !important;
+      // border-bottom: 2px solid $main-color;
+      color: $light-color !important;
+    }
+  }
+}
