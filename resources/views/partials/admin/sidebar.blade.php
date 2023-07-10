@@ -28,7 +28,7 @@
 
     {{-- Genre --}}
     <li class="nav-item">
-      <a class="nav-link" href="">
+      <a class="nav-link" href="{{ route('genres.index') }}">
         <i class="menu-icon fa-solid fa-cube"></i>
         <span class="menu-title">Thể loại</span>
       </a>

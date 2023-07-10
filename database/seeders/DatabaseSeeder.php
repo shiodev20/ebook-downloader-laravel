@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Genre;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -47,5 +48,14 @@ class DatabaseSeeder extends Seeder
                 'created_at' => $user->createdAt,
             ]);
         }
+
+        $genres = $seedDataDecode->genres;
+        foreach ($genres as $genre) {
+            Genre::create([
+                'id' => $genre->id,
+                'name' => $genre->name
+            ]);
+        }
+
     }
 }

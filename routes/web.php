@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\GenreController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Client\HomeController;
@@ -21,3 +22,8 @@ Route::get('/logout', [LogoutController::class, 'index'])->name('auth.logout');
 
 Route::get('/', [HomeController::class, 'index'])->name('client.home');
 Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+
+Route::get('/genres', [GenreController::class, 'index'])->name('genres.index');
+Route::post('/genres', [GenreController::class, 'store'])->name('genres.store');
+Route::get('/genres/search', [GenreController::class, 'search'])->name('genres.search');

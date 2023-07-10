@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="{{ asset('backend/vendors/css/vendor.bundle.base.css') }}">
   <link rel="stylesheet" href="{{ asset('backend/css/style.css') }}">
   <link rel="stylesheet" href="{{ asset('backend/css/app.css') }}">
-  <title>{{ env('APP_NAME') }} | Trang chủ</title>
+  <title>{{ env('APP_NAME') }} | @yield('documentTitle')</title>
 </head>
 <body>
   <div class="container-scroller">
