@@ -70,7 +70,6 @@ class LoginController extends Controller
             : 
               [
                 'status' => true,
-                'message' => 'Đăng nhập thành công',
                 'redirectUrl' => route('admin.dashboard')
               ];
 

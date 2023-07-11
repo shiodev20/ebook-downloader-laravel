@@ -24,6 +24,11 @@ Route::get('/', [HomeController::class, 'index'])->name('client.home');
 Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
 
 
-Route::get('/genres', [GenreController::class, 'index'])->name('genres.index');
-Route::post('/genres', [GenreController::class, 'store'])->name('genres.store');
 Route::get('/genres/search', [GenreController::class, 'search'])->name('genres.search');
+Route::get('/genres/sort', [GenreController::class, 'sort'])->name('genres.sort');
+Route::resource('genres', GenreController::class);
+
+// Route::get('/genres', [GenreController::class, 'index'])->name('genres.index');
+// Route::post('/genres', [GenreController::class, 'store'])->name('genres.store');
+// Route::put('/genres/{id}', [GenreController::class, 'update'])->name('genres.update');
+// Route::delete('/genres/{id}', [GenreController::class, 'destroy'])->name('genres.destroy');

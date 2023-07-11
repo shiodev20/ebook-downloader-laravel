@@ -45,12 +45,21 @@
     </div>
 
     <x-flash-message></x-flash-message>
-   
+    <x-delete-confirm-modal></x-delete-confirm-modal>
   </div>
   
-  <script src="{{ asset('backend/js/ui.js') }}"></script>
+  <script src="{{ asset('js/ui.js') }}"></script>
   <script src="{{ asset('backend/vendors/js/vendor.bundle.base.js') }}"></script>
   <script src="{{ asset('backend/js/template.js') }}"></script>
+  <script>
+     function handleDelete(url, message) {
+      const deleteConfirmModal = document.querySelector('#deleteConfirmModal');
+      const deleteConfirmForm = document.querySelector('#deleteConfirmForm');
+      const modalMessage = document.querySelector('#deleteConfirmModal .modal-message');
+      modalMessage.innerHTML = 'Bạn có chắc muốn xóa ' + message + ' ?';
+      deleteConfirmForm.action = url;
+    }
+  </script>
   @stack('js')
 </body>
 </html>

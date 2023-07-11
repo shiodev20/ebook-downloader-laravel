@@ -10,10 +10,10 @@ interface IRepository {
 
   function find($expressions = []);
 
-  // function add($attributes = []);
+  function add($attributes = []);
 
-  // function update($id, $attributes = []);
+  function update($entity, $attributes = []);
 
-  // function delete($id);
+  function delete($entity);
 
 }
