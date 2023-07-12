@@ -2,10 +2,13 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GenreController;
+use App\Http\Controllers\Admin\AuthorController;
+
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
-use App\Http\Controllers\AuthorController;
+
 use App\Http\Controllers\Client\HomeController;
+
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
