@@ -3,7 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GenreController;
 use App\Http\Controllers\Admin\AuthorController;
-
+use App\Http\Controllers\Admin\PublisherController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 
@@ -36,3 +36,7 @@ Route::resource('genres', GenreController::class);
 Route::get('/authors/search', [AuthorController::class, 'search'])->name('authors.search');
 Route::get('/authors/sort', [AuthorController::class, 'sort'])->name('authors.sort');
 Route::resource('authors', AuthorController::class);
+
+Route::get('/publishers/search', [PublisherController::class, 'search'])->name('publishers.search');
+Route::get('/publishers/sort', [PublisherController::class, 'sort'])->name('publishers.sort');
+Route::resource('publishers', PublisherController::class);

@@ -44,7 +44,7 @@
 
     {{-- Publisher --}}
     <li class="nav-item">
-      <a class="nav-link" href="">
+      <a class="nav-link" href="{{ route('publishers.index') }}">
         <i class="menu-icon fa-solid fa-building"></i>
         <span class="menu-title">Nhà xuất bản</span>
       </a>
