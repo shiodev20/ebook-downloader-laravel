@@ -28,7 +28,4 @@ Route::get('/genres/search', [GenreController::class, 'search'])->name('genres.s
 Route::get('/genres/sort', [GenreController::class, 'sort'])->name('genres.sort');
 Route::resource('genres', GenreController::class);
 
-// Route::get('/genres', [GenreController::class, 'index'])->name('genres.index');
-// Route::post('/genres', [GenreController::class, 'store'])->name('genres.store');
-// Route::put('/genres/{id}', [GenreController::class, 'update'])->name('genres.update');
-// Route::delete('/genres/{id}', [GenreController::class, 'destroy'])->name('genres.destroy');
+

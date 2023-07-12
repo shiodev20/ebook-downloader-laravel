@@ -126,7 +126,7 @@
                         </div>
                       </form>
                     </td>
-                    <td class="font-weight-bold">{{ $genre->book_count }}</td>
+                    <td class="font-weight-bold">{{ $genre->books->count() }}</td>
 
                     <td class="font-weight-bold">
                       <div class="d-flex justify-content-start">

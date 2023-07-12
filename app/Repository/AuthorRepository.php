@@ -2,25 +2,24 @@
 
 namespace App\Repository;
 
-use App\Models\Genre;
+use App\Models\Author;
 
-class GenreRepository implements IRepository
-{
+class AuthorRepository implements IRepository {
 
   public function getAll($paginate = 0) {
-    return Genre::paginate($paginate);
+    return Author::paginate($paginate);
   }
 
   public function getById($id) {
-    return Genre::find($id);
+    return Author::find($id);
   }
 
   public function find($expressions = [], $paginate = 0) {
-    return Genre::where($expressions)->paginate($paginate);
+    return Author::where($expressions)->paginate($paginate);
   }
 
   public function add($attributes = []) {
-    return Genre::create($attributes);
+    return Author::create($attributes);
   }
 
   public function update($genre = null, $attributes = []) {
@@ -33,12 +32,11 @@ class GenreRepository implements IRepository
 
     switch ($sortBy) {
       case 'bookDescending':
-        $genres = Genre::all()->sortByDesc(fn ($genre) => $genre->books->count(), SORT_NUMERIC)->paginate($paginate);
-
+        $genres = Author::orderBy('book_count', 'desc')->paginate($paginate);
         break;
 
       case 'bookAscending':
-        $genres = Genre::all()->sortBy(fn ($genre) => $genre->books->count(), SORT_NUMERIC)->paginate($paginate);
+        $genres = Author::orderBy('book_count', 'asc')->paginate($paginate);
         break;
     }
 

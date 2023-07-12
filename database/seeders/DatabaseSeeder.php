@@ -4,7 +4,11 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Author;
+use App\Models\Book;
+use App\Models\BookGenre;
 use App\Models\Genre;
+use App\Models\Publisher;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -57,5 +61,46 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
+        $authors = $seedDataDecode->authors;
+        foreach ($authors as $author) {
+            Author::create([
+                'id' => $author->id,
+                'name' => $author->name,
+                'description' => $author->description,
+            ]);
+        }
+
+        $publishers = $seedDataDecode->publishers;
+        foreach ($publishers as $publisher) {
+            Publisher::create([
+                'id' => $publisher->id,
+                'name' => $publisher->name
+            ]);
+        }
+
+        $books = $seedDataDecode->books;
+        foreach ($books as $book) {
+            Book::create([
+                'id' => $book->id,
+                'title' => $book->title,
+                'description' => $book->description,
+                'num_pages' => $book->num_pages,
+                'publish_date' => $book->publish_date,
+                'downloads' => $book->downloads,
+                'rating' => $book->rating,
+                'cover_url' => $book->cover_url,
+                'publisher_id' => $book->publisher_id,
+                'author_id' => $book->author_id
+            ]);
+        }
+
+        $bookGenres = $seedDataDecode->bookGenres;
+        foreach ($bookGenres as $bookGenre) {
+            BookGenre::create([
+                'id' => $bookGenre->id,
+                'book_id' => $bookGenre->book_id,
+                'genre_id' => $bookGenre->genre_id,
+            ]);
+        }
     }
 }

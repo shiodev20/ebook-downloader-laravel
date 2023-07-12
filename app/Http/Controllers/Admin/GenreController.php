@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class GenreController extends Controller
 {
   private $genreRepository;
-  private $pagination = 15;
+  private $pagination = 2;
 
   public function __construct(GenreRepository $genreRepository)
   {
@@ -143,7 +143,7 @@ class GenreController extends Controller
         'query'
       ]));
     } catch (\Throwable $th) {
-
+      dd($th);
       return redirect()
         ->back()
         ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');

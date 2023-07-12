@@ -1,0 +1,138 @@
+{
+  "roles": [
+    {
+      "id": 1,
+      "name": "Master Admin"
+    },
+    {
+      "id": 2,
+      "name": "Admin"
+    },
+    {
+      "id": 3,
+      "name": "Client"
+    }
+  ],
+
+  "users": [
+      
+    {
+      "id": "00000001",
+      "username": "Admin 1",
+      "email": "nghind2011@gmail.com",
+      "password": "$2y$10$2.7RV3.JXzHHztXttyiVB.Gy9/BMmbK5UcH6fWtB0YxYhHSJwOPAy",
+      "status": 1,
+      "role_id": 1,
+      "createdAt": "2023-01-13 07:27:39",
+      "updatedAt": "2023-01-13 07:27:39"
+    },
+    {
+      "id": "00000002",
+      "username": "Admin 2",
+      "email": "nv2@gmail.com",
+      "password": "$2y$10$2.7RV3.JXzHHztXttyiVB.Gy9/BMmbK5UcH6fWtB0YxYhHSJwOPAy",
+      "status": 1,
+      "role_id": 2,
+      "createdAt": "2023-01-13 07:27:39",
+      "updatedAt": "2023-01-13 07:27:39"
+    },
+    {
+      "id": "00000003",
+      "username": "Shio Nguyen",
+      "email": "nv3@gmail.com",
+      "password": "$2y$10$2.7RV3.JXzHHztXttyiVB.Gy9/BMmbK5UcH6fWtB0YxYhHSJwOPAy",
+      "status": 1,
+      "role_id": 3,
+      "createdAt": "2023-01-13 07:27:39",
+      "updatedAt": "2023-01-13 07:27:39"
+    }
+  ],
+
+  "genres": [
+    {
+      "id": 1,
+      "name": "Kỹ năng sống"
+    },
+    {
+      "id": 2,
+      "name": "Tâm lý học"
+    },
+    {
+      "id": 3,
+      "name": "Quản trị học"
+    }
+  ],
+
+  "authors": [
+    {
+      "id": 1,
+      "name": "Shio Nguyễn",
+      "description": "Hello world"
+    }
+  ],
+
+  "publishers": [
+    {
+      "id": 1,
+      "name": "NXB Nhã Nam"
+    }
+  ],
+
+  "books": [
+    {
+      "id": "b1",
+      "title": "Book 1",
+      "description": "hello",
+      "num_pages": 200,
+      "publish_date": "2006-11-20",
+      "downloads": 108,
+      "rating": 4.7,
+      "cover_url": "/",
+      "publisher_id": 1,
+      "author_id": 1
+    },
+    {
+      "id": "b2",
+      "title": "Book 2",
+      "description": "hello",
+      "num_pages": 200,
+      "publish_date": "2006-11-20",
+      "downloads": 108,
+      "rating": 4.7,
+      "cover_url": "/",
+      "publisher_id": 1,
+      "author_id": 1
+    },
+    {
+      "id": "b3",
+      "title": "Book 3",
+      "description": "hello",
+      "num_pages": 200,
+      "publish_date": "2006-11-20",
+      "downloads": 108,
+      "rating": 4.7,
+      "cover_url": "/",
+      "publisher_id": 1,
+      "author_id": 1
+    }
+
+  ],
+
+  "bookGenres": [
+    {
+      "id": 1,
+      "book_id": "b1",
+      "genre_id": 1
+    },
+    {
+      "id": 2,
+      "book_id": "b2",
+      "genre_id": 1
+    },
+    {
+      "id": 3,
+      "book_id": "b3",
+      "genre_id": 2
+    }
+  ]
+}
