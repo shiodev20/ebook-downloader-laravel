@@ -3,49 +3,56 @@
 namespace App\Repository;
 
 use App\Models\Author;
+use App\Repository\IRepository\IAuthorRepository;
 
-class AuthorRepository implements IRepository {
+class AuthorRepository implements IAuthorRepository
+{
 
-  public function getAll($paginate = 0) {
+  public function getAll($paginate = 0)
+  {
     return Author::paginate($paginate);
   }
 
-  public function getById($id) {
+  public function getById($id)
+  {
     return Author::find($id);
   }
 
-  public function find($expressions = [], $paginate = 0) {
-    return Author::where($expressions)->paginate($paginate);
-  }
-
-  public function add($attributes = []) {
+  public function add($attributes = [])
+  {
     return Author::create($attributes);
   }
 
-  public function update($genre = null, $attributes = []) {
-    return $genre->update($attributes);
+  public function update($author = null, $attributes = [])
+  {
+    return $author->update($attributes);
   }
 
-  public function sort($sortBy, $paginate = 0) {
+  public function find($expressions = [], $paginate = 0)
+  {
+    return Author::where($expressions)->paginate($paginate);
+  }
 
-    $genres = [];
+  public function sort($sortBy, $paginate = 0)
+  {
+    $authors = [];
 
     switch ($sortBy) {
       case 'bookDescending':
-        $genres = Author::orderBy('book_count', 'desc')->paginate($paginate);
+        $authors = Author::all()->sortByDesc(fn ($author) => $author->books->count(), SORT_NUMERIC)->paginate($paginate);
         break;
 
       case 'bookAscending':
-        $genres = Author::orderBy('book_count', 'asc')->paginate($paginate);
+        $authors = Author::all()->sortBy(fn ($author) => $author->books->count(), SORT_NUMERIC)->paginate($paginate);
         break;
     }
 
-    return $genres;
+    return $authors;
   }
 
-  public function delete($genre) {
+  public function delete($author)
+  {
 
-    return $genre->delete();
-
+    return $author->delete();
   }
 }

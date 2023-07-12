@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class GenreController extends Controller
 {
   private $genreRepository;
-  private $pagination = 2;
+  private $pagination = 15;
 
   public function __construct(GenreRepository $genreRepository)
   {
@@ -103,6 +103,9 @@ class GenreController extends Controller
         ->with('successMessage', 'Xóa thể loại thành công');
 
     } catch (\Throwable $th) {
+      return redirect()
+        ->back()
+        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
     }
   }
 

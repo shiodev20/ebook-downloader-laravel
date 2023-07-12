@@ -2,63 +2,157 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Author;
+use App\Repository\AuthorRepository;
 use Illuminate\Http\Request;
 
 class AuthorController extends Controller
 {
-  /**
-   * Display a listing of the resource.
-   */
+
+  private $authorRepository;
+  private $pagination = 15;
+
+  public function __construct(AuthorRepository $authorRepository) {
+    $this->middleware(['auth', 'admin']);
+    $this->authorRepository = $authorRepository;
+  }
+
+  
   public function index()
   {
-    //
+    try {
+      $query = ['search' => '', 'sort' => ''];
+
+      $authors = $this->authorRepository->getAll($this->pagination);
+
+      return view('admin.authors.index', compact(['authors', 'query']));
+
+    } catch (\Throwable $th) {
+      return redirect()
+        ->back()
+        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+    }
   }
 
-  /**
-   * Show the form for creating a new resource.
-   */
-  public function create()
-  {
-    //
-  }
-
-  /**
-   * Store a newly created resource in storage.
-   */
+  
   public function store(Request $request)
   {
-    //
+    $request->validate(
+      ['author' => 'required|unique:App\Models\Author,name'],
+      [
+        'author.required' => 'Vui lòng nhập tên tác giả',
+        'author.unique' => 'Tên tác giả không được giống nhau',
+      ]
+    );
+
+    try {
+      $author = [
+        'name' => $request->author
+      ];
+
+      $createdAuthor = $this->authorRepository->add($author);
+
+      return redirect()
+        ->back()
+        ->with('successMessage', 'Thêm tác giả ' . $createdAuthor->name . ' thành công');
+
+    } catch (\Throwable $th) {
+
+      return redirect()
+        ->back()
+        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+    }
   }
 
-  /**
-   * Display the specified resource.
-   */
-  public function show(string $id)
+
+  public function update(Request $request, Author $author)
   {
-    //
+    $request->validate(
+      ['author-' . $author->id => 'required|unique:App\Models\Author,name'],
+      [
+        'author-' . $author->id . '.required' => 'Vui lòng nhập tên tác giả',
+        'author-' . $author->id . '.unique' => 'Tên tác giả không được giống nhau',
+      ]
+    );
+
+    try {
+      $attributes = [
+        'name' => $request['author-' . $author->id]
+      ];
+
+      $updatedAuthor = $this->authorRepository->update($author, $attributes);
+
+      return redirect()
+        ->back()
+        ->with('successMessage', 'Tác giả được cập nhật thành công');
+
+    } catch (\Throwable $th) {
+      return redirect()
+        ->back()
+        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+    }
   }
 
-  /**
-   * Show the form for editing the specified resource.
-   */
-  public function edit(string $id)
+  
+  public function destroy(Author $author)
   {
-    //
+    try {
+
+      $deletedAuthor = $this->authorRepository->delete($author);
+
+      return redirect()
+        ->back()
+        ->with('successMessage', 'Xóa tác giả thành công');
+
+    } catch (\Throwable $th) {
+      return redirect()
+        ->back()
+        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+    }
   }
 
-  /**
-   * Update the specified resource in storage.
-   */
-  public function update(Request $request, string $id)
+
+  public function search(Request $request)
   {
-    //
+    try {
+      $query = ['search' => '', 'sort' => ''];
+
+      $query['search'] = $request->query('search');
+
+      $authors = $this->authorRepository->find([
+        ['name', 'like', '%' . $query['search'] . '%'],
+      ], $this->pagination);
+
+      return view('admin.authors.index', compact([
+        'authors',
+        'query'
+      ]));
+    } catch (\Throwable $th) {
+      return redirect()
+        ->back()
+        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+    }
   }
 
-  /**
-   * Remove the specified resource from storage.
-   */
-  public function destroy(string $id)
+
+  public function sort(Request $request)
   {
-    //
+    try {
+      $query = ['search' => '', 'sort' => ''];
+
+      $query['sort'] = $request->query('sortBy');
+
+      $authors = $this->authorRepository->sort($query['sort'], $this->pagination);
+
+      return view('admin.authors.index', compact([
+        'authors',
+        'query'
+      ]));
+
+    } catch (\Throwable $th) {
+      return redirect()
+        ->back()
+        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+    }
   }
 }

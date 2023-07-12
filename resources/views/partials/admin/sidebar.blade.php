@@ -36,7 +36,7 @@
 
     {{-- Author --}}
     <li class="nav-item">
-      <a class="nav-link" href="">
+      <a class="nav-link" href="{{ route('authors.index') }}">
         <i class="menu-icon fa-solid fa-user-pen"></i>
         <span class="menu-title">Tác giả</span>
       </a>

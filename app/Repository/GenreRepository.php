@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Models\Genre;
+use App\Repository\IRepository\IGenreRepository;
 
-class GenreRepository implements IRepository
+class GenreRepository implements IGenreRepository
 {
 
   public function getAll($paginate = 0) {
@@ -15,16 +16,18 @@ class GenreRepository implements IRepository
     return Genre::find($id);
   }
 
-  public function find($expressions = [], $paginate = 0) {
-    return Genre::where($expressions)->paginate($paginate);
-  }
-
   public function add($attributes = []) {
     return Genre::create($attributes);
   }
 
   public function update($genre = null, $attributes = []) {
     return $genre->update($attributes);
+  }
+
+  public function delete($genre) {
+
+    return $genre->delete();
+
   }
 
   public function sort($sortBy, $paginate = 0) {
@@ -45,9 +48,7 @@ class GenreRepository implements IRepository
     return $genres;
   }
 
-  public function delete($genre) {
-
-    return $genre->delete();
-
+  public function find($expressions = [], $paginate = 0) {
+    return Genre::where($expressions)->paginate($paginate);
   }
 }

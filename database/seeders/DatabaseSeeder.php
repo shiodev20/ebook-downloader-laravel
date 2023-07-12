@@ -66,7 +66,6 @@ class DatabaseSeeder extends Seeder
             Author::create([
                 'id' => $author->id,
                 'name' => $author->name,
-                'description' => $author->description,
             ]);
         }
 

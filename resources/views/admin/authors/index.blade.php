@@ -1,7 +1,7 @@
 @extends('partials.layouts.admin')
 
 @section('documentTitle')
-  Thể loại
+  Tác giả
 @endsection
 
 @section('content')
@@ -10,17 +10,17 @@
     <div class="col-12">
       <div class="card">
         <div class="card-body">
-          <div class="card-title">Quản lý thể loại sách</div>
+          <div class="card-title">Quản lý tác giả</div>
 
-          {{-- genre Forms --}}
+          {{-- Author Forms --}}
           <div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
 
-            {{-- genre Search --}}
-            <form id="genreSearchForm" action="{{ route('genres.search') }}" method="GET">
+            {{-- Author Search --}}
+            <form id="authorSearchForm" action="{{ route('authors.search') }}" method="GET">
 
-              <label for="#genreSearhInput">Tìm kiếm thể loại</label>
+              <label for="#authorSearhInput">Tìm kiếm tác giả</label>
               <div class="input-group">
-                <input type="text" id="genreSearhInput" class="form-control form-control-sm font-weight-bold" placeholder="Tên thể loại" name="search" value="{{ $query['search'] }}">
+                <input type="text" id="authorSearhInput" class="form-control form-control-sm font-weight-bold" placeholder="Tên tác giả" name="search" value="{{ $query['search'] }}">
                 <div class="input-group-append">
                   <button class="btn btn-primary btn-sm" type="submit"><i class="fa-solid fa-search"></i></button>
                 </div>
@@ -37,19 +37,19 @@
               <hr>
             </div>
 
-            {{-- genre Add --}}
-            <form id="genreAddForm" action="{{ route('genres.store') }}" method="POST">
+            {{-- author Add --}}
+            <form id="authorAddForm" action="{{ route('authors.store') }}" method="POST">
               @csrf
 
-              <label for="genreAddInput">Thêm thể loại</label>
+              <label for="authorAddInput">Thêm tác giả</label>
               <div class="input-group">
-                <input type="text" id="genreAddInput" class="form-control form-control-sm font-weight-bold" placeholder="Tên thể loại" name="genre">
+                <input type="text" id="authorAddInput" class="form-control form-control-sm font-weight-bold" placeholder="Tên tác giả" name="author">
                 <div class="input-group-append">
                   <button class="btn btn-primary btn-sm" type="submit"><i class="fa-solid fa-plus"></i></button>
                 </div>
               </div>
-              <div class="input-error genre-error text-danger p-1 position-relative" style="font-size: .8rem;">
-                @error('genre')
+              <div class="input-error author-error text-danger p-1 position-relative" style="font-size: .8rem;">
+                @error('author')
                   <div class="position-absolute">{{ $message }}</div>
                 @enderror
               </div>
@@ -60,11 +60,11 @@
 
           <hr>
 
-          {{-- genre Options --}}
+          {{-- author Options --}}
           <div class="mb-4 d-flex justify-content-between align-items-center">
-            <a href="{{ route('genres.index') }}" class="btn btn-primary btn-sm">Tất cả</a>
+            <a href="{{ route('authors.index') }}" class="btn btn-primary btn-sm">Tất cả</a>
 
-            <select class="custom-select custom-select-sm" style="width: 150px;" id="genreSort">
+            <select class="custom-select custom-select-sm" style="width: 150px;" id="authorSort">
 
               @if ($query['sort'] == 'bookAscending')
 
@@ -89,14 +89,14 @@
             </select>
           </div>
 
-          {{-- genre Data --}}
+          {{-- author Data --}}
           <div class="table-responsive">
-            <table id="genreData" class="table table-hover table-striped table-bordered">
+            <table id="authorData" class="table table-hover table-striped table-bordered">
 
               <thead class="table-primary">
                 <tr>
                   <th>STT</th>
-                  <th>Thể loại</th>
+                  <th>Tác giả</th>
                   <th>Sách</th>
                   <th>Lựa chọn</th>
                 </tr>
@@ -104,29 +104,29 @@
 
               <tbody>
 
-                @foreach ($genres as $genre)
+                @foreach ($authors as $author)
                   <tr>
                     <td class="font-weight-bold" style="width: 100px;">{{ $loop->index + 1 }}</td>
                     <td class="font-weight-bold" style="min-width: 400px; width: 400px;">
-                      <form id="genreEditForm" action="{{ route('genres.update', ['genre' => $genre->id]) }}" method="POST">
+                      <form id="authorEditForm" action="{{ route('authors.update', ['author' => $author->id]) }}" method="POST">
                         @csrf
                         @method('PUT')
 
                         <div class="input-group">
-                          <input type="text" class="form-control form-control-sm font-weight-bold" value="{{ $genre->name }}" name="{{ 'genre-'.$genre->id }}">
+                          <input type="text" class="form-control form-control-sm font-weight-bold" value="{{ $author->name }}" name="{{ 'author-'.$author->id }}">
                           <div class="input-group-append">
                             <button class="btn btn-success btn-sm" type="submit"><i class='fa-solid fa-pen' style="font-size: .8rem;"></i></button>
                           </div>
                         </div>
 
-                        <div class="{{'input-error text-danger p-1 position-relative'.' genre-'.$genre->id.'-error' }}" style="font-size: .8rem;">
-                          @error('genre-'.$genre->id)
+                        <div class="{{'input-error text-danger p-1 position-relative'.' author-'.$author->id.'-error' }}" style="font-size: .8rem;">
+                          @error('author-'.$author->id)
                             <div class="position-absolute">{{ $message }}</div>
                           @enderror
                         </div>
                       </form>
                     </td>
-                    <td class="font-weight-bold">{{ $genre->books->count() }}</td>
+                    <td class="font-weight-bold">{{ $author->books->count() }}</td>
 
                     <td class="font-weight-bold">
                       <div class="d-flex justify-content-start">
@@ -137,8 +137,8 @@
                         </a>
 
                         <x-delete-confirm-button
-                          :url="route('genres.destroy', ['genre' => $genre->id]) "
-                          :message=" 'thể loại '.'<b><q>'.$genre->name.'</q></b>' "
+                          :url="route('authors.destroy', ['author' => $author->id]) "
+                          :message=" 'tác giả '.'<b><q>'.$author->name.'</q></b>' "
                         >
                           <i class="fa-solid fa-trash" style="font-size: .8rem;"></i>
                         </x-delete-confirm-button>
@@ -153,9 +153,9 @@
             </table>
           </div>
 
-          @if ($genres)
+          @if ($authors)
             <div class="mt-4 d-flex justify-content-center justify-content-md-end">
-              {{ $genres->links() }}
+              {{ $authors->links() }}
             </div>
           @endif
         </div>
@@ -168,22 +168,22 @@
 @endsection
 
 @push('js')
-  {{-- Sort genre --}}
+  {{-- Sort author --}}
   <script>
-    const genreSortSelect = document.querySelector('#genreSort')
+    const authorSortSelect = document.querySelector('#authorSort')
 
-    genreSortSelect.addEventListener('change', (e) => {
+    authorSortSelect.addEventListener('change', (e) => {
       const sortBy = e.target.value
 
-      if(sortBy) window.location.href = '{{ route('genres.sort') }}' + `?sortBy=${sortBy}`
+      if(sortBy) window.location.href = '{{ route('authors.sort') }}' + `?sortBy=${sortBy}`
     })
   </script>
 
   <script>
     const inputs = [
-      ...document.querySelectorAll('#genreSearchForm input'),
-      ...document.querySelectorAll('#genreAddForm input'),
-      ...document.querySelectorAll('#genreEditForm input'),
+      ...document.querySelectorAll('#authorSearchForm input'),
+      ...document.querySelectorAll('#authorAddForm input'),
+      ...document.querySelectorAll('#authorEditForm input'),
     ]
 
     inputs.forEach(input => {
