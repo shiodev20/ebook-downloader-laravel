@@ -48,9 +48,12 @@
 
             <ul class="dropdown-menu dropdown-menu-end text-small" aria-labelledby="dropdownUser1">
               <li><a class="dropdown-item fs-4" href="#">Tài Khoản</a></li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
+              
+              @can('is-admin')
+                <li><a class="dropdown-item fs-4" href="{{ route('admin.dashboard') }}">Trang quản trị</a></li>
+              @endcan
+
+              <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item fs-4" href="{{ route('auth.logout') }}">Đăng Xuất</a></li>
             </ul>
           </div>

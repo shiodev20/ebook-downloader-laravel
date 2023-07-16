@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BookRequest;
 use App\Repository\AuthorRepository;
 use App\Repository\BookRepository;
 use App\Repository\FileTypeRepository;
 use App\Repository\GenreRepository;
 use App\Repository\PublisherRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class BookController extends Controller
 {
@@ -36,8 +39,7 @@ class BookController extends Controller
     $this->fileTypeRepository = $fileTypeRepository;
   }
 
-  public function index()
-  {
+  public function index() {
     try {
       $query = ['search' => '', 'sort' => ''];
     
@@ -63,8 +65,18 @@ class BookController extends Controller
     ]));
   }
 
-  public function store(Request $request) {
+  public function store(BookRequest $request) {
+
     dd($request->all());
+    
+    $formatTitle = ucwords($request->title);
+    $slugTitle = Str::slug($request->title);
+
+    $coverExt = $request->cover->extension();
+    $coverUrl = $slugTitle.'-'.time().'.'.$coverExt;
+
+    Storage::putFileAs('bookCovers', $request->file('cover'), $coverUrl);
+
   }
 
   public function search() {}

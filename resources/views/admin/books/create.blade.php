@@ -11,7 +11,7 @@
         <div class="card-body">
           <h4 class="card-title">Tạo sách</h4>
 
-          <form action="{{ route('books.store') }}" method="POST" id="bookAddForm">
+          <form id="bookAddForm" action="{{ route('books.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="row">
@@ -49,7 +49,7 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label class="form-label font-weight-bold" for="author">Tác giả</label>
-                  <select class="js-example-basic-single" style="width: 100%;" name="author">
+                  <select class="js-example-basic-single" style="width: 100%;" name="author" id="author">
                     <option value="">Lựa chọn</option>
                     @foreach ($authors as $author)
                       <option value="{{ $author->id }}">{{ $author->name }}</option>
@@ -64,13 +64,13 @@
               {{-- Genre --}}
               <div class="col-md-4">
                 <div class="form-group">
-                  <label class="form-label font-weight-bold" for="genre">Thể loại</label>
-                  <select class="js-example-basic-multiple" multiple="multiple" style="width: 100%;" name="genres[]">
+                  <label class="form-label font-weight-bold" for="genres">Thể loại</label>
+                  <select class="js-example-basic-multiple" multiple="multiple" style="width: 100%;" name="genres" id="genres">
                     @foreach ($genres as $genre)
                       <option value="{{ $genre->id }}">{{ $genre->name }}</option>
                     @endforeach
                   </select>
-                  @error('genre')
+                  @error('genres')
                     <div class="invalid-feedback d-block">{{ $message }}</div>
                   @enderror
                 </div>
@@ -80,7 +80,7 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label class="form-label font-weight-bold" for="publisher">Nhà xuất bản</label>
-                  <select class="js-example-basic-single" style="width: 100%;" name="publisher">
+                  <select class="js-example-basic-single" style="width: 100%;" name="publisher" id="publisher">
                     <option value="">Lựa chọn</option>
                     @foreach ($publishers as $publisher)
                       <option value="{{ $publisher->id }}">{{ $publisher->name }}</option>
@@ -101,25 +101,29 @@
               {{-- Book cover --}}
               <div class="col-md-3">
                 <div class="form-group">
-                  <label class="form-label font-weight-bold" for="bookCover">Ảnh bìa sách</label>
+                  <label class="form-label font-weight-bold" for="bookCover">Ảnh bìa sách <small><i>(png/jpeg)</i></small></label>
                   <div>
-                    <input type="file" name="bookCover" class="file-upload-default" onchange="preview_imageBook()" id="bookCoverInput">
+                    <input type="file" name="cover" class="file-upload-default" onchange="preview_imageBook()" id="bookCoverInput">
                     <div class="input-group col-xs-12 mb-1">
                       <button class="file-upload-browse btn btn-primary btn-sm" type="button">Tải ảnh</button>
                     </div>
-                    <img class="rounded border" id="bookCoverRender" src="{{ asset('images/book-cover-default.jpg') }}" width="150px" height="200px" />
+                    <img class="rounded border" id="bookCoverRender" src="{{ old('cover') ? old('cover') : asset('images/book-cover-default.jpg') }}" width="150px" height="200px" />
                   </div>
+
+                  @error('cover')
+                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                  @enderror
                 </div>
               </div>
 
 
               {{-- Book files --}}
-              <div class="col-md-9">
+              <div class="col-md-9 mb-3">
                 <label class="form-label font-weight-bold" for="first_name">File sách</label>
 
                 @foreach ($fileTypes as $fileType)
                   <div class="form-group" style="height: 40px;">
-                    <input type="file" name="files[]" class="file-upload-default" style="height: 100%;">
+                    <input type="file" name="{{ $fileType->name }}" class="file-upload-default" style="height: 100%;">
 
                     <div class="input-group col-xs-12" style="height: 100%;">
                       <span class="input-group-prepend" style="height: 100%;">
@@ -130,7 +134,9 @@
                       </span>
                       <input type="text" class="form-control file-upload-info" disabled style="height: 100%;">
                     </div>
-
+                    @error($fileType->name)
+                      <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
                   </div>
                 @endforeach
 
@@ -159,3 +165,27 @@
     </div>
   </div>
 @endsection
+
+@push('js')
+<script>
+  const inputs = document.querySelectorAll('#bookAddForm input')
+  const selects = document.querySelectorAll('#bookAddForm select')
+
+  inputs.forEach(input => {
+    input.addEventListener('input', () => {
+      input.style.border = '1px solid #CED4DA'
+      const invalidFeedBack = document.querySelector(`input[id=${input.id}] + .invalid-feedback`)
+      if(invalidFeedBack) invalidFeedBack.style.visibility = 'hidden'
+    })
+  })
+
+  selects.forEach(select => {
+    select.addEventListener('change', () => {
+      select.style.border = '1px solid #CED4DA'
+      const invalidFeedBack = document.querySelector(`select[id=${select.id}] + .invalid-feedback`)
+      if(invalidFeedBack) invalidFeedBack.style.visibility = 'hidden'
+    })
+  })
+
+</script>
+@endpush

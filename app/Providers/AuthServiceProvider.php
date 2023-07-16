@@ -27,5 +27,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('is-masterAdmin', function(User $user) {
             return $user->role_id === RoleEnum::MASTER_ADMIN->value;
         });
+
+        Gate::define('is-admin', function(User $user) {
+            return $user->role_id === RoleEnum::MASTER_ADMIN->value || $user->role_id === RoleEnum::ADMIN->value;
+        });
     }
 }
