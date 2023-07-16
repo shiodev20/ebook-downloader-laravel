@@ -133,5 +133,28 @@
       "book_id": "b3",
       "genre_id": 2
     }
+  ],
+
+  "fileTypes": [
+    {
+      "id": 1,
+      "name": "EPUB",
+      "color": "#fe7e73"
+    },
+    {
+      "id": 2,
+      "name": "PDF",
+      "color": "#fbb96b"
+    },
+    {
+      "id": 3,
+      "name": "MOBI",
+      "color": "#3DA174"
+    },
+    {
+      "id": 4,
+      "name": "AWZ3",
+      "color": "#0dcaf0"
+    }
   ]
 }

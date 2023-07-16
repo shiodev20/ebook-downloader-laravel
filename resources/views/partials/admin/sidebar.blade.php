@@ -20,7 +20,7 @@
 
     {{-- Book --}}
     <li class="nav-item">
-      <a class="nav-link" href="">
+      <a class="nav-link" href="{{ route('books.index') }}">
         <i class="menu-icon fa-solid fa-book"></i>
         <span class="menu-title">Sách</span>
       </a>

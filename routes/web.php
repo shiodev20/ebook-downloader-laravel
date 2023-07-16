@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GenreController;
 use App\Http\Controllers\Admin\AuthorController;
+use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\PublisherController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
@@ -27,6 +28,10 @@ Route::get('/logout', [LogoutController::class, 'index'])->name('auth.logout');
 Route::get('/', [HomeController::class, 'index'])->name('client.home');
 Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
 
+
+Route::get('/books/search', [BookController::class, 'search'])->name('books.search');
+Route::get('/books/sort', [BookController::class, 'sort'])->name('books.sort');
+Route::resource('books', BookController::class);
 
 Route::get('/genres/search', [GenreController::class, 'search'])->name('genres.search');
 Route::get('/genres/sort', [GenreController::class, 'sort'])->name('genres.sort');
