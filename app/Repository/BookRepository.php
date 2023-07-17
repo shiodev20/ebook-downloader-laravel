@@ -15,18 +15,15 @@ use Illuminate\Support\Str;
 class BookRepository implements IBookRepository
 {
 
-  public function getAll($paginate = 0)
-  {
+  public function getAll($paginate = 0) {
     return Book::paginate($paginate);
   }
 
-  public function getById($id)
-  {
+  public function getById($id) {
     return Book::find($id);
   }
 
-  public function add($attributes = null)
-  {
+  public function add($attributes = null) {
 
     $fileStored = [];
 
@@ -101,18 +98,15 @@ class BookRepository implements IBookRepository
 
   }
 
-  public function update($book = null, $attributes = [])
-  {
+  public function update($book = null, $attributes = []) {
     return $book->update($attributes);
   }
 
-  public function find($expressions = [], $paginate = 0)
-  {
+  public function find($expressions = [], $paginate = 0) {
     return Book::where($expressions)->paginate($paginate);
   }
 
-  public function sort($sortBy, $paginate = 0)
-  {
+  public function sort($sortBy, $paginate = 0) {
     $books = [];
 
     switch ($sortBy) {
@@ -128,8 +122,7 @@ class BookRepository implements IBookRepository
     return $books;
   }
 
-  public function delete($book)
-  {
+  public function delete($book) {
     return $book->delete();
   }
 }

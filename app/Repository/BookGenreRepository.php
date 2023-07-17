@@ -8,30 +8,24 @@ use App\Repository\IRepository\IRepository;
 class BookGenreRepository implements IRepository
 {
 
-  public function getAll($paginate = 0)
-  {
+  public function getAll($paginate = 0) {
     return BookGenre::paginate($paginate);
   }
 
-  public function getById($id)
-  {
+  public function getById($id) {
     return BookGenre::find($id);
   }
 
-  public function add($attributes = [])
-  {
+  public function add($attributes = []) {
     return BookGenre::create($attributes);
   }
 
-  public function update($publisher = null, $attributes = [])
-  {
+  public function update($publisher = null, $attributes = []) {
     return $publisher->update($attributes);
   }
 
-
-  public function delete($publisher)
-  {
-
+  public function delete($publisher) {
     return $publisher->delete();
   }
+  
 }

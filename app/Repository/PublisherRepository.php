@@ -8,33 +8,27 @@ use App\Repository\IRepository\IPublisherRepository;
 class PublisherRepository implements IPublisherRepository
 {
 
-  public function getAll($paginate = 0)
-  {
+  public function getAll($paginate = 0) {
     return Publisher::paginate($paginate);
   }
 
-  public function getById($id)
-  {
+  public function getById($id) {
     return Publisher::find($id);
   }
 
-  public function add($attributes = [])
-  {
+  public function add($attributes = []) {
     return Publisher::create($attributes);
   }
 
-  public function update($publisher = null, $attributes = [])
-  {
+  public function update($publisher = null, $attributes = []) {
     return $publisher->update($attributes);
   }
 
-  public function find($expressions = [], $paginate = 0)
-  {
+  public function find($expressions = [], $paginate = 0) {
     return Publisher::where($expressions)->paginate($paginate);
   }
 
-  public function sort($sortBy, $paginate = 0)
-  {
+  public function sort($sortBy, $paginate = 0) {
     $publishers = [];
 
     switch ($sortBy) {
@@ -50,9 +44,7 @@ class PublisherRepository implements IPublisherRepository
     return $publishers;
   }
 
-  public function delete($publisher)
-  {
-
+  public function delete($publisher) {
     return $publisher->delete();
   }
 }

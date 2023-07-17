@@ -19,8 +19,7 @@ class AuthorController extends Controller
   }
 
   
-  public function index()
-  {
+  public function index() {
     try {
       $query = ['search' => '', 'sort' => ''];
 
@@ -36,8 +35,7 @@ class AuthorController extends Controller
   }
 
   
-  public function store(Request $request)
-  {
+  public function store(Request $request) {
     $request->validate(
       ['author' => 'required|unique:App\Models\Author,name'],
       [

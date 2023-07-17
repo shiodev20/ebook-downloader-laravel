@@ -25,9 +25,7 @@ class GenreRepository implements IGenreRepository
   }
 
   public function delete($genre) {
-
     return $genre->delete();
-
   }
 
   public function sort($sortBy, $paginate = 0) {
@@ -51,4 +49,5 @@ class GenreRepository implements IGenreRepository
   public function find($expressions = [], $paginate = 0) {
     return Genre::where($expressions)->paginate($paginate);
   }
+  
 }

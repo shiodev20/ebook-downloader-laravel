@@ -8,33 +8,27 @@ use App\Repository\IRepository\IAuthorRepository;
 class AuthorRepository implements IAuthorRepository
 {
 
-  public function getAll($paginate = 0)
-  {
+  public function getAll($paginate = 0) {
     return Author::paginate($paginate);
   }
 
-  public function getById($id)
-  {
+  public function getById($id) {
     return Author::find($id);
   }
 
-  public function add($attributes = [])
-  {
+  public function add($attributes = []) {
     return Author::create($attributes);
   }
 
-  public function update($author = null, $attributes = [])
-  {
+  public function update($author = null, $attributes = []) {
     return $author->update($attributes);
   }
 
-  public function find($expressions = [], $paginate = 0)
-  {
+  public function find($expressions = [], $paginate = 0) {
     return Author::where($expressions)->paginate($paginate);
   }
 
-  public function sort($sortBy, $paginate = 0)
-  {
+  public function sort($sortBy, $paginate = 0) {
     $authors = [];
 
     switch ($sortBy) {
@@ -50,9 +44,7 @@ class AuthorRepository implements IAuthorRepository
     return $authors;
   }
 
-  public function delete($author)
-  {
-
+  public function delete($author) {
     return $author->delete();
   }
 }
