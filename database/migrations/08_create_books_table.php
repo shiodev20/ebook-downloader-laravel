@@ -14,15 +14,14 @@ return new class extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->string('id', 8)->primary();
             $table->string('title');
-            $table->string('description');
-            $table->integer('num_pages');
-            $table->date('publish_date');
-            $table->integer('downloads');
-            $table->decimal('rating');
+            $table->string('description')->nullable();
+            $table->integer('num_pages')->nullable();
+            $table->timestamp('publish_date')->useCurrent();
+            $table->integer('downloads')->default(0);
+            $table->decimal('rating')->default(0);
             $table->string('cover_url');
-            $table->unsignedBigInteger('publisher_id');
-            $table->unsignedBigInteger('author_id');
-            $table->timestamps();
+            $table->unsignedBigInteger('publisher_id')->nullable();
+            $table->unsignedBigInteger('author_id')->nullable();
             
             $table->foreign('publisher_id')->references('id')->on('publishers');
             $table->foreign('author_id')->references('id')->on('authors');

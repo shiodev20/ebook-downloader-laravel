@@ -9,6 +9,8 @@ use App\Repository\IRepository\IBookRepository;
 use App\Repository\GenreRepository;
 use App\Repository\PublisherRepository;
 use App\Repository\AuthorRepository;
+use App\Repository\BookFileRepository;
+use App\Repository\BookGenreRepository;
 use App\Repository\BookRepository;
 use App\Repository\FileTypeRepository;
 use Illuminate\Support\ServiceProvider;
@@ -25,6 +27,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(IPublisherRepository::class, PublisherRepository::class);
         $this->app->bind(IBookRepository::class, BookRepository::class);
         $this->app->bind(IRepository::class, FileTypeRepository::class);
+        $this->app->bind(IRepository::class, BookFileRepository::class);
+        $this->app->bind(IRepository::class, BookGenreRepository::class);
     }
 
     /**

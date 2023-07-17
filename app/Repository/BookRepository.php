@@ -3,31 +3,116 @@
 namespace App\Repository;
 
 use App\Models\Book;
+use App\Models\BookFile;
+use App\Models\BookGenre;
+use App\Models\FileType;
 use App\Repository\IRepository\IBookRepository;
+use App\Utils\GenerateId;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
-class BookRepository implements IBookRepository {
+class BookRepository implements IBookRepository
+{
 
-  public function getAll($paginate = 0) {
+  public function getAll($paginate = 0)
+  {
     return Book::paginate($paginate);
   }
 
-  public function getById($id) {
+  public function getById($id)
+  {
     return Book::find($id);
   }
 
-  public function add($attributes = []) {
-    return Book::create($attributes);
+  public function add($attributes = null)
+  {
+
+    $fileStored = [];
+
+    DB::beginTransaction();
+
+    try {
+      $bookId = GenerateId::generateId('', 8);
+
+      while (true) {
+        if ($this->getById($bookId)) $bookId = GenerateId::generateId('', 8);
+        else break;
+      }
+  
+      $book = [
+        'id' => $bookId,
+        'title' => ucwords($attributes['title']),
+        'num_pages' => $attributes['numPages'],
+        'author' => $attributes['author'],
+        'publisher' => $attributes['publisher'],
+        'description' => $attributes['description'],
+      ];
+    
+      // Add Book Cover
+      $bookSlug = Str::slug($book['title']);
+      $bookCoverUrl = $bookSlug . '-' . time() . '.' . $attributes['cover']->extension();
+      $book['cover_url'] = 'bookCovers/' . $bookCoverUrl;
+      Book::create($book);
+  
+      array_push($fileStored, $book['cover_url']);
+
+      Storage::putFileAs('bookCovers', $attributes['cover'], $bookCoverUrl);
+
+
+      // Add book genre
+      if (isset($attributes['genres'])) {
+        foreach ($attributes['genres'] as $genre) {
+          BookGenre::create(['book_id' => $bookId, 'genre_id' => $genre]);
+        }
+      }
+  
+  
+      // Add Book Files
+      $fileTypes = FileType::all();
+      foreach ($fileTypes as $fileType) {
+        if (isset($attributes[$fileType->name])) {
+          $bookFileUrl = $fileType->name . '/' . $bookSlug . '-' . time() . '.' . $attributes[$fileType->name]->extension();
+          array_push($fileStored, $bookFileUrl);
+
+          BookFile::create([
+            'book_id' => $bookId,
+            'file_type_id' => $fileType->id,
+            'file_url' => 'files/'.$bookFileUrl
+          ]);
+  
+          Storage::putFileAs('files/', $attributes[$fileType->name], $bookFileUrl);
+        }
+      }
+  
+      DB::commit();
+      
+      return true;
+
+    } catch (\Throwable $th) {
+      DB::rollBack();
+
+      foreach ($fileStored as $file) {
+        Storage::delete($file);
+      }
+
+      return false;
+    }
+
   }
 
-  public function update($book = null, $attributes = []) {
+  public function update($book = null, $attributes = [])
+  {
     return $book->update($attributes);
   }
 
-  public function find($expressions = [], $paginate = 0) {
+  public function find($expressions = [], $paginate = 0)
+  {
     return Book::where($expressions)->paginate($paginate);
   }
 
-  public function sort($sortBy, $paginate = 0) {
+  public function sort($sortBy, $paginate = 0)
+  {
     $books = [];
 
     switch ($sortBy) {
@@ -43,7 +128,8 @@ class BookRepository implements IBookRepository {
     return $books;
   }
 
-  public function delete($book) {
+  public function delete($book)
+  {
     return $book->delete();
   }
 }

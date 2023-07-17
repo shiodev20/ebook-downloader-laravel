@@ -11,6 +11,5 @@ class BookGenre extends Model
 
     public $timestamps = false;
     public $incrementing = false;
-
     protected $fillable = ['id', 'book_id', 'genre_id'];
 }

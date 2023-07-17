@@ -65,7 +65,7 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label class="form-label font-weight-bold" for="genres">Thể loại</label>
-                  <select class="js-example-basic-multiple" multiple="multiple" style="width: 100%;" name="genres" id="genres">
+                  <select class="js-example-basic-multiple" multiple="multiple" style="width: 100%;" name="genres[]" id="genres">
                     @foreach ($genres as $genre)
                       <option value="{{ $genre->id }}">{{ $genre->name }}</option>
                     @endforeach

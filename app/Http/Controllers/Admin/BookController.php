@@ -66,17 +66,11 @@ class BookController extends Controller
   }
 
   public function store(BookRequest $request) {
+    $result = $this->bookRepository->add($request->except('_token'));
 
-    dd($request->all());
-    
-    $formatTitle = ucwords($request->title);
-    $slugTitle = Str::slug($request->title);
+    if($result) return redirect()->back()->with('successMessage', 'Thêm sách thành công');
 
-    $coverExt = $request->cover->extension();
-    $coverUrl = $slugTitle.'-'.time().'.'.$coverExt;
-
-    Storage::putFileAs('bookCovers', $request->file('cover'), $coverUrl);
-
+    return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
   }
 
   public function search() {}
