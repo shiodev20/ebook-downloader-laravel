@@ -9,9 +9,6 @@ use App\Repository\BookRepository;
 use App\Repository\FileTypeRepository;
 use App\Repository\GenreRepository;
 use App\Repository\PublisherRepository;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class BookController extends Controller
 {
@@ -41,9 +38,11 @@ class BookController extends Controller
 
   public function index() {
     $query = ['search' => '', 'sort' => ''];
-  
+    $books = $this->bookRepository->getAll($this->pagination);
+
     return view('admin.books.index', compact([
       'query',
+      'books'
     ]));
   }
 

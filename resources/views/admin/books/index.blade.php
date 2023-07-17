@@ -45,44 +45,19 @@
 
           <hr>
 
-          {{-- book Options --}}
-          {{-- <div class="mb-4 d-flex justify-content-between align-items-center">
-            <a href="{{ route('books.index') }}" class="btn btn-primary btn-sm">Tất cả</a>
-
-            <select class="custom-select custom-select-sm" style="width: 150px;" id="bookSort">
-
-              @if ($query['sort'] == 'bookAscending')
-
-                <option value="">Sắp xếp theo: </option>
-                <option value="bookDescending">Số sách giảm dần</option>
-                <option value="bookAscending" selected>Số sách tăng dần</option>
-
-              @elseif ($query['sort'] == 'bookDescending')
-
-                <option value="">Sắp xếp theo: </option>
-                <option value="bookDescending" selected>Số sách giảm dần</option>
-                <option value="bookAscending">Số sách tăng dần</option>
-
-              @else
-
-                <option value="" selected>Sắp xếp theo: </option>
-                <option value="bookDescending">Số sách giảm dần</option>
-                <option value="bookAscending">Số sách tăng dần</option>
-                
-              @endif
-
-            </select>
-          </div> --}}
 
           {{-- book Data --}}
-          {{-- <div class="table-responsive">
+          <div class="table-responsive">
             <table id="bookData" class="table table-hover table-striped table-bordered">
 
               <thead class="table-primary">
                 <tr>
-                  <th>STT</th>
-                  <th>Thể loại</th>
-                  <th>Sách</th>
+                  <th>Mã</th>
+                  <th>Bìa sách</th>
+                  <th>Tiêu đề</th>
+                  <th>Tác giả</th>
+                  <th>File sách hiện có</th>
+                  <th>Ngày cập nhật</th>
                   <th>Lựa chọn</th>
                 </tr>
               </thead>
@@ -91,27 +66,22 @@
 
                 @foreach ($books as $book)
                   <tr>
-                    <td class="font-weight-bold" style="width: 100px;">{{ $loop->index + 1 }}</td>
-                    <td class="font-weight-bold" style="min-width: 400px; width: 400px;">
-                      <form id="bookEditForm" action="{{ route('books.update', ['book' => $book->id]) }}" method="POST">
-                        @csrf
-                        @method('PUT')
-
-                        <div class="input-group">
-                          <input type="text" class="form-control form-control-sm font-weight-bold" value="{{ $book->name }}" name="{{ 'book-'.$book->id }}">
-                          <div class="input-group-append">
-                            <button class="btn btn-success btn-sm" type="submit"><i class='fa-solid fa-pen' style="font-size: .8rem;"></i></button>
-                          </div>
-                        </div>
-
-                        <div class="{{'input-error text-danger p-1 position-relative'.' book-'.$book->id.'-error' }}" style="font-size: .8rem;">
-                          @error('book-' . $book->id)
-                            <div class="position-absolute">{{ $message }}</div>
-                          @enderror
-                        </div>
-                      </form>
+                    <td class="font-weight-bold" style="width: 100px;">{{ $book->id }}</td>
+                    <td class="font-weight-bold">
+                      <img src="{{ 'storage/' . $book->cover_url }}" alt="{{ $book->title }}" style="border-radius: 0; height: 50px;">
                     </td>
-                    <td class="font-weight-bold">{{ $book->books->count() }}</td>
+                    <td class="font-weight-bold">{{ $book->title }}</td>
+                    <td class="font-weight-bold">{{ $book->author ? $book->author->name : '' }}</td>
+                    <td class="font-weight-bold">
+                      <div class="d-flex">
+                        @foreach ($book->files as $file)
+                          <span 
+                            class="p-2 text-white" 
+                            style="background-color: {{ $file->color }}">{{ $file->name }}</span>   
+                        @endforeach
+                      </div>
+                    </td>
+                    <td class="font-weight-bold">{{ date_format(date_create($book->publish_date), 'd-m-Y') }}</td>
 
                     <td class="font-weight-bold">
                       <div class="d-flex justify-content-start">
@@ -136,13 +106,13 @@
               </tbody>
 
             </table>
-          </div> --}}
+          </div>
 
-          {{-- @if ($books)
+          @if ($books)
             <div class="mt-4 d-flex justify-content-center justify-content-md-end">
               {{ $books->links() }}
             </div>
-          @endif --}}
+          @endif
         </div>
 
       </div>

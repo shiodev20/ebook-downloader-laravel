@@ -78,30 +78,6 @@ class DatabaseSeeder extends Seeder
       ]);
     }
 
-    $books = $seedDataDecode->books;
-    foreach ($books as $book) {
-      Book::create([
-        'id' => $book->id,
-        'title' => $book->title,
-        'description' => $book->description,
-        'num_pages' => $book->num_pages,
-        'publish_date' => $book->publish_date,
-        'downloads' => $book->downloads,
-        'rating' => $book->rating,
-        'cover_url' => $book->cover_url,
-        'publisher_id' => $book->publisher_id,
-        'author_id' => $book->author_id
-      ]);
-    }
-
-    $bookGenres = $seedDataDecode->bookGenres;
-    foreach ($bookGenres as $bookGenre) {
-      BookGenre::create([
-        'id' => $bookGenre->id,
-        'book_id' => $bookGenre->book_id,
-        'genre_id' => $bookGenre->genre_id,
-      ]);
-    }
 
     $fileTypes = $seedDataDecode->fileTypes;
     foreach ($fileTypes as $fileType) {

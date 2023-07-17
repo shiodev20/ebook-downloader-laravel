@@ -16,7 +16,19 @@ class BookRepository implements IBookRepository
 {
 
   public function getAll($paginate = 0) {
-    return Book::paginate($paginate);
+    $books = Book::all()->map(function ($book) {
+      $temp = $book;
+      $coverData = Storage::get($book->cover_url);
+      $coverExtension = array_pad(explode('.', $book->cover_url), 2, null);
+      
+
+      $temp->cover = 'data:image/' . $coverExtension[1]. ';base64,' . $coverData;
+
+      return $temp;
+
+    })->paginate($paginate);
+
+    return $books;
   }
 
   public function getById($id) {
@@ -54,7 +66,9 @@ class BookRepository implements IBookRepository
   
       array_push($fileStored, $book['cover_url']);
 
-      Storage::putFileAs('bookCovers', $attributes['cover'], $bookCoverUrl);
+      // Storage::disk('public')->put( 'bookCovers',  $attributes['cover']);
+      // Storage::disk('public')->put( $book['cover_url'],  $attributes['cover']);
+      Storage::disk('public')->putFileAs('bookCovers', $attributes['cover'], $bookCoverUrl);
 
 
       // Add book genre
@@ -78,7 +92,7 @@ class BookRepository implements IBookRepository
             'file_url' => 'files/'.$bookFileUrl
           ]);
   
-          Storage::putFileAs('files/', $attributes[$fileType->name], $bookFileUrl);
+          Storage::putFileAs('files', $attributes[$fileType->name], $bookFileUrl);
         }
       }
   
