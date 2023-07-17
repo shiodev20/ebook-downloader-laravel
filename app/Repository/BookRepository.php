@@ -41,8 +41,8 @@ class BookRepository implements IBookRepository
         'id' => $bookId,
         'title' => ucwords($attributes['title']),
         'num_pages' => $attributes['numPages'],
-        'author' => $attributes['author'],
-        'publisher' => $attributes['publisher'],
+        'author_id' => $attributes['author'],
+        'publisher_id' => $attributes['publisher'],
         'description' => $attributes['description'],
       ];
     

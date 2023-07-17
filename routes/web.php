@@ -11,6 +11,8 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Client\HomeController;
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,6 +23,19 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+// $bookCovers = Storage::files('bookCovers');
+// $epubs = Storage::files('files/EPUB');
+// $pdfs = Storage::files('files/PDF');
+// $mobis = Storage::files('files/MOBI');
+// $awz3s = Storage::files('files/AWZ3');
+
+// Storage::delete($bookCovers);
+// Storage::delete($epubs);
+// Storage::delete($pdfs);
+// Storage::delete($mobis);
+// Storage::delete($awz3s);
+
 
 Route::post('/login', [LoginController::class, 'index'])->name('auth.login');
 Route::get('/logout', [LogoutController::class, 'index'])->name('auth.logout');

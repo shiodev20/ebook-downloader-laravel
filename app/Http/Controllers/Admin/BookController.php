@@ -40,15 +40,11 @@ class BookController extends Controller
   }
 
   public function index() {
-    try {
-      $query = ['search' => '', 'sort' => ''];
-    
-      return view('admin.books.index', compact([
-        'query',
-      ]));
-
-    } catch (\Throwable $th) {
-    }
+    $query = ['search' => '', 'sort' => ''];
+  
+    return view('admin.books.index', compact([
+      'query',
+    ]));
   }
 
   public function create() {
