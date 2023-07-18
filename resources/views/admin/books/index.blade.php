@@ -10,6 +10,7 @@
     <div class="col-12">
       <div class="card">
         <div class="card-body">
+
           <div class="card-title">Quản lý sách</div>
 
           <div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
@@ -46,7 +47,6 @@
 
           <hr>
 
-
           {{-- book Data --}}
           <div class="table-responsive">
             <table id="bookData" class="table table-hover table-bordered">
@@ -71,16 +71,18 @@
                   <tr>
                     <td class="font-weight-bold" style="width: 100px;">{{ $book->id }}</td>
                     <td class="font-weight-bold text-center">
-                      <img src="{{ 'storage/' . $book->cover_url }}" alt="{{ $book->title }}" style="border-radius: 0; height: 50px;">
+                      <img src="{{ 'storage/' . $book->cover_url }}" alt="{{ $book->title }}"
+                        style="border-radius: 0; height: 50px;">
                     </td>
                     <td class="font-weight-bold">{{ $book->title }}</td>
                     <td class="font-weight-bold">{{ $book->author ? $book->author->name : '' }}</td>
                     <td class="font-weight-bold">
                       <div class="d-flex">
                         @foreach ($book->files as $file)
-                        <a href=""style="background-color: {{ $file->color }}; font-size: 10px;" class="p-2 text-white"> 
-                          {{ $file->name }}
-                        </a>
+                          <a href=""style="background-color: {{ $file->color }}; font-size: 10px;"
+                            class="p-2 text-white">
+                            {{ $file->name }}
+                          </a>
                         @endforeach
                       </div>
                     </td>
@@ -90,16 +92,14 @@
 
                     <td class="font-weight-bold">
                       <div class="d-flex justify-content-start">
-                        <a class="mr-1" href="/">
-                          <button class="btn btn-sm btn-info">
+
+                        <a href="{{ route('books.edit', ['book' => $book->id]) }}">
+                          <button class="btn btn-sm btn-info mr-1">
                             <i class='fa-solid fa-chart-simple' style="font-size: .8rem;"></i>
                           </button>
                         </a>
 
-                        <x-delete-confirm-button
-                          :url="route('books.destroy', ['book' => $book->id]) "
-                          :message=" 'thể loại '.'<b><q>'.$book->name.'</q></b>' "
-                        >
+                        <x-delete-confirm-button :url="route('books.destroy', ['book' => $book->id])" :message="'thể loại ' . '<b><q>' . $book->name . '</q></b>'">
                           <i class="fa-solid fa-trash" style="font-size: .8rem;"></i>
                         </x-delete-confirm-button>
                       </div>
@@ -118,6 +118,7 @@
               {{ $books->links() }}
             </div>
           @endif
+
         </div>
 
       </div>

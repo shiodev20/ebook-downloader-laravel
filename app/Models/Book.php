@@ -48,6 +48,10 @@ class Book extends Model
         return $this->belongsToMany(FileType::class, 'book_files');
     }
 
+    public function bookFiles() {
+        return $this->hasMany(BookFile::class, 'book_id', 'id');
+    }
+
     public function collections(): BelongsToMany {
         return $this->belongsToMany(Collection::class, 'collections');
     }
