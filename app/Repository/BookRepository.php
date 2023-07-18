@@ -61,15 +61,15 @@ class BookRepository implements IBookRepository
       // Add Book Cover
       $bookSlug = Str::slug($book['title']);
       $bookCoverUrl = $bookSlug . '-' . time() . '.' . $attributes['cover']->extension();
+
+      $book['slug'] = $bookSlug;
       $book['cover_url'] = 'bookCovers/' . $bookCoverUrl;
+      
       Book::create($book);
   
       array_push($fileStored, $book['cover_url']);
 
-      // Storage::disk('public')->put( 'bookCovers',  $attributes['cover']);
-      // Storage::disk('public')->put( $book['cover_url'],  $attributes['cover']);
       Storage::disk('public')->putFileAs('bookCovers', $attributes['cover'], $bookCoverUrl);
-
 
       // Add book genre
       if (isset($attributes['genres'])) {

@@ -75,3 +75,8 @@ input:read-only {
   margin: 0;
   list-style: none;
 }
+
+.table td {
+  font-size: .8rem;
+  padding: .3rem .5rem;
+}

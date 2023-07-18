@@ -41,6 +41,7 @@
             <a class="btn btn-primary btn-icon-text" href="{{ route('books.create') }}">
               <i class='fa-solid fa-plus btn-icon-prepend'></i>Thêm sách
             </a>
+
           </div>
 
           <hr>
@@ -48,7 +49,7 @@
 
           {{-- book Data --}}
           <div class="table-responsive">
-            <table id="bookData" class="table table-hover table-striped table-bordered">
+            <table id="bookData" class="table table-hover table-bordered">
 
               <thead class="table-primary">
                 <tr>
@@ -57,6 +58,8 @@
                   <th>Tiêu đề</th>
                   <th>Tác giả</th>
                   <th>File sách hiện có</th>
+                  <th>Lượt tải</th>
+                  <th>Đánh giá</th>
                   <th>Ngày cập nhật</th>
                   <th>Lựa chọn</th>
                 </tr>
@@ -67,7 +70,7 @@
                 @foreach ($books as $book)
                   <tr>
                     <td class="font-weight-bold" style="width: 100px;">{{ $book->id }}</td>
-                    <td class="font-weight-bold">
+                    <td class="font-weight-bold text-center">
                       <img src="{{ 'storage/' . $book->cover_url }}" alt="{{ $book->title }}" style="border-radius: 0; height: 50px;">
                     </td>
                     <td class="font-weight-bold">{{ $book->title }}</td>
@@ -75,12 +78,14 @@
                     <td class="font-weight-bold">
                       <div class="d-flex">
                         @foreach ($book->files as $file)
-                          <span 
-                            class="p-2 text-white" 
-                            style="background-color: {{ $file->color }}">{{ $file->name }}</span>   
+                        <a href=""style="background-color: {{ $file->color }}; font-size: 10px;" class="p-2 text-white"> 
+                          {{ $file->name }}
+                        </a>
                         @endforeach
                       </div>
                     </td>
+                    <td class="font-weight-bold">{{ $book->downloads }}</td>
+                    <td class="font-weight-bold">{{ $book->rating }}</td>
                     <td class="font-weight-bold">{{ date_format(date_create($book->publish_date), 'd-m-Y') }}</td>
 
                     <td class="font-weight-bold">
@@ -121,9 +126,3 @@
   </div>
 
 @endsection
-
-@push('js')
-  <script>
-    function preview_images() {}
-  </script>
-@endpush

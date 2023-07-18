@@ -60,39 +60,14 @@
 
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  
   <script src="{{ asset('js/ui.js') }}"></script>
   <script src="{{ asset('backend/vendors/js/vendor.bundle.base.js') }}"></script>
-  <script src="{{ asset('backend/js/template.js') }}"></script>
-
   <script src="{{ asset('backend/vendors/select2/select2.min.js') }}"></script>
-
-  <script>
-    (function($) {
-      'use strict';
-
-      if ($(".js-example-basic-single").length) {
-        $(".js-example-basic-single").select2();
-      }
-      if ($(".js-example-basic-multiple").length) {
-        $(".js-example-basic-multiple").select2();
-      }
-    })(jQuery);
-  </script>
-
-  <script>
-    (function($) {
-      'use strict';
-      $(function() {
-        $('.file-upload-browse').on('click', function() {
-          var file = $(this).parent().parent().parent().find('.file-upload-default');
-          file.trigger('click');
-        });
-        $('.file-upload-default').on('change', function() {
-          $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i, ''));
-        });
-      });
-    })(jQuery);
-  </script>
+  <script src="{{ asset('backend/js/template.js') }}"></script>
+  <script src="{{ asset('backend/js/select2.js') }}"></script>
+  <script src="{{ asset('backend/js/file-upload.js') }}"></script>
+  <script src="{{ asset('backend/js/preview-image.js') }}"></script>
 
   <script>
     function handleDelete(url, message) {
@@ -101,12 +76,6 @@
       const modalMessage = document.querySelector('#deleteConfirmModal .modal-message');
       modalMessage.innerHTML = 'Bạn có chắc muốn xóa ' + message + ' ?';
       deleteConfirmForm.action = url;
-    }
-  </script>
-
-  <script>
-     function preview_imageBook() {
-      document.getElementById('bookCoverRender').src = URL.createObjectURL(document.getElementById("bookCoverInput").files[0])
     }
   </script>
   @stack('js')
