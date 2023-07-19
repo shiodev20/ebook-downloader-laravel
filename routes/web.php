@@ -25,12 +25,14 @@ use Illuminate\Support\Facades\Storage;
 */
 
 // $bookCovers = Storage::disk('public')->files('bookCovers');
+// $deletedFiles = Storage::files('deletedFiles');
 // $epubs = Storage::files('files/EPUB');
 // $pdfs = Storage::files('files/PDF');
 // $mobis = Storage::files('files/MOBI');
 // $awz3s = Storage::files('files/AWZ3');
 
 // Storage::disk('public')->delete($bookCovers);
+// Storage::delete($deletedFiles);
 // Storage::delete($epubs);
 // Storage::delete($pdfs);
 // Storage::delete($mobis); 

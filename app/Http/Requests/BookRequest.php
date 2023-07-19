@@ -38,7 +38,7 @@ class BookRequest extends FormRequest
     return [
       'title' => 'required',
       // 'numPages' => 'required|gt:0',
-      'cover' => 'required|image',
+      'cover' => 'image',
       ...$fileTypeRules
     ];
   }
@@ -51,7 +51,7 @@ class BookRequest extends FormRequest
       // 'numPages.required' => 'Vui lòng nhập số trang',
       // 'numPages.gt' => 'Số trang phải lớn hơn 0',
 
-      'cover.required' => 'Vui lòng tải ảnh bìa',
+      // 'cover.required' => 'Vui lòng tải ảnh bìa',
       'cover.image' => 'Vui lòng chọn file có định dạng png/jpg'
     ];
   }

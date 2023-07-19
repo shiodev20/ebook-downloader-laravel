@@ -10,6 +10,7 @@ use App\Repository\BookRepository;
 use App\Repository\FileTypeRepository;
 use App\Repository\GenreRepository;
 use App\Repository\PublisherRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
@@ -63,7 +64,9 @@ class BookController extends Controller
   }
 
   public function store(BookRequest $request) {
+
     $result = $this->bookRepository->add($request->except('_token'));
+
 
     if($result) return redirect()->back()->with('successMessage', 'Thêm sách thành công');
 
@@ -77,7 +80,7 @@ class BookController extends Controller
     $genres = $this->genreRepository->getAll();
     $fileTypes = $this->fileTypeRepository->getAll();
 
-    // dd(Storage::get($book->bookFiles[0]->file_url));
+    $book->cover_content = Storage::disk('public')->get($book->cover_url);
     // dd(basename($book->bookFiles[0]->file_url));
     
     foreach ($fileTypes as $fileType) {
@@ -86,11 +89,13 @@ class BookController extends Controller
         $filtered = $book->bookFiles->filter(fn ($value, $key) => $value->id == $fileType->id);
 
         $fileType->url = $filtered->first()->file_url;
-        // $fileType->content = Storage::get($filtered->first()->file_url);
+        $fileType->file_name = array_pad(explode('/', $fileTypes[0]->url), 2, null)[2];
+        $fileType->content = Storage::get($filtered->first()->file_url);
 
       }
     }
 
+    // dd($book);
     // dd($fileTypes);
     // dd(array_pad(explode('/', $fileTypes[0]->url), 2, null));
 
@@ -102,6 +107,13 @@ class BookController extends Controller
       'fileTypes'
     ]));
 
+  }
+
+  public function update(BookRequest $request, Book $book) {
+    $result = $this->bookRepository->update($book, $request->except(['_token', '_method']));
+
+    if($result) return redirect()->back()->with('successMessage', 'Cập nhật sách thành công');
+    return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
   }
 
   public function search() {}

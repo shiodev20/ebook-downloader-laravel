@@ -11,8 +11,9 @@
         <div class="card-body">
           <h4 class="card-title">Sách {{ $book->id }}</h4>
 
-          <form id="bookAddForm" action="{{ route('books.store') }}" method="POST" enctype="multipart/form-data">
+          <form id="bookAddForm" action="{{ route('books.update', ['book' => $book->id]) }}" method="POST" enctype="multipart/form-data">
             @csrf
+            @method('PUT')
 
             <div class="row">
 
@@ -48,7 +49,7 @@
                   <label class="form-label font-weight-bold" for="publishDate">Ngày cập nhật</label>
                   <input readonly type="text" class="form-control form-control-sm font-weight-bold" id="publishDate"
                     name="publishDate" style="{{ $errors->has('publishDate') ? 'border: 1px solid #dc3545' : '' }}"
-                    value="{{ $book->publish_date }}">
+                    value="{{ date_format(date_create($book->publish_date), 'd-m-Y') }}">
                   @error('publishDate')
                     <div class="invalid-feedback d-block">{{ $message }}</div>
                   @enderror
@@ -116,15 +117,16 @@
               {{-- Book cover --}}
               <div class="col-md-3">
                 <div class="form-group">
-                  <label class="form-label font-weight-bold" for="bookCover">Ảnh bìa sách
-                    <small><i>(png/jpeg)</i></small></label>
+                  <label class="form-label font-weight-bold" for="bookCover">Ảnh bìa sách <small><i>(png/jpeg)</i></small></label>
                   <div>
-                    <input type="file" name="cover" class="file-upload-default" onchange="preview_imageBook()"
-                      id="bookCoverInput">
+                    <input type="file" name="cover" class="file-upload-default" onchange="preview_imageBook()" id="bookCoverInput" value="{{ url('/storage/' . $book->cover_url)}} ">
                     <div class="input-group col-xs-12 mb-1">
                       <button class="file-upload-browse btn btn-primary btn-sm" type="button">Tải ảnh</button>
                     </div>
-                    <img class="rounded border" id="bookCoverRender" src="{{ url('/storage/' . $book->cover_url) }}"
+                    <img 
+                      id="bookCoverRender" 
+                      class="rounded border" 
+                      src="{{ url('/storage/' . $book->cover_url) }}"
                       width="150px" height="200px" />
                   </div>
 
@@ -137,7 +139,7 @@
 
               {{-- Book files --}}
               <div class="col-md-9 mb-3">
-                <label class="form-label font-weight-bold" for="first_name">File sách</label>
+                <label class="form-label font-weight-bold" for="bookFiles">File sách</label>
 
                 @foreach ($fileTypes as $fileType)
                   <div class="form-group" style="height: 40px; width: 100%; max-width: 700px;">
@@ -152,7 +154,7 @@
                       </span>
 
                       <input type="text" class="form-control file-upload-info" disabled style="height: 100%;"
-                        value="{{ array_pad(explode('/', $fileType->url), 3, null)[2] }}">
+                        value="{{ $fileType->file_name }}">
 
                       @if ($fileType->url)
                         <a href="" class="btn btn-info" style="border-radius: 0; height: 100%;"><i
@@ -261,4 +263,9 @@
       })
     })
   </script>
+
+  {{-- <script>
+    const file = new Blob(["{{ $book->cover_content }}"]);
+    console.log(file);
+  </script> --}}
 @endpush
