@@ -17,4 +17,8 @@ class BookFile extends Model
         'file_type_id',
         'file_url'
     ];
+
+    public function fileType() {
+        return $this->belongsTo(FileType::class, 'file_type_id', 'id');
+    }
 }

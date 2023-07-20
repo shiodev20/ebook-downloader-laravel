@@ -127,7 +127,7 @@
                       id="bookCoverRender" 
                       class="rounded border" 
                       src="{{ url('/storage/' . $book->cover_url) }}"
-                      width="150px" height="200px" />
+                      width="110px" height="150px" />
                   </div>
 
                   @error('cover')
@@ -142,30 +142,23 @@
                 <label class="form-label font-weight-bold" for="bookFiles">File sách</label>
 
                 @foreach ($fileTypes as $fileType)
-                  <div class="form-group" style="height: 40px; width: 100%; max-width: 700px;">
-                    <input type="file" name="{{ $fileType->name }}" class="file-upload-default"
-                      style="height: 100%;">
+                  <div class="form-group mb-3" style="height: 30px; width: 100%; max-width: 700px;">
+                    <input type="file" name="{{ $fileType->name }}" class="file-upload-default" style="height: 100%;">
 
                     <div class="input-group col-xs-12" style="height: 100%;">
 
                       <span class="input-group-prepend" style="height: 100%;">
-                        <button type="button" class="file-upload-browse btn text-white font-weight-bold"
-                          style="width: 100px; background-color: {{ $fileType->color }}">{{ $fileType->name }}</button>
+                        <button type="button" class="file-upload-browse btn text-white font-weight-bold p-0" style="width: 100px; background-color: {{ $fileType->color }}">{{ $fileType->name }}</button>
                       </span>
 
-                      <input type="text" class="form-control file-upload-info" disabled style="height: 100%;"
-                        value="{{ $fileType->file_name }}">
+                      <input type="text" class="form-control file-upload-info" disabled style="height: 100%;" value="{{ $fileType->file_name }}">
 
                       @if ($fileType->url)
-                        <a href="" class="btn btn-info" style="border-radius: 0; height: 100%;"><i
-                            class="fa-solid fa-download"></i></a>
-                        <a href="" class="btn btn-danger" style="border-radius: 0 15px 15px 0; height: 100%;"><i
-                            class="fa-solid fa-trash"></i></a>
+                        <a href="" class="btn btn-info py-2" style="border-radius: 0; height: 100%;"><i class="fa-solid fa-download"></i></a>
+                        <a href="" class="btn btn-danger py-2" style="border-radius: 0 15px 15px 0; height: 100%;"><i class="fa-solid fa-trash"></i></a>
                       @else
-                        <button class="btn btn-info" style="border-radius: 0; height: 100%;" disabled><i
-                            class="fa-solid fa-download"></i></button>
-                        <button class="btn btn-danger" style="border-radius: 0 15px 15px 0; height: 100%;" disabled><i
-                            class="fa-solid fa-trash"></i></button>
+                        <button class="btn btn-info py-2" style="border-radius: 0; height: 100%;" disabled><i class="fa-solid fa-download"></i></button>
+                        <button class="btn btn-danger py-2" style="border-radius: 0 15px 15px 0; height: 100%;" disabled><i class="fa-solid fa-trash"></i></button>
                       @endif
                     </div>
                     @error($fileType->name)
@@ -180,47 +173,7 @@
 
             <hr>
 
-            <div class="accordion" id="bookReviewAccordion" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;">
-              <div class="card bg-primary">
-
-                <div class="card-header p-2" id="bookReview">
-                  <button class="btn btn-block text-left text-white" type="button" data-toggle="collapse"
-                    data-target="#bookReviewCollapse" aria-expanded="true" aria-controls="bookReviewCollapse">
-                    Thông tin đánh giá
-                  </button>
-                </div>
-
-                <div id="bookReviewCollapse" class="collapse show" aria-labelledby="bookReview" data-parent="#bookReviewAccordion">
-                  <div class="card-body bg-white py-3 px-4">
-
-                    <div class="row">
-
-                      {{-- Download --}}
-                      <div class="col-md-2">
-                        <div class="form-group">
-                          <label class="form-label font-weight-bold" for="publishDate">Lượt tải</label>
-                          <input readonly type="text" class="form-control form-control-sm font-weight-bold"
-                            value="{{ $book->downloads }}">
-                        </div>
-                      </div>
-
-                      {{-- Rating --}}
-                      <div class="col-md-2">
-                        <div class="form-group">
-                          <label class="form-label font-weight-bold" for="publishDate">Đánh giá</label>
-                          <input readonly type="text" class="form-control form-control-sm font-weight-bold"
-                            value="{{ $book->rating }}">
-                        </div>
-                      </div>
-
-                    </div>
-
-                  </div>
-                </div>
-
-              </div>
-
-            </div>
+           
 
             {{-- Description --}}
             <div class="row">
@@ -235,6 +188,50 @@
             <button type="submit" class="btn btn-success w-100">Cập nhật</button>
 
           </form>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-12 grid-margin">
+      <div class="accordion" id="bookReviewAccordion" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;">
+        <div class="card bg-primary">
+
+          <div class="card-header p-2" id="bookReview">
+            <button class="btn btn-block text-left text-white" type="button" data-toggle="collapse"
+              data-target="#bookReviewCollapse" aria-expanded="true" aria-controls="bookReviewCollapse">
+              Thông tin đánh giá
+            </button>
+          </div>
+
+          <div id="bookReviewCollapse" class="collapse show" aria-labelledby="bookReview" data-parent="#bookReviewAccordion">
+            <div class="card-body bg-white py-3 px-4">
+
+              <div class="row">
+
+                {{-- Download --}}
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="form-label font-weight-bold" for="publishDate">Lượt tải</label>
+                    <input readonly type="text" class="form-control form-control-sm font-weight-bold"
+                      value="{{ $book->downloads }}">
+                  </div>
+                </div>
+
+                {{-- Rating --}}
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="form-label font-weight-bold" for="publishDate">Đánh giá</label>
+                    <input readonly type="text" class="form-control form-control-sm font-weight-bold"
+                      value="{{ $book->rating }}">
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
         </div>
 
       </div>
@@ -263,9 +260,4 @@
       })
     })
   </script>
-
-  {{-- <script>
-    const file = new Blob(["{{ $book->cover_content }}"]);
-    console.log(file);
-  </script> --}}
 @endpush

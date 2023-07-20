@@ -8,7 +8,6 @@ use App\Models\BookGenre;
 use App\Models\FileType;
 use App\Repository\IRepository\IBookRepository;
 use App\Utils\GenerateId;
-use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -96,7 +95,7 @@ class BookRepository implements IBookRepository
   
       DB::commit();
       
-      return true;
+      return $book;
 
     } catch (\Throwable $th) {
       DB::rollBack();
@@ -186,14 +185,19 @@ class BookRepository implements IBookRepository
         }
       }
 
-      if($data) $book->update($data);
+      if(isset($attributes['genres'])) {
+        BookGenre::where('book_id', '=', $book->id)->delete();
 
-      // dd($deletedFiles, $storedFiles);
-      // throw new Exception("Error Processing Request", 1);
+        foreach ($attributes['genres'] as $genre) {
+          BookGenre::create(['book_id' => $book->id, 'genre_id' => $genre]);
+        }
+      }
+
+      if($data) $book->update($data);
 
       DB::commit();
 
-      return true;
+      return $book;
 
     } catch (\Throwable $th) {
       DB::rollBack();

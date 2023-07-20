@@ -78,10 +78,17 @@
                     <td class="font-weight-bold">{{ $book->author ? $book->author->name : '' }}</td>
                     <td class="font-weight-bold">
                       <div class="d-flex">
-                        @foreach ($book->files as $file)
+                        {{-- @foreach ($book->files as $file)
                           <a href=""style="background-color: {{ $file->color }}; font-size: 10px;"
                             class="p-2 text-white">
                             {{ $file->name }}
+                          </a>
+                        @endforeach --}}
+
+                        @foreach ($book->bookFiles as $bookFile)
+                        <a href="" style="background-color: {{ $bookFile->fileType->color }}; font-size: 10px;"
+                            class="p-2 text-white">
+                            {{ $bookFile->fileType->name }}
                           </a>
                         @endforeach
                       </div>

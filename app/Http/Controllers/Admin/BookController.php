@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Book;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BookRequest;
-use App\Models\Book;
+use App\Models\BookFile;
 use App\Repository\AuthorRepository;
 use App\Repository\BookRepository;
 use App\Repository\FileTypeRepository;
 use App\Repository\GenreRepository;
 use App\Repository\PublisherRepository;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
@@ -40,13 +40,18 @@ class BookController extends Controller
   }
 
   public function index() {
-    $query = ['search' => '', 'sort' => ''];
-    $books = $this->bookRepository->getAll($this->pagination);
+    try {
+      $query = ['search' => '', 'sort' => ''];
+      $books = $this->bookRepository->getAll($this->pagination);
+  
+      return view('admin.books.index', compact([
+        'query',
+        'books'
+      ]));
 
-    return view('admin.books.index', compact([
-      'query',
-      'books'
-    ]));
+    } catch (\Throwable $th) {
+      return redirect()->route('admin.dashboard')->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+    }
   }
 
   public function create() {
@@ -65,10 +70,10 @@ class BookController extends Controller
 
   public function store(BookRequest $request) {
 
-    $result = $this->bookRepository->add($request->except('_token'));
+    $createdBook = $this->bookRepository->add($request->except('_token'));
 
 
-    if($result) return redirect()->back()->with('successMessage', 'Thêm sách thành công');
+    if($createdBook) return redirect()->route('books.edit', ['book' => $createdBook->id])->with('successMessage', 'Thêm sách thành công');
 
     return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
   }
@@ -103,11 +108,10 @@ class BookController extends Controller
   }
 
   public function update(BookRequest $request, Book $book) {
-    // dd($request->all());
+    $updatedBook = $this->bookRepository->update($book, $request->except(['_token', '_method']));
 
-    $result = $this->bookRepository->update($book, $request->except(['_token', '_method']));
+    if($updatedBook) return redirect()->back()->with('successMessage', 'Cập nhật sách ' . $updatedBook->id . ' thành công');
 
-    if($result) return redirect()->back()->with('successMessage', 'Cập nhật sách thành công');
     return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
   }
 
