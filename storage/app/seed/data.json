@@ -60,13 +60,21 @@
     {
       "id": 3,
       "name": "Quản trị học"
+    },
+    {
+      "id": 4,
+      "name": "Hình sự - Trinh thám"
     }
   ],
 
   "authors": [
     {
       "id": 1,
-      "name": "Shio Nguyễn"
+      "name": "Minato Kanae"
+    },
+    {
+      "id": 2,
+      "name": "Rosie Nguyễn"
     }
   ],
 

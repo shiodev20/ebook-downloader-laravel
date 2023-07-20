@@ -81,23 +81,16 @@ class BookController extends Controller
     $fileTypes = $this->fileTypeRepository->getAll();
 
     $book->cover_content = Storage::disk('public')->get($book->cover_url);
-    // dd(basename($book->bookFiles[0]->file_url));
-    
+
     foreach ($fileTypes as $fileType) {
-      if($book->bookFiles->contains($fileType->id)) {
+      $filtered = $book->bookFiles->where('file_type_id', $fileType->id)->first();
 
-        $filtered = $book->bookFiles->filter(fn ($value, $key) => $value->id == $fileType->id);
-
-        $fileType->url = $filtered->first()->file_url;
-        $fileType->file_name = array_pad(explode('/', $fileTypes[0]->url), 2, null)[2];
-        $fileType->content = Storage::get($filtered->first()->file_url);
-
+      if($filtered) {
+        $fileType->url = $filtered->file_url;
+        $fileType->file_name = basename($filtered->file_url);
+        $fileType->content = Storage::get($filtered->file_url);
       }
     }
-
-    // dd($book);
-    // dd($fileTypes);
-    // dd(array_pad(explode('/', $fileTypes[0]->url), 2, null));
 
     return view('admin.books.edit', compact([
       'book',
@@ -110,6 +103,8 @@ class BookController extends Controller
   }
 
   public function update(BookRequest $request, Book $book) {
+    // dd($request->all());
+
     $result = $this->bookRepository->update($book, $request->except(['_token', '_method']));
 
     if($result) return redirect()->back()->with('successMessage', 'Cập nhật sách thành công');
