@@ -49,7 +49,15 @@
 
           {{-- book Options --}}
           <div class="mb-4 d-flex justify-content-between align-items-center">
-            <a href="{{ route('books.index') }}" class="btn btn-primary btn-sm">Tất cả</a>
+            <div>
+              <a href="{{ route('books.index') }}" class="btn btn-primary btn-sm mr-2">Tất cả</a>
+
+              <select class="custom-select custom-select-sm" style="width: 170px;" id="statusSort" name="statusSort">
+                <option value="" selected>Trạng thái</option>
+                <option value="active">Đang cung cấp</option>
+                <option value="disabled">Ngừng cung cấp</option>
+              </select>
+            </div>
 
             <div>
               <form action="{{ route('books.sort') }}" method="GET">
@@ -100,8 +108,6 @@
 
                 <button class="btn btn-primary btn-sm">Sắp xếp</button>
               </form>
-
-
             </div>
           </div>
 
@@ -119,6 +125,7 @@
                   <th>Lượt tải</th>
                   <th>Đánh giá</th>
                   <th>Ngày cập nhật</th>
+                  <th>Trang thái</th>
                   <th>Lựa chọn</th>
                 </tr>
               </thead>
@@ -147,6 +154,7 @@
                     <td class="font-weight-bold">{{ $book->downloads }}</td>
                     <td class="font-weight-bold">{{ $book->rating }}</td>
                     <td class="font-weight-bold">{{ date_format(date_create($book->publish_date), 'd-m-Y') }}</td>
+                    <td class="font-weight-bold">{{ $book->status ? 'Đang cung cấp' : 'Ngừng cung cấp' }}</td>
 
                     <td class="font-weight-bold">
                       <div class="d-flex justify-content-start">
@@ -157,9 +165,16 @@
                           </button>
                         </a>
 
-                        <x-delete-confirm-button :url="route('books.destroy', ['book' => $book->id])" :message="'thể loại ' . '<b><q>' . $book->name . '</q></b>'">
-                          <i class="fa-solid fa-trash" style="font-size: .8rem;"></i>
-                        </x-delete-confirm-button>
+                        @if ($book->status)
+                          <x-delete-confirm-button :url="route('books.destroy', ['book' => $book->id])" :message="'thể loại ' . '<b><q>' . $book->name . '</q></b>'">
+                            <i class="fa-solid fa-trash" style="font-size: .8rem;"></i>
+                          </x-delete-confirm-button>
+                        @else
+                          <a href="" class="btn btn-success btn-sm">
+                            <i class="fa-solid fa-trash-arrow-up" style="font-size: .8rem;"></i>
+                          </a>
+                        @endif
+
                       </div>
                     </td>
 
@@ -185,3 +200,15 @@
   </div>
 
 @endsection
+
+@push('js')
+<script>
+  const statusSortSelect = document.querySelector('#statusSort')
+
+  statusSortSelect.addEventListener('change', (e) => {
+    const sortBy = e.target.value
+
+    if(sortBy) window.location.href = '{{ route('books.status') }}' + `?sortBy=${sortBy}`
+  })
+</script>
+@endpush

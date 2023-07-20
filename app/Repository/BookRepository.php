@@ -17,7 +17,7 @@ class BookRepository implements IBookRepository
 {
 
   public function getAll($paginate = 0) {
-    $books = Book::all()->map(function ($book) {
+    $books = Book::orderBy('publish_date', 'desc')->get()->map(function ($book) {
       $temp = $book;
       $coverData = Storage::get($book->cover_url);
       $coverExtension = array_pad(explode('.', $book->cover_url), 2, null);
@@ -224,7 +224,7 @@ class BookRepository implements IBookRepository
   }
 
   public function find($expressions = [], $paginate = 0) {
-    return Book::where($expressions)->paginate($paginate);
+    return Book::where($expressions)->orderBy('publish_date', 'desc')->paginate($paginate);
   }
 
   public function sort($sortBy, $paginate = 0) {
@@ -232,6 +232,7 @@ class BookRepository implements IBookRepository
 
     $books = Book::orderBy('downloads', $sortBy['download'] == 'downloadDescending' ? 'desc' : 'asc')
     ->orderBy('rating', $sortBy['rating'] == 'ratingDescending' ? 'desc' : 'asc')
+    ->orderBy('publish_date', 'desc')
     ->get();
 
     $books = $books->map(function ($book) {
@@ -249,7 +250,26 @@ class BookRepository implements IBookRepository
     return $books;
   }
 
+  public function status($sortBy, $paginate = 0) {
+    
+    $books = [];
+
+    switch ($sortBy) {
+      case 'active':
+        $books = Book::where('status', '=', 1)->orderBy('publish_date', 'desc')->paginate($paginate);
+        break;
+      case 'disabled':
+        $books = Book::where('status', '=', 0)->orderBy('publish_date', 'desc')->paginate($paginate);
+        break;
+    }
+
+    return $books;
+
+  }
+
   public function delete($book) {
     return $book->delete();
   }
+
+
 }

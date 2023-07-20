@@ -24,6 +24,7 @@ class Book extends Model
         'downloads',
         'rating',
         'cover_url',
+        'status',
         'publisher_id',
         'author_id'
     ];

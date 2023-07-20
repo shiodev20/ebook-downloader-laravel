@@ -164,4 +164,26 @@ class BookController extends Controller
       return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
     }
   }
+
+  public function status(Request $request) {
+    $query = [
+      'search' => '',
+      'sort' => [
+        'rating' => '',
+        'download' => ''
+      ]
+    ];
+
+    try {
+      $books = $this->bookRepository->status($request->sortBy, $this->pagination);
+      
+      return view('admin.books.index', compact([
+        'books',
+        'query'
+      ]));
+
+    } catch (\Throwable $th) {
+      return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+    }
+  }
 }
