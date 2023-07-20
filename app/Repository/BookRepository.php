@@ -229,15 +229,21 @@ class BookRepository implements IBookRepository
   public function sort($sortBy, $paginate = 0) {
     $books = [];
 
-    switch ($sortBy) {
-      case 'bookDescending':
-        $books = Book::all()->sortByDesc(fn ($book) => $book->books->count(), SORT_NUMERIC)->paginate($paginate);
-        break;
+    $books = Book::orderBy('downloads', $sortBy['download'] == 'downloadDescending' ? 'desc' : 'asc')
+    ->orderBy('rating', $sortBy['rating'] == 'ratingDescending' ? 'desc' : 'asc')
+    ->get();
 
-      case 'bookAscending':
-        $books = Book::all()->sortBy(fn ($book) => $book->books->count(), SORT_NUMERIC)->paginate($paginate);
-        break;
-    }
+    $books = $books->map(function ($book) {
+      $temp = $book;
+      $coverData = Storage::disk('public')->get($book->cover_url);
+      $coverExtension = array_pad(explode('.', $book->cover_url), 2, null);
+      
+
+      $temp->cover = 'data:image/' . $coverExtension[1]. ';base64,' . $coverData;
+
+      return $temp;
+
+    })->paginate($paginate);
 
     return $books;
   }

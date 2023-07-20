@@ -47,6 +47,64 @@
 
           <hr>
 
+          {{-- book Options --}}
+          <div class="mb-4 d-flex justify-content-between align-items-center">
+            <a href="{{ route('books.index') }}" class="btn btn-primary btn-sm">Tất cả</a>
+
+            <div>
+              <form action="{{ route('books.sort') }}" method="GET">
+                <select class="custom-select custom-select-sm mr-2" style="width: 170px;" id="downloadSort" name="downloadSort">
+                  @if ($query['sort']['download'] == 'downloadDescending')
+
+                    <option value="">Lượt tải</option>
+                    <option value="downloadDescending" selected>Lượt tải giảm dần</option>
+                    <option value="downloadAscending">Lượt tải tăng dần</option>
+
+                  @elseif($query['sort']['download'] == 'downloadAscending')
+
+                    <option value="">Lượt tải</option>
+                    <option value="downloadDescending">Lượt tải giảm dần</option>
+                    <option value="downloadAscending" selected>Lượt tải tăng dần</option>
+
+                  @else
+
+                    <option value="" selected>Lượt tải</option>
+                    <option value="downloadDescending">Lượt tải giảm dần</option>
+                    <option value="downloadAscending">Lượt tải tăng dần</option>
+
+                  @endif
+
+                </select>
+    
+                <select class="custom-select custom-select-sm mr-2" style="width: 170px;" id="ratingSort" name="ratingSort">
+                  @if ($query['sort']['rating'] == 'ratingDescending')
+
+                    <option value="">Đánh giá</option>
+                    <option value="ratingDescending" selected>Đánh giá giảm dần</option>
+                    <option value="ratingAscending">Đánh giá tăng dần</option>
+
+                  @elseif($query['sort']['rating'] == 'ratingAscending')
+
+                    <option value="">Đánh giá</option>
+                    <option value="ratingDescending">Đánh giá giảm dần</option>
+                    <option value="ratingAscending" selected>Đánh giá tăng dần</option>
+
+                  @else
+
+                    <option value="" selected>Đánh giá</option>
+                    <option value="ratingDescending">Đánh giá giảm dần</option>
+                    <option value="ratingAscending">Đánh giá tăng dần</option>
+
+                  @endif
+                </select>
+
+                <button class="btn btn-primary btn-sm">Sắp xếp</button>
+              </form>
+
+
+            </div>
+          </div>
+
           {{-- book Data --}}
           <div class="table-responsive">
             <table id="bookData" class="table table-hover table-bordered">
@@ -71,20 +129,13 @@
                   <tr>
                     <td class="font-weight-bold" style="width: 100px;">{{ $book->id }}</td>
                     <td class="font-weight-bold text-center">
-                      <img src="{{ 'storage/' . $book->cover_url }}" alt="{{ $book->title }}"
+                      <img src="{{ url('storage/' . $book->cover_url) }}" alt="{{ $book->title }}"
                         style="border-radius: 0; height: 50px;">
                     </td>
                     <td class="font-weight-bold">{{ $book->title }}</td>
                     <td class="font-weight-bold">{{ $book->author ? $book->author->name : '' }}</td>
                     <td class="font-weight-bold">
                       <div class="d-flex">
-                        {{-- @foreach ($book->files as $file)
-                          <a href=""style="background-color: {{ $file->color }}; font-size: 10px;"
-                            class="p-2 text-white">
-                            {{ $file->name }}
-                          </a>
-                        @endforeach --}}
-
                         @foreach ($book->bookFiles as $bookFile)
                         <a href="" style="background-color: {{ $bookFile->fileType->color }}; font-size: 10px;"
                             class="p-2 text-white">

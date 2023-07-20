@@ -5,12 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Book;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BookRequest;
-use App\Models\BookFile;
 use App\Repository\AuthorRepository;
 use App\Repository\BookRepository;
 use App\Repository\FileTypeRepository;
 use App\Repository\GenreRepository;
 use App\Repository\PublisherRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
@@ -41,7 +41,7 @@ class BookController extends Controller
 
   public function index() {
     try {
-      $query = ['search' => '', 'sort' => ''];
+      $query = ['search' => '', 'sort' => ['download' => '', 'rating' => '']];
       $books = $this->bookRepository->getAll($this->pagination);
   
       return view('admin.books.index', compact([
@@ -117,5 +117,20 @@ class BookController extends Controller
 
   public function search() {}
 
-  public function sort() {}
+  public function sort(Request $request) {
+    $query = [
+      'search' => '',
+      'sort' => [
+        'rating' => $request->ratingSort,
+        'download' => $request->downloadSort
+      ]
+    ];
+
+    $books = $this->bookRepository->sort($query['sort'], $this->pagination);
+    
+    return view('admin.books.index', compact([
+      'books',
+      'query'
+    ]));
+  }
 }
