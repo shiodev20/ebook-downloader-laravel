@@ -9,7 +9,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 
 use App\Http\Controllers\Client\HomeController;
-
+use App\Utils\UppercaseFirstLetter;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 

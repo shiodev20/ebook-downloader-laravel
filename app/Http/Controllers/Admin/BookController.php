@@ -108,6 +108,7 @@ class BookController extends Controller
   }
 
   public function update(BookRequest $request, Book $book) {
+    
     $updatedBook = $this->bookRepository->update($book, $request->except(['_token', '_method']));
 
     if($updatedBook) return redirect()->back()->with('successMessage', 'Cập nhật sách ' . $updatedBook->id . ' thành công');
@@ -115,7 +116,32 @@ class BookController extends Controller
     return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
   }
 
-  public function search() {}
+  public function search(Request $request) {
+    $query = [
+      'search' => '',
+      'sort' => [
+        'rating' => $request->ratingSort,
+        'download' => $request->downloadSort
+      ]
+    ];
+    
+    $query['search'] = $request->query('search');
+
+    try {
+      $books = $this->bookRepository->find([
+        ['title', 'like', '%' . $query['search'] . '%'],
+      ], $this->pagination);
+
+      return view('admin.books.index', compact([
+        'books',
+        'query'
+      ]));
+
+    } catch (\Throwable $th) {
+      return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+    }
+
+  }
 
   public function sort(Request $request) {
     $query = [
@@ -126,11 +152,16 @@ class BookController extends Controller
       ]
     ];
 
-    $books = $this->bookRepository->sort($query['sort'], $this->pagination);
-    
-    return view('admin.books.index', compact([
-      'books',
-      'query'
-    ]));
+    try {
+      $books = $this->bookRepository->sort($query['sort'], $this->pagination);
+      
+      return view('admin.books.index', compact([
+        'books',
+        'query'
+      ]));
+
+    } catch (\Throwable $th) {
+      return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+    }
   }
 }

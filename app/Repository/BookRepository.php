@@ -8,6 +8,7 @@ use App\Models\BookGenre;
 use App\Models\FileType;
 use App\Repository\IRepository\IBookRepository;
 use App\Utils\GenerateId;
+use App\Utils\UppercaseFirstLetter;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -44,22 +45,22 @@ class BookRepository implements IBookRepository
     try {
       $book = new Book;
 
-      $bookId = GenerateId::generateId('', 8);
+      $bookId = GenerateId::make('', 8);
 
       while (true) {
-        if ($this->getById($bookId)) $bookId = GenerateId::generateId('', 8);
+        if ($this->getById($bookId)) $bookId = GenerateId::make('', 8);
         else break;
       }
 
       $book->id = $bookId;
-      $book->title = ucwords($attributes['title']);
+      $book->title = UppercaseFirstLetter::make($attributes['title']);
       $book->num_pages = $attributes['numPages'];
       $book->author_id = $attributes['author'];
       $book->publisher_id = $attributes['publisher'];
       $book->description = $attributes['description'];
+      $book->slug = Str::slug($book->title);
 
       // Add Book Cover
-      $book->slug = Str::slug($book->title);
       $book->cover_url = 'bookCovers/' . $book->slug . '-' . time() . '.' . $attributes['cover']->extension();
       
       Storage::disk('public')->put($book->cover_url, file_get_contents($attributes['cover']));
@@ -123,8 +124,9 @@ class BookRepository implements IBookRepository
 
     DB::beginTransaction();
     try {
-      if($book->slug != Str::slug($attributes['title'])) {
-        $data['title'] = ucwords($attributes['title']);
+
+      if($book->title != $attributes['title']) {
+        $data['title'] = UppercaseFirstLetter::make($attributes['title']);
         $data['slug'] = Str::slug($attributes['title']);
       }
 
@@ -185,9 +187,8 @@ class BookRepository implements IBookRepository
         }
       }
 
+      BookGenre::where('book_id', '=', $book->id)->delete();
       if(isset($attributes['genres'])) {
-        BookGenre::where('book_id', '=', $book->id)->delete();
-
         foreach ($attributes['genres'] as $genre) {
           BookGenre::create(['book_id' => $book->id, 'genre_id' => $genre]);
         }

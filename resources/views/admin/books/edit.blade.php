@@ -116,7 +116,7 @@
 
               {{-- Book cover --}}
               <div class="col-md-3">
-                <div class="form-group">
+                <div class="form-group mb-0">
                   <label class="form-label font-weight-bold" for="bookCover">Ảnh bìa sách <small><i>(png/jpeg)</i></small></label>
                   <div>
                     <input type="file" name="cover" class="file-upload-default" onchange="preview_imageBook()" id="bookCoverInput" value="{{ url('/storage/' . $book->cover_url)}} ">
@@ -138,7 +138,7 @@
 
 
               {{-- Book files --}}
-              <div class="col-md-9 mb-3">
+              <div class="col-md-9">
                 <label class="form-label font-weight-bold" for="bookFiles">File sách</label>
 
                 @foreach ($fileTypes as $fileType)
