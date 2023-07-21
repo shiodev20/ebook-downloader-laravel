@@ -144,7 +144,7 @@
                     <td class="font-weight-bold">
                       <div class="d-flex">
                         @foreach ($book->bookFiles as $bookFile)
-                        <a href="" style="background-color: {{ $bookFile->fileType->color }}; font-size: 10px;"
+                        <a href="{{ route('downloads.index', ['book' => $book->id]) .'?url=' . $bookFile->file_url }}" style="background-color: {{ $bookFile->fileType->color }}; font-size: 10px;"
                             class="p-2 text-white">
                             {{ $bookFile->fileType->name }}
                           </a>

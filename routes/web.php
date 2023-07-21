@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 
 use App\Http\Controllers\Client\HomeController;
+use App\Http\Controllers\DownloadController;
 use App\Utils\UppercaseFirstLetter;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -57,7 +58,6 @@ Route::get('/genres/search', [GenreController::class, 'search'])->name('genres.s
 Route::get('/genres/sort', [GenreController::class, 'sort'])->name('genres.sort');
 Route::resource('genres', GenreController::class);
 
-
 Route::get('/authors/search', [AuthorController::class, 'search'])->name('authors.search');
 Route::get('/authors/sort', [AuthorController::class, 'sort'])->name('authors.sort');
 Route::resource('authors', AuthorController::class);
@@ -65,3 +65,5 @@ Route::resource('authors', AuthorController::class);
 Route::get('/publishers/search', [PublisherController::class, 'search'])->name('publishers.search');
 Route::get('/publishers/sort', [PublisherController::class, 'sort'])->name('publishers.sort');
 Route::resource('publishers', PublisherController::class);
+
+Route::get('/downloads/{book}', [DownloadController::class, 'index'])->name('downloads.index');
