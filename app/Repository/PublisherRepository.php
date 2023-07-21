@@ -47,4 +47,16 @@ class PublisherRepository implements IPublisherRepository
   public function delete($publisher) {
     return $publisher->delete();
   }
+
+  public function deleteBook($publisher, $book) {
+
+    $result = false;
+
+    if($publisher->id == $book->publisher_id) {
+      $result = $book->update(['publisher_id' => null]);
+    }
+
+    return $result;
+
+  }
 }

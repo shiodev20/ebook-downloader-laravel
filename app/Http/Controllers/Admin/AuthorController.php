@@ -51,7 +51,9 @@ class AuthorController extends Controller
       ]));
 
     } catch (\Throwable $th) {
-      //throw $th;
+      return redirect()
+        ->back()
+        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
     }
 
   }

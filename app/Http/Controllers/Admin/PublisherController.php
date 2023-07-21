@@ -3,23 +3,26 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Book;
 use App\Models\Publisher;
+use App\Repository\BookRepository;
 use App\Repository\PublisherRepository;
 use Illuminate\Http\Request;
 
 class PublisherController extends Controller
 {
-    private $publisherRepository;
+  private $publisherRepository;
+  private $bookRepository;
   private $pagination = 15;
 
-  public function __construct(PublisherRepository $publisherRepository) {
+  public function __construct(PublisherRepository $publisherRepository, BookRepository $bookRepository) {
     $this->middleware(['auth', 'admin']);
     $this->publisherRepository = $publisherRepository;
+    $this->bookRepository = $bookRepository;
   }
 
   
-  public function index()
-  {
+  public function index() {
     try {
       $query = ['search' => '', 'sort' => ''];
 
@@ -34,9 +37,26 @@ class PublisherController extends Controller
     }
   }
 
+
+  public function show(Publisher $publisher) {
+    try {
+
+      $books = $this->bookRepository->find([['publisher_id', '=', $publisher->id]], $this->pagination);
+
+      return view('admin.publishers.show', compact([
+        'publisher',
+        'books',
+      ]));
+
+    } catch (\Throwable $th) {
+      return redirect()
+        ->back()
+        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+    }
+  }
   
-  public function store(Request $request)
-  {
+
+  public function store(Request $request) {
     $request->validate(
       ['publisher' => 'required|unique:App\Models\Publisher,name'],
       [
@@ -65,8 +85,7 @@ class PublisherController extends Controller
   }
 
 
-  public function update(Request $request, Publisher $publisher)
-  {
+  public function update(Request $request, Publisher $publisher) {
     $request->validate(
       ['publisher-' . $publisher->id => 'required|unique:App\Models\Publisher,name'],
       [
@@ -94,8 +113,7 @@ class PublisherController extends Controller
   }
 
   
-  public function destroy(Publisher $publisher)
-  {
+  public function destroy(Publisher $publisher) {
     try {
 
       $deletedPublisher = $this->publisherRepository->delete($publisher);
@@ -111,9 +129,20 @@ class PublisherController extends Controller
     }
   }
 
+  public function deleteBook(Publisher $publisher, Book $book) {
+    try {
 
-  public function search(Request $request)
-  {
+      $result = $this->publisherRepository->deleteBook($publisher, $book);
+
+      if($result) return redirect()->back()->with('successMessage', 'Xóa thành công sách ' . $book->id);
+      return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+
+    } catch (\Throwable $th) {
+      return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+    }
+  }
+
+  public function search(Request $request) {
     try {
       $query = ['search' => '', 'sort' => ''];
 
@@ -135,8 +164,7 @@ class PublisherController extends Controller
   }
 
 
-  public function sort(Request $request)
-  {
+  public function sort(Request $request) {
     try {
       $query = ['search' => '', 'sort' => ''];
 

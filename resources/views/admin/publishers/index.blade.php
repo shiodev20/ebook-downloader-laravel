@@ -130,7 +130,7 @@
 
                     <td class="font-weight-bold">
                       <div class="d-flex justify-content-start">
-                        <a class="mr-1" href="/">
+                        <a class="mr-1" href="{{ route('publishers.show', ['publisher' => $publisher->id]) }}">
                           <button class="btn btn-sm btn-info">
                             <i class='fa-solid fa-chart-simple' style="font-size: .8rem;"></i>
                           </button>

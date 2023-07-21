@@ -65,6 +65,7 @@ Route::resource('authors', AuthorController::class);
 
 Route::get('/publishers/search', [PublisherController::class, 'search'])->name('publishers.search');
 Route::get('/publishers/sort', [PublisherController::class, 'sort'])->name('publishers.sort');
+Route::delete('/publishers/{publisher}/books/{book}/delete', [PublisherController::class, 'deleteBook'])->name('publishers.deleteBook');
 Route::resource('publishers', PublisherController::class);
 
 Route::get('/downloads/{book}', [DownloadController::class, 'index'])->name('downloads.index');
