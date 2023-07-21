@@ -12,60 +12,75 @@
       <div class="card-body">
         <div class="card-title">Thể loại sách "{{ $genre->name }}"</div>
 
+        <div class="row">
+          <div class="col-sm-2">
+            <div class="form-group mb-1">
+              <label class="form-label font-weight-bold" for="title">Số lượng sách</label>
+              <input class="form-control form-control-sm font-weight-bold" value="{{ $books->count() }}" readonly>
+            </div>
 
-        {{-- genre Data --}}
-        {{-- <div class="table-responsive">
-          <table id="genreData" class="table table-hover table-striped table-bordered">
+          </div>
+        </div>
+
+        {{-- book Data --}}
+        <div class="table-responsive">
+          <table id="bookData" class="table table-hover table-bordered">
 
             <thead class="table-primary">
               <tr>
-                <th>STT</th>
-                <th>Thể loại</th>
-                <th>Sách</th>
+                <th>Mã</th>
+                <th>Bìa sách</th>
+                <th>Tiêu đề</th>
+                <th>File sách hiện có</th>
+                <th>Lượt tải</th>
+                <th>Đánh giá</th>
+                <th>Ngày cập nhật</th>
+                <th>Trang thái</th>
                 <th>Lựa chọn</th>
               </tr>
             </thead>
 
             <tbody>
 
-              @foreach ($genres as $genre)
+              @foreach ($books as $book)
                 <tr>
-                  <td class="font-weight-bold" style="width: 100px;">{{ $loop->index + 1 }}</td>
-                  <td class="font-weight-bold" style="min-width: 400px; width: 400px;">
-                    <form id="genreEditForm" action="{{ route('genres.update', ['genre' => $genre->id]) }}" method="POST">
-                      @csrf
-                      @method('PUT')
-
-                      <div class="input-group">
-                        <input type="text" class="form-control form-control-sm font-weight-bold" value="{{ $genre->name }}" name="{{ 'genre-'.$genre->id }}">
-                        <div class="input-group-append">
-                          <button class="btn btn-success btn-sm" type="submit"><i class='fa-solid fa-pen' style="font-size: .8rem;"></i></button>
-                        </div>
-                      </div>
-
-                      <div class="{{'input-error text-danger p-1 position-relative'.' genre-'.$genre->id.'-error' }}" style="font-size: .8rem;">
-                        @error('genre-'.$genre->id)
-                          <div class="position-absolute">{{ $message }}</div>
-                        @enderror
-                      </div>
-                    </form>
+                  <td class="font-weight-bold" style="width: 100px;">{{ $book->id }}</td>
+                  <td class="font-weight-bold text-center">
+                    <img src="{{ url('storage/' . $book->cover_url) }}" alt="{{ $book->title }}"
+                      style="border-radius: 0; height: 50px;">
                   </td>
-                  <td class="font-weight-bold">{{ $genre->books->count() }}</td>
+                  <td class="font-weight-bold">{{ $book->title }}</td>
+                  <td class="font-weight-bold">
+                    <div class="d-flex">
+                      @foreach ($book->bookFiles as $bookFile)
+                      <a href="{{ route('downloads.index', ['book' => $book->id]) .'?url=' . $bookFile->file_url }}" style="background-color: {{ $bookFile->fileType->color }}; font-size: 10px;"
+                          class="p-2 text-white">
+                          {{ $bookFile->fileType->name }}
+                        </a>
+                      @endforeach
+                    </div>
+                  </td>
+                  <td class="font-weight-bold">{{ $book->downloads }}</td>
+                  <td class="font-weight-bold">{{ $book->rating }}</td>
+                  <td class="font-weight-bold">{{ date_format(date_create($book->publish_date), 'd-m-Y') }}</td>
+                  <td class="font-weight-bold">{{ $book->status ? 'Đang cung cấp' : 'Ngừng cung cấp' }}</td>
 
                   <td class="font-weight-bold">
                     <div class="d-flex justify-content-start">
-                      <a class="mr-1" href="/">
-                        <button class="btn btn-sm btn-info">
+
+                      <a href="{{ route('books.edit', ['book' => $book->id]) }}">
+                        <button class="btn btn-sm btn-info mr-1">
                           <i class='fa-solid fa-chart-simple' style="font-size: .8rem;"></i>
                         </button>
                       </a>
 
+                      
                       <x-delete-confirm-button
-                        :url="route('genres.destroy', ['genre' => $genre->id]) "
-                        :message=" 'thể loại '.'<b><q>'.$genre->name.'</q></b>' "
-                      >
-                        <i class="fa-solid fa-trash" style="font-size: .8rem;"></i>
-                      </x-delete-confirm-button>
+                          :url="route('genres.deleteBook', ['genre' => $genre->id, 'book' => $book->id]) "
+                          :message=" 'sách '.'<b><q>'.$book->title.'</q></b> ' . 'Khỏi thể loại ' . '<b><q>'.$genre->name.'</q></b>' "
+                        >
+                          <i class="fa-solid fa-trash" style="font-size: .8rem;"></i>
+                        </x-delete-confirm-button>
                     </div>
                   </td>
 
@@ -75,13 +90,13 @@
             </tbody>
 
           </table>
-        </div> --}}
+        </div>
 
-        {{-- @if ($genres)
+        @if ($books)
           <div class="mt-4 d-flex justify-content-center justify-content-md-end">
-            {{ $genres->links() }}
+            {{ $books->links() }}
           </div>
-        @endif --}}
+        @endif
       </div>
 
     </div>

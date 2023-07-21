@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Book;
 use App\Models\Genre;
 use App\Repository\BookRepository;
 use App\Repository\GenreRepository;
@@ -43,15 +44,17 @@ class GenreController extends Controller
   public function show(Genre $genre) {
 
     try {
-
-      $books = $this->bookRepository->find(['']);
+      $books = $genre->books->paginate($this->pagination);
 
       return view('admin.genres.show', compact([
         'genre',
+        'books'
       ]));
 
     } catch (\Throwable $th) {
-      //throw $th;
+      return redirect()
+        ->back()
+        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
     }
 
   }
@@ -128,6 +131,17 @@ class GenreController extends Controller
     }
   }
 
+  public function deleteBook(Genre $genre, Book $book) {
+    try {
+
+      $result = $this->genreRepository->deleteBook($genre, $book);
+      if($result) return redirect()->back()->with('successMessage', 'Xóa thành công sách ' . $book->id);
+      return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+
+    } catch (\Throwable $th) {
+      return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+    }
+  }
 
   public function search(Request $request) {
     try {

@@ -56,6 +56,7 @@ Route::resource('books', BookController::class);
 
 Route::get('/genres/search', [GenreController::class, 'search'])->name('genres.search');
 Route::get('/genres/sort', [GenreController::class, 'sort'])->name('genres.sort');
+Route::delete('/genres/{genre}/books/{book}/delete', [GenreController::class, 'deleteBook'])->name('genres.deleteBook');
 Route::resource('genres', GenreController::class);
 
 Route::get('/authors/search', [AuthorController::class, 'search'])->name('authors.search');
