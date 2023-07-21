@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Models\Author;
+use App\Models\Book;
 use App\Repository\IRepository\IAuthorRepository;
 
 class AuthorRepository implements IAuthorRepository
@@ -46,5 +47,17 @@ class AuthorRepository implements IAuthorRepository
 
   public function delete($author) {
     return $author->delete();
+  }
+
+  public function deleteBook($author, $book) {
+
+    $result = false;
+
+    if($author->id == $book->author_id) {
+      $result = $book->update(['author_id' => null]);
+    }
+
+    return $result;
+
   }
 }

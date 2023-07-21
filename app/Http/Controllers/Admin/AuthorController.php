@@ -4,18 +4,22 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Author;
+use App\Models\Book;
 use App\Repository\AuthorRepository;
+use App\Repository\BookRepository;
 use Illuminate\Http\Request;
 
 class AuthorController extends Controller
 {
 
   private $authorRepository;
+  private $bookRepository;
   private $pagination = 15;
 
-  public function __construct(AuthorRepository $authorRepository) {
+  public function __construct(AuthorRepository $authorRepository, BookRepository $bookRepository) {
     $this->middleware(['auth', 'admin']);
     $this->authorRepository = $authorRepository;
+    $this->bookRepository = $bookRepository;
   }
 
   
@@ -34,7 +38,25 @@ class AuthorController extends Controller
     }
   }
 
+
+  public function show(Author $author) {
+
+    try {
+
+      $books = $this->bookRepository->find([['author_id', '=', $author->id]], $this->pagination);
+
+      return view('admin.authors.show', compact([
+        'author',
+        'books',
+      ]));
+
+    } catch (\Throwable $th) {
+      //throw $th;
+    }
+
+  }
   
+
   public function store(Request $request) {
     $request->validate(
       ['author' => 'required|unique:App\Models\Author,name'],
@@ -64,8 +86,7 @@ class AuthorController extends Controller
   }
 
 
-  public function update(Request $request, Author $author)
-  {
+  public function update(Request $request, Author $author) {
     $request->validate(
       ['author-' . $author->id => 'required|unique:App\Models\Author,name'],
       [
@@ -93,8 +114,7 @@ class AuthorController extends Controller
   }
 
   
-  public function destroy(Author $author)
-  {
+  public function destroy(Author $author) {
     try {
 
       $deletedAuthor = $this->authorRepository->delete($author);
@@ -111,8 +131,21 @@ class AuthorController extends Controller
   }
 
 
-  public function search(Request $request)
-  {
+  public function deleteBook(Author $author, Book $book) {
+    try {
+
+      $result = $this->authorRepository->deleteBook($author, $book);
+
+      if($result) return redirect()->back()->with('successMessage', 'Xóa thành công sách ' . $book->id);
+      return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+
+    } catch (\Throwable $th) {
+      return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+    }
+  }
+
+
+  public function search(Request $request) {
     try {
       $query = ['search' => '', 'sort' => ''];
 
@@ -134,8 +167,7 @@ class AuthorController extends Controller
   }
 
 
-  public function sort(Request $request)
-  {
+  public function sort(Request $request) {
     try {
       $query = ['search' => '', 'sort' => ''];
 

@@ -4,22 +4,24 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Genre;
+use App\Repository\BookRepository;
 use App\Repository\GenreRepository;
 use Illuminate\Http\Request;
 
 class GenreController extends Controller
 {
   private $genreRepository;
+  private $bookRepository;
   private $pagination = 15;
 
-  public function __construct(GenreRepository $genreRepository)
+  public function __construct(GenreRepository $genreRepository, BookRepository $bookRepository)
   {
     $this->middleware(['auth', 'admin']);
     $this->genreRepository = $genreRepository;
+    $this->bookRepository = $bookRepository;
   }
 
-  public function index(Request $request)
-  {
+  public function index(Request $request) {
     try {
       $query = ['search' => '', 'sort' => ''];
 
@@ -37,8 +39,24 @@ class GenreController extends Controller
     }
   }
 
-  public function store(Request $request)
-  {
+
+  public function show(Genre $genre) {
+
+    try {
+
+      $books = $this->bookRepository->find(['']);
+
+      return view('admin.genres.show', compact([
+        'genre',
+      ]));
+
+    } catch (\Throwable $th) {
+      //throw $th;
+    }
+
+  }
+
+  public function store(Request $request) {
     $request->validate(
       ['genre' => 'required|unique:App\Models\Genre,name'],
       [
@@ -65,8 +83,8 @@ class GenreController extends Controller
     }
   }
 
-  public function update(Request $request, Genre $genre)
-  {
+
+  public function update(Request $request, Genre $genre) {
     $request->validate(
       ['genre-' . $genre->id => 'required|unique:App\Models\Genre,name'],
       [
@@ -92,6 +110,7 @@ class GenreController extends Controller
         ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
     }
   }
+  
 
   public function destroy(Genre $genre) {
     try {
@@ -110,8 +129,7 @@ class GenreController extends Controller
   }
 
 
-  public function search(Request $request)
-  {
+  public function search(Request $request) {
     try {
       $query = ['search' => '', 'sort' => ''];
 
@@ -132,8 +150,8 @@ class GenreController extends Controller
     }
   }
 
-  public function sort(Request $request)
-  {
+
+  public function sort(Request $request) {
     try {
       $query = ['search' => '', 'sort' => ''];
 

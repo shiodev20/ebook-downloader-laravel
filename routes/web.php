@@ -60,6 +60,7 @@ Route::resource('genres', GenreController::class);
 
 Route::get('/authors/search', [AuthorController::class, 'search'])->name('authors.search');
 Route::get('/authors/sort', [AuthorController::class, 'sort'])->name('authors.sort');
+Route::delete('/authors/{author}/books/{book}/delete', [AuthorController::class, 'deleteBook'])->name('authors.deleteBook');
 Route::resource('authors', AuthorController::class);
 
 Route::get('/publishers/search', [PublisherController::class, 'search'])->name('publishers.search');
