@@ -49,7 +49,8 @@ Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboa
 
 Route::get('/books/search', [BookController::class, 'search'])->name('books.search');
 Route::get('/books/sort', [BookController::class, 'sort'])->name('books.sort');
-Route::get('/books/status', [BookController::class, 'status'])->name('books.status');
+Route::get('/books/sortStatus', [BookController::class, 'sortStatus'])->name('books.sortStatus');
+Route::put('/books/{book}/sortStatus', [BookController::class, 'updateStatus'])->name('books.updateStatus');
 Route::resource('books', BookController::class);
 
 Route::get('/genres/search', [GenreController::class, 'search'])->name('genres.search');

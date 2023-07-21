@@ -250,7 +250,7 @@ class BookRepository implements IBookRepository
     return $books;
   }
 
-  public function status($sortBy, $paginate = 0) {
+  public function sortStatus($sortBy, $paginate = 0) {
     
     $books = [];
 
@@ -264,6 +264,14 @@ class BookRepository implements IBookRepository
     }
 
     return $books;
+
+  }
+
+  public function updateStatus($book = null) {
+
+    $result = $book->update(['status' =>  !$book->status]);
+
+    return $result;
 
   }
 

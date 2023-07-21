@@ -165,7 +165,7 @@ class BookController extends Controller
     }
   }
 
-  public function status(Request $request) {
+  public function sortStatus(Request $request) {
     $query = [
       'search' => '',
       'sort' => [
@@ -175,12 +175,25 @@ class BookController extends Controller
     ];
 
     try {
-      $books = $this->bookRepository->status($request->sortBy, $this->pagination);
+      $books = $this->bookRepository->sortStatus($request->sortBy, $this->pagination);
       
       return view('admin.books.index', compact([
         'books',
         'query'
       ]));
+
+    } catch (\Throwable $th) {
+      return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+    }
+  }
+
+  public function updateStatus(Request $request, Book $book) {
+    try {
+      $result = $this->bookRepository->updateStatus($book);
+
+      
+      if($result) return redirect()->back()->with('successMessage', 'Cập nhật sách ' . $book->id . ' thành công');
+      else return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
 
     } catch (\Throwable $th) {
       return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');

@@ -165,16 +165,19 @@
                           </button>
                         </a>
 
-                        @if ($book->status)
-                          <x-delete-confirm-button :url="route('books.destroy', ['book' => $book->id])" :message="'thể loại ' . '<b><q>' . $book->name . '</q></b>'">
-                            <i class="fa-solid fa-trash" style="font-size: .8rem;"></i>
-                          </x-delete-confirm-button>
-                        @else
-                          <a href="" class="btn btn-success btn-sm">
-                            <i class="fa-solid fa-trash-arrow-up" style="font-size: .8rem;"></i>
-                          </a>
-                        @endif
+                        {{-- <a href="{{ route('books.updateSort', ['book' => $book->id]) }}" class="btn btn-sm {{ $book->status ? 'btn-danger' : 'btn-success' }}">
+                          <i class="fa-solid {{ $book->status ? 'fa-trash' : 'fa-trash-arrow-up' }}" style="font-size: .8rem;"></i>
+                        </a> --}}
+                        
+                        <form action="{{ route('books.updateStatus', ['book' => $book->id]) }}" method="POST">
+                          @csrf
+                          @method('PUT')
 
+                          <button class="btn btn-sm {{ $book->status ? 'btn-danger' : 'btn-success' }}" type="submit">
+                            <i class="fa-solid {{ $book->status ? 'fa-trash' : 'fa-trash-arrow-up' }}" style="font-size: .8rem;"></i>
+                          </button>
+                          
+                        </form>
                       </div>
                     </td>
 
@@ -208,7 +211,7 @@
   statusSortSelect.addEventListener('change', (e) => {
     const sortBy = e.target.value
 
-    if(sortBy) window.location.href = '{{ route('books.status') }}' + `?sortBy=${sortBy}`
+    if(sortBy) window.location.href = '{{ route('books.sortStatus') }}' + `?sortBy=${sortBy}`
   })
 </script>
 @endpush
