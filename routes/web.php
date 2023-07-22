@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GenreController;
 use App\Http\Controllers\Admin\AuthorController;
 use App\Http\Controllers\Admin\BookController;
+use App\Http\Controllers\Admin\CollectionController;
 use App\Http\Controllers\Admin\PublisherController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
@@ -68,5 +69,9 @@ Route::get('/publishers/search', [PublisherController::class, 'search'])->name('
 Route::get('/publishers/sort', [PublisherController::class, 'sort'])->name('publishers.sort');
 Route::delete('/publishers/{publisher}/books/{book}/delete', [PublisherController::class, 'deleteBook'])->name('publishers.deleteBook');
 Route::resource('publishers', PublisherController::class);
+
+
+Route::resource('collections', CollectionController::class);
+
 
 Route::get('/downloads/{book}', [DownloadController::class, 'index'])->name('downloads.index');

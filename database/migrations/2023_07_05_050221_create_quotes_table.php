@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('content');
             $table->string('author_name');
-            $table->string('book_name');
         });
     }
 

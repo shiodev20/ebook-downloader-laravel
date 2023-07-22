@@ -22,6 +22,8 @@
           </div>
         </div>
 
+        <hr>
+        
         {{-- book Data --}}
         <div class="table-responsive">
           <table id="bookData" class="table table-hover table-bordered">
