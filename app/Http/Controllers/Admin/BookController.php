@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BookRequest;
 use App\Repository\AuthorRepository;
 use App\Repository\BookRepository;
+use App\Repository\CollectionRepository;
 use App\Repository\FileTypeRepository;
 use App\Repository\GenreRepository;
 use App\Repository\PublisherRepository;
@@ -20,6 +21,7 @@ class BookController extends Controller
   private $authorRepository;
   private $genreRepository;
   private $fileTypeRepository;
+  private $collectionRepository;
 
   private $pagination = 15;
 
@@ -28,7 +30,8 @@ class BookController extends Controller
     PublisherRepository $publisherRepository, 
     AuthorRepository $authorRepository,
     GenreRepository $genreRepository,
-    FileTypeRepository $fileTypeRepository
+    FileTypeRepository $fileTypeRepository,
+    CollectionRepository $collectionRepository
   )
   {
     $this->middleware(['auth', 'admin']);
@@ -37,6 +40,7 @@ class BookController extends Controller
     $this->authorRepository = $authorRepository;
     $this->genreRepository = $genreRepository;
     $this->fileTypeRepository = $fileTypeRepository;
+    $this->collectionRepository = $collectionRepository;
   }
 
   public function index() {
@@ -59,12 +63,17 @@ class BookController extends Controller
     $publishers = $this->publisherRepository->getAll();
     $genres = $this->genreRepository->getAll();
     $fileTypes = $this->fileTypeRepository->getAll();
+    $collections = [];
+    $collections = $this->collectionRepository->getAll();
+
+    // dd($collections);
 
     return view('admin.books.create', compact([
       'publishers',
       'authors',
       'genres',
-      'fileTypes'
+      'fileTypes',
+      'collections'
     ]));
   }
 

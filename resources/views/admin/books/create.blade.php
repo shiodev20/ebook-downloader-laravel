@@ -92,6 +92,21 @@
                 </div>
               </div>
 
+              {{-- Publisher --}}
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="form-label font-weight-bold" for="collection">Tuyển tập</label>
+                  <select class="js-example-basic-single" style="width: 100%;" name="collection" id="collection">
+                    <option value="">Lựa chọn</option>
+                    @foreach ($collections as $collection)
+                      <option value="{{ $collection->id }}">{{ $collection->name }}</option>
+                    @endforeach
+                  </select>
+                  @error('publisher')
+                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                  @enderror
+                </div>
+              </div>
             </div>
 
             <hr>

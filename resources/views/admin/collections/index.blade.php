@@ -91,32 +91,18 @@
 
               <tbody>
 
-                {{-- @foreach ($genres as $genre)
+                @foreach ($collections as $collection)
                   <tr>
                     <td class="font-weight-bold" style="width: 100px;">{{ $loop->index + 1 }}</td>
-                    <td class="font-weight-bold" style="min-width: 400px; width: 400px;">
-                      <form id="genreEditForm" action="{{ route('genres.update', ['genre' => $genre->id]) }}" method="POST">
-                        @csrf
-                        @method('PUT')
-
-                        <div class="input-group">
-                          <input type="text" class="form-control form-control-sm font-weight-bold" value="{{ $genre->name }}" name="{{ 'genre-'.$genre->id }}">
-                          <div class="input-group-append">
-                            <button class="btn btn-success btn-sm" type="submit"><i class='fa-solid fa-pen' style="font-size: .8rem;"></i></button>
-                          </div>
-                        </div>
-
-                        <div class="{{'input-error text-danger p-1 position-relative'.' genre-'.$genre->id.'-error' }}" style="font-size: .8rem;">
-                          @error('genre-'.$genre->id)
-                            <div class="position-absolute">{{ $message }}</div>
-                          @enderror
-                        </div>
-                      </form>
+                    <td class="font-weight-bold text-center">
+                      <img src="{{ url('storage/' . $collection->cover_url) }}" alt="{{ $collection->name }}"
+                        style="border-radius: 0; height: 70px; width: 80%;">
                     </td>
-                    <td class="font-weight-bold">{{ $genre->books->count() }}</td>
+                    <td class="font-weight-bold">{{ $collection->name }}</td>
+                    <td class="font-weight-bold">{{ $collection->books->count() }}</td>
 
                     <td class="font-weight-bold">
-                      <div class="d-flex justify-content-start">
+                      {{-- <div class="d-flex justify-content-start">
                         <a class="mr-1" href="{{ route('genres.show', ['genre' => $genre->id]) }}">
                           <button class="btn btn-sm btn-info">
                             <i class='fa-solid fa-chart-simple' style="font-size: .8rem;"></i>
@@ -129,11 +115,11 @@
                         >
                           <i class="fa-solid fa-trash" style="font-size: .8rem;"></i>
                         </x-delete-confirm-button>
-                      </div>
+                      </div> --}}
                     </td>
 
                   </tr>
-                @endforeach --}}
+                @endforeach
 
               </tbody>
 
@@ -155,52 +141,62 @@
   <div class="modal fade" id="collectionAddModal" tabindex="-1" aria-labelledby="collectionAddLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
+        <form action="{{ route('collections.store') }}" enctype="multipart/form-data" method="POST">
+          @csrf
 
-        <div class="modal-header">
-          <h5 class="modal-title" id="collectionAddLabel">Tạo tuyển tập sách</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
+          <div class="modal-header">
+            <h5 class="modal-title" id="collectionAddLabel">Tạo tuyển tập sách</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
 
-        <div class="modal-body">
-          <form action="" enctype="multipart/form-data" method="POST">
+          <div class="modal-body">
+            {{-- Collection name --}}
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label class="form-label font-weight-bold" for="name">Tên tuyển tập</label>
+                <input 
+                  class="form-control form-control-sm font-weight-bold" id="name" name="name"
+                  style="{{ $errors->has('name') ? 'border: 1px solid #dc3545' : '' }}" type="text"
+                  value="{{ old('name') }}">
+                @error('name')
+                  <div class="invalid-feedback d-block">{{ $message }}</div>
+                @enderror
+              </div>
+            </div>
 
-          </form>
-        </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label class="form-label font-weight-bold" for="bookCover">Ảnh bìa <small><i>(png/jpeg)</i></small></label>
+                <div>
+                  <input type="file" name="cover" class="file-upload-default" onchange="preview_imageBook()" id="bookCoverInput">
+                  <div class="input-group col-xs-12 mb-1">
+                    <button class="file-upload-browse btn btn-primary btn-sm" type="button">Tải ảnh</button>
+                  </div>
+                  <img class="border" id="bookCoverRender" src="{{ old('cover') ? old('cover') : asset('images/book-cover-default.jpg') }}" width="100%" height="100px" />
+                </div>
 
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Đóng</button>
-          <button type="button" class="btn btn-primary btn-sm">Tạo</button>
-        </div>
+                @error('cover')
+                  <div class="invalid-feedback d-block">{{ $message }}</div>
+                @enderror
+              </div>
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Đóng</button>
+            <button type="submit" class="btn btn-primary btn-sm">Tạo</button>
+          </div>
+
+        </form>
+
       </div>
     </div>
   </div>
 @endsection
 
 @push('js')
-  {{-- Sort genre --}}
-  <script>
-    const genreSortSelect = document.querySelector('#genreSort')
-
-    genreSortSelect.addEventListener('change', (e) => {
-      const sortBy = e.target.value
-
-      if(sortBy) window.location.href = '{{ route('genres.sort') }}' + `?sortBy=${sortBy}`
-    })
-  </script>
-
-  <script>
-    const inputs = [
-      ...document.querySelectorAll('#genreSearchForm input'),
-      ...document.querySelectorAll('#genreAddForm input'),
-      ...document.querySelectorAll('#genreEditForm input'),
-    ]
-
-    inputs.forEach(input => {
-      input.addEventListener('input', () => {
-        document.querySelector(`.${input.name}-error`).innerHTML = ''
-      })
-    });
-  </script>
+  <script></script>
 @endpush
