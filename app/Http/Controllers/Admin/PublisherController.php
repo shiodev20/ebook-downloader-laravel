@@ -129,6 +129,7 @@ class PublisherController extends Controller
     }
   }
 
+
   public function deleteBook(Publisher $publisher, Book $book) {
     try {
 
@@ -142,6 +143,7 @@ class PublisherController extends Controller
     }
   }
 
+  
   public function search(Request $request) {
     try {
       $query = ['search' => '', 'sort' => ''];

@@ -12,11 +12,11 @@
         <div class="card-body">
           <div class="card-title">Quản lý tuyển tập sách</div>
 
-          {{-- genre Forms --}}
+          {{-- collection Forms --}}
           <div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
 
-            {{-- genre Search --}}
-            <form id="genreSearchForm" action="{{ route('genres.search') }}" method="GET">
+            {{-- collection Search --}}
+            <form id="genreSearchForm" action="{{ route('collections.search') }}" method="GET">
 
               <label for="#genreSearhInput">Tìm kiếm</label>
               <div class="input-group">
@@ -47,10 +47,10 @@
           <hr>
 
           {{-- genre Options --}}
-          {{-- <div class="mb-4 d-flex justify-content-between align-items-center">
-            <a href="{{ route('genres.index') }}" class="btn btn-primary btn-sm">Tất cả</a>
+          <div class="mb-4 d-flex justify-content-between align-items-center">
+            <a href="{{ route('collections.index') }}" class="btn btn-primary btn-sm">Tất cả</a>
 
-            <select class="custom-select custom-select-sm" style="width: 150px;" id="genreSort">
+            <select class="custom-select custom-select-sm" style="width: 150px;" id="collectionSort">
 
               @if ($query['sort'] == 'bookAscending')
 
@@ -73,7 +73,9 @@
               @endif
 
             </select>
-          </div> --}}
+          </div>
+
+          <hr>
 
           {{-- genre Data --}}
           <div class="table-responsive">
@@ -102,20 +104,20 @@
                     <td class="font-weight-bold">{{ $collection->books->count() }}</td>
 
                     <td class="font-weight-bold">
-                      {{-- <div class="d-flex justify-content-start">
-                        <a class="mr-1" href="{{ route('genres.show', ['genre' => $genre->id]) }}">
+                      <div class="d-flex justify-content-start">
+                        <a class="mr-1" href="{{ route('collections.show', ['collection' => $collection->id]) }}">
                           <button class="btn btn-sm btn-info">
                             <i class='fa-solid fa-chart-simple' style="font-size: .8rem;"></i>
                           </button>
                         </a>
 
                         <x-delete-confirm-button
-                          :url="route('genres.destroy', ['genre' => $genre->id]) "
-                          :message=" 'thể loại '.'<b><q>'.$genre->name.'</q></b>' "
+                          :url="route('collections.destroy', ['collection' => $collection->id]) "
+                          :message=" 'thể loại '.'<b><q>'.$collection->name.'</q></b>' "
                         >
                           <i class="fa-solid fa-trash" style="font-size: .8rem;"></i>
                         </x-delete-confirm-button>
-                      </div> --}}
+                      </div>
                     </td>
 
                   </tr>
@@ -126,11 +128,11 @@
             </table>
           </div>
 
-          {{-- @if ($genres)
+          @if ($collections)
             <div class="mt-4 d-flex justify-content-center justify-content-md-end">
-              {{ $genres->links() }}
+              {{ $collections->links() }}
             </div>
-          @endif --}}
+          @endif
         </div>
 
       </div>
@@ -198,5 +200,13 @@
 @endsection
 
 @push('js')
-  <script></script>
+<script>
+  const collectionSortSelect = document.querySelector('#collectionSort')
+
+  collectionSortSelect.addEventListener('change', (e) => {
+    const sortBy = e.target.value
+
+    if(sortBy) window.location.href = '{{ route('collections.sort') }}' + `?sortBy=${sortBy}`
+  })
+</script>
 @endpush

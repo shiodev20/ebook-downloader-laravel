@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Models\BookCollection;
 use App\Models\Collection;
 use App\Repository\IRepository\ICollectionRepository;
 use App\Utils\UppercaseFirstLetter;
@@ -81,19 +82,19 @@ class CollectionRepository implements ICollectionRepository
   }
 
   public function sort($sortBy, $paginate = 0) {
-    $authors = [];
+    $collections = [];
 
     switch ($sortBy) {
       case 'bookDescending':
-        $authors = Collection::all()->sortByDesc(fn ($author) => $author->books->count(), SORT_NUMERIC)->paginate($paginate);
+        $collections = Collection::all()->sortByDesc(fn ($collection) => $collection->books->count(), SORT_NUMERIC)->paginate($paginate);
         break;
 
       case 'bookAscending':
-        $authors = Collection::all()->sortBy(fn ($author) => $author->books->count(), SORT_NUMERIC)->paginate($paginate);
+        $collections = Collection::all()->sortBy(fn ($collection) => $collection->books->count(), SORT_NUMERIC)->paginate($paginate);
         break;
     }
 
-    return $authors;
+    return $collections;
   }
 
   public function delete($author) {
@@ -101,6 +102,15 @@ class CollectionRepository implements ICollectionRepository
   }
 
   public function deleteBook($collection, $book) {
+    $result = false;
 
+    $bookCollection = BookCollection::where([
+      ['collection_id', '=', $collection->id],
+      ['book_id', '=', $book->id]
+    ])->first();
+
+    $result = $bookCollection->delete();
+
+    return $result;
   }
 }

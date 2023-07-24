@@ -70,7 +70,9 @@ Route::get('/publishers/sort', [PublisherController::class, 'sort'])->name('publ
 Route::delete('/publishers/{publisher}/books/{book}/delete', [PublisherController::class, 'deleteBook'])->name('publishers.deleteBook');
 Route::resource('publishers', PublisherController::class);
 
-
+Route::get('/collections/search', [CollectionController::class, 'search'])->name('collections.search');
+Route::delete('/collections/{collection}/books/{book}/delete', [CollectionController::class, 'deleteBook'])->name('collections.deleteBook');
+Route::get('/collections/sort', [CollectionController::class, 'sort'])->name('collections.sort');
 Route::resource('collections', CollectionController::class);
 
 
