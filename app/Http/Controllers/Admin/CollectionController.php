@@ -8,6 +8,7 @@ use App\Models\Collection;
 use App\Repository\BookRepository;
 use App\Repository\CollectionRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CollectionController extends Controller
 {
@@ -34,16 +35,14 @@ class CollectionController extends Controller
       ]));
 
     } catch (\Throwable $th) {
-      return redirect()
-        ->back()
-        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+      return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
     }
 
   }
 
+
   public function show(Collection $collection) {
     try {
-
       $books = $collection->books->paginate($this->pagination);
 
       return view('admin.collections.show', compact([
@@ -65,6 +64,27 @@ class CollectionController extends Controller
     return redirect()->route('collections.index')->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
 
   }
+
+
+  public function update(Request $request, Collection $collection) {
+
+    $request->validate(
+      [
+        'name' => 'required',
+        'cover' => 'image'
+      ],
+      [
+        'name.required' => 'Vui lòng nhập tên tuyển tập',
+        'cover.image' => 'Vui lòng chọn file có định dạng png/jpg'
+      ]
+    );
+
+    $updatedCollection = $this->collectionRepository->update($collection, $request->except(['_token, _method']));
+
+    if($updatedCollection) return redirect()->back()->with('successMessage', 'Cập nhật thành công');
+    return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+  }
+
 
   public function search(Request $request) {
 
@@ -88,6 +108,7 @@ class CollectionController extends Controller
 
   }
 
+
   public function sort(Request $request) {
     try {
       $query = ['search' => '', 'sort' => ''];
@@ -106,6 +127,7 @@ class CollectionController extends Controller
     }
   }
 
+
   public function deleteBook(Collection $collection, Book $book) {
     try {
       $result = $this->collectionRepository->deleteBook($collection, $book);
@@ -116,5 +138,7 @@ class CollectionController extends Controller
       return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
     }
   }
+
+
   public function destroy() {}
 }

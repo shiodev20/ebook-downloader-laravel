@@ -51,6 +51,7 @@ class CollectionRepository implements ICollectionRepository
       $collection = new Collection;
 
       $collection->name = UppercaseFirstLetter::make($attributes['name']);
+      $collection->slug = Str::slug($collection->name);
       $collection->cover_url = 'collections/' . Str::slug($collection->name) . '-' . time() . '.' . $attributes['cover']->extension();
 
       Storage::disk('public')->put($collection->cover_url, file_get_contents($attributes['cover']));
@@ -73,8 +74,43 @@ class CollectionRepository implements ICollectionRepository
     }
   }
 
-  public function update($author = null, $attributes = []) {
-    return $author->update($attributes);
+  public function update($collection = null, $attributes = []) {
+
+    $storedCoverUrl = '';
+    $deletedCoverUrl = '';
+
+    try {
+
+      if($collection->slug != Str::slug($attributes['name'])) {
+        $collection->name = UppercaseFirstLetter::make($attributes['name']);
+        $collection->slug = Str::slug($collection->name);
+      }
+
+      if(isset($attributes['cover'])) {
+        $currentCoverUrl = $collection->cover_url;
+
+        $collection->cover_url = 'collections/' . $collection->slug . '-' . time() . '.' . $attributes['cover']->extension();
+
+        Storage::disk('public')->put($collection->cover_url, file_get_contents($attributes['cover']));
+        $storedCoverUrl = $collection->cover_url;
+
+        Storage::put('deletedFiles/'.basename($currentCoverUrl), Storage::disk('public')->get($currentCoverUrl));
+        $deletedCoverUrl = 'deletedFiles/'. basename($currentCoverUrl);
+      }
+      $collection->save();
+
+      return $collection;
+
+    } catch (\Throwable $th) {
+      
+      if($storedCoverUrl && $deletedCoverUrl) {
+        Storage::disk('public')->put('collections/'.basename($deletedCoverUrl), Storage::get($deletedCoverUrl));
+        Storage::delete($deletedCoverUrl);
+        Storage::disk('public')->delete($storedCoverUrl);
+      }
+
+      return false;
+    }
   }
 
   public function find($expressions = [], $paginate = 0) {

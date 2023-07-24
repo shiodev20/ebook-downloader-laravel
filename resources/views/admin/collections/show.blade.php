@@ -12,17 +12,58 @@
       <div class="card-body">
         <div class="card-title">Tuyển tập "{{ $collection->name }}"</div>
 
+        <form action="{{ route('collections.update', ['collection' => $collection->id]) }}" method="POST" enctype="multipart/form-data">
+          @csrf
+          @method('PUT')
+
+          <div class="row">
+
+            <div class="col-sm-12 mb-3">
+              <div class="form-group mb-1">
+                <label class="form-label font-weight-bold" for="name">Tên tuyển tập</label>
+                <input class="form-control form-control-sm font-weight-bold" name="name" value="{{ $collection->name }}">
+              </div>
+              @error('name')
+                <div class="invalid-feedback d-block">{{ $message }}</div>
+              @enderror
+            </div>
+  
+            <div class="col-sm-12 mb-3">
+              <div class="form-group mb-0">
+                <label class="form-label font-weight-bold" for="bookCover">Ảnh bìa <small><i>(png/jpeg)</i></small></label>
+                <div>
+                  <input type="file" name="cover" class="file-upload-default" onchange="preview_imageBook()" id="bookCoverInput" value="{{ url('/storage/' . $collection->cover_url) }}">
+                  <div class="input-group col-xs-12 mb-1">
+                    <button class="file-upload-browse btn btn-primary btn-sm" type="button">Tải ảnh</button>
+                  </div>
+                  <img 
+                    id="bookCoverRender" 
+                    class="rounded border" 
+                    src="{{ url('/storage/' . $collection->cover_url) }}"
+                    width="500px"
+                    height="150px" />
+                </div>
+  
+                @error('cover')
+                  <div class="invalid-feedback d-block">{{ $message }}</div>
+                @enderror
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-success btn-block">Cập nhật</button>
+            
+          </div>
+        </form>
+
+        <hr>
         <div class="row">
-          <div class="col-sm-2">
+          <div class="col-sm-2 mb-3">
             <div class="form-group mb-1">
               <label class="form-label font-weight-bold" for="title">Số lượng sách</label>
               <input class="form-control form-control-sm font-weight-bold" value="{{ $books->count() }}" readonly>
             </div>
-
           </div>
         </div>
-
-        <hr>
         
         {{-- book Data --}}
         <div class="table-responsive">

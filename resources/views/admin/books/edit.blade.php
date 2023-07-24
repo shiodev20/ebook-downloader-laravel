@@ -125,7 +125,7 @@
                 <div class="form-group mb-0">
                   <label class="form-label font-weight-bold" for="bookCover">Ảnh bìa sách <small><i>(png/jpeg)</i></small></label>
                   <div>
-                    <input type="file" name="cover" class="file-upload-default" onchange="preview_imageBook()" id="bookCoverInput" value="{{ url('/storage/' . $book->cover_url)}} ">
+                    <input type="file" name="cover" class="file-upload-default" onchange="preview_imageBook()" id="bookCoverInput" value="{{ url('/storage/' . $book->cover_url)}}">
                     <div class="input-group col-xs-12 mb-1">
                       <button class="file-upload-browse btn btn-primary btn-sm" type="button">Tải ảnh</button>
                     </div>
