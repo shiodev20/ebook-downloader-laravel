@@ -13,6 +13,7 @@ use App\Repository\BookFileRepository;
 use App\Repository\BookGenreRepository;
 use App\Repository\BookRepository;
 use App\Repository\FileTypeRepository;
+use App\Repository\QuoteRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -29,6 +30,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(IRepository::class, FileTypeRepository::class);
         $this->app->bind(IRepository::class, BookFileRepository::class);
         $this->app->bind(IRepository::class, BookGenreRepository::class);
+        $this->app->bind(IRepository::class, QuoteRepository::class);
     }
 
     /**

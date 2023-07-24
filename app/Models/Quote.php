@@ -15,7 +15,6 @@ class Quote extends Model
     protected $fillable = [
         'id',
         'content',
-        'author_name',
-        'book_name'
+        'author',
     ];
 }

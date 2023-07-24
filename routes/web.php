@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AuthorController;
 use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\CollectionController;
 use App\Http\Controllers\Admin\PublisherController;
+use App\Http\Controllers\Admin\QuoteController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 
@@ -75,5 +76,7 @@ Route::delete('/collections/{collection}/books/{book}/delete', [CollectionContro
 Route::get('/collections/sort', [CollectionController::class, 'sort'])->name('collections.sort');
 Route::resource('collections', CollectionController::class);
 
+Route::get('/quotes/search', [QuoteController::class, 'search'])->name('quotes.search');
+Route::resource('quotes', QuoteController::class);
 
 Route::get('/downloads/{book}', [DownloadController::class, 'index'])->name('downloads.index');

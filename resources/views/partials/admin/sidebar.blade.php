@@ -60,9 +60,9 @@
 
     {{-- Quote --}}
     <li class="nav-item">
-      <a class="nav-link" href="">
+      <a class="nav-link" href="{{ route('quotes.index') }}">
         <i class="menu-icon fa-solid fa-quote-left"></i>
-        <span class="menu-title">Câu nói hay</span>
+        <span class="menu-title">Trích dẫn</span>
       </a>
     </li>
 
