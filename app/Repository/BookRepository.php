@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Models\Book;
+use App\Models\BookCollection;
 use App\Models\BookFile;
 use App\Models\BookGenre;
 use App\Models\FileType;
@@ -62,7 +63,6 @@ class BookRepository implements IBookRepository
 
       // Add Book Cover
       $book->cover_url = 'bookCovers/' . $book->slug . '-' . time() . '.' . $attributes['cover']->extension();
-      
       Storage::disk('public')->put($book->cover_url, file_get_contents($attributes['cover']));
       array_push($fileStored, $book->cover_url);
 
@@ -74,7 +74,14 @@ class BookRepository implements IBookRepository
           BookGenre::create(['book_id' => $book->id, 'genre_id' => $genre]);
         }
       }
-  
+
+      // Add book genre
+      if (isset($attributes['collections'])) {
+        foreach ($attributes['collections'] as $collection) {
+          BookCollection::create(['book_id' => $book->id, 'collection_id' => $collection]);
+        }
+      }
+      
       // Add Book Files
       $fileTypes = FileType::all();
       foreach ($fileTypes as $fileType) {
@@ -191,6 +198,13 @@ class BookRepository implements IBookRepository
       if(isset($attributes['genres'])) {
         foreach ($attributes['genres'] as $genre) {
           BookGenre::create(['book_id' => $book->id, 'genre_id' => $genre]);
+        }
+      }
+
+      BookCollection::where('book_id', '=', $book->id)->delete();
+      if(isset($attributes['collections'])) {
+        foreach ($attributes['collections'] as $collection) {
+          BookCollection::create(['book_id' => $book->id, 'collection_id' => $collection]);
         }
       }
 

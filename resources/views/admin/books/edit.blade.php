@@ -9,7 +9,7 @@
     <div class="col-12 grid-margin">
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title">Sách {{ $book->id }}</h4>
+          <h4 class="card-title">Sách {{ $book->id }} | {{ date_format(date_create($book->publish_date), 'd-m-Y') }}</h4>
 
           <form id="bookAddForm" action="{{ route('books.update', ['book' => $book->id]) }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -43,18 +43,6 @@
                 </div>
               </div>
 
-              {{-- Publish date --}}
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="form-label font-weight-bold" for="publishDate">Ngày cập nhật</label>
-                  <input readonly type="text" class="form-control form-control-sm font-weight-bold" id="publishDate"
-                    name="publishDate" style="{{ $errors->has('publishDate') ? 'border: 1px solid #dc3545' : '' }}"
-                    value="{{ date_format(date_create($book->publish_date), 'd-m-Y') }}">
-                  @error('publishDate')
-                    <div class="invalid-feedback d-block">{{ $message }}</div>
-                  @enderror
-                </div>
-              </div>
 
               {{-- Author --}}
               <div class="col-md-4">
@@ -68,23 +56,6 @@
                     @endforeach
                   </select>
                   @error('author')
-                    <div class="invalid-feedback d-block">{{ $message }}</div>
-                  @enderror
-                </div>
-              </div>
-
-              {{-- Genre --}}
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="form-label font-weight-bold" for="genres">Thể loại</label>
-                  <select class="js-example-basic-multiple" multiple="multiple" style="width: 100%;" name="genres[]"
-                    id="genres">
-                    @foreach ($genres as $genre)
-                      <option value="{{ $genre->id }}" {{ $book->genres->contains($genre->id) ? 'selected' : '' }}>
-                        {{ $genre->name }}</option>
-                    @endforeach
-                  </select>
-                  @error('genres')
                     <div class="invalid-feedback d-block">{{ $message }}</div>
                   @enderror
                 </div>
@@ -107,6 +78,41 @@
                 </div>
               </div>
 
+
+              {{-- Genre --}}
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="form-label font-weight-bold" for="genres">Thể loại</label>
+                  <select class="js-example-basic-multiple" multiple="multiple" style="width: 100%;" name="genres[]"
+                    id="genres">
+                    @foreach ($genres as $genre)
+                      <option value="{{ $genre->id }}" {{ $book->genres->contains($genre->id) ? 'selected' : '' }}>
+                        {{ $genre->name }}</option>
+                    @endforeach
+                  </select>
+                  @error('genres')
+                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                  @enderror
+                </div>
+              </div>
+
+              
+              {{-- Collection --}}
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="form-label font-weight-bold" for="collections">Tuyển tập</label>
+                  <select class="js-example-basic-multiple" multiple="multiple" style="width: 100%;" name="collections[]"
+                    id="collections">
+                    @foreach ($collections as $collection)
+                      <option value="{{ $collection->id }}" {{ $book->collections->contains($collection->id) ? 'selected' : '' }}>
+                        {{ $collection->name }}</option>
+                    @endforeach
+                  </select>
+                  @error('collections')
+                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                  @enderror
+                </div>
+              </div>
 
             </div>
 
@@ -172,8 +178,6 @@
             </div>
 
             <hr>
-
-           
 
             {{-- Description --}}
             <div class="row">

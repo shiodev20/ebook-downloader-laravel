@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamp('publish_date')->useCurrent();
             $table->integer('downloads')->default(0);
             $table->decimal('rating', 2, 1)->default(0);
-            $table->string('cover_url');
+            $table->string('cover_url')->nullable();
             $table->boolean('status')->default(1);
             $table->unsignedBigInteger('publisher_id')->nullable();
             $table->unsignedBigInteger('author_id')->nullable();

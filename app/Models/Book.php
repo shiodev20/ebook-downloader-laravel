@@ -54,7 +54,7 @@ class Book extends Model
     }
 
     public function collections(): BelongsToMany {
-        return $this->belongsToMany(Collection::class, 'collections');
+        return $this->belongsToMany(Collection::class, 'book_collections');
     }
    
 }

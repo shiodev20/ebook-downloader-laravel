@@ -63,7 +63,6 @@ class BookController extends Controller
     $publishers = $this->publisherRepository->getAll();
     $genres = $this->genreRepository->getAll();
     $fileTypes = $this->fileTypeRepository->getAll();
-    $collections = [];
     $collections = $this->collectionRepository->getAll();
 
     // dd($collections);
@@ -78,7 +77,6 @@ class BookController extends Controller
   }
 
   public function store(BookRequest $request) {
-
     $createdBook = $this->bookRepository->add($request->except('_token'));
 
 
@@ -93,6 +91,7 @@ class BookController extends Controller
     $publishers = $this->publisherRepository->getAll();
     $genres = $this->genreRepository->getAll();
     $fileTypes = $this->fileTypeRepository->getAll();
+    $collections = $this->collectionRepository->getAll();
 
     $book->cover_content = Storage::disk('public')->get($book->cover_url);
 
@@ -111,7 +110,8 @@ class BookController extends Controller
       'publishers',
       'authors',
       'genres',
-      'fileTypes'
+      'fileTypes',
+      'collections'
     ]));
 
   }
