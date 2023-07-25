@@ -113,7 +113,7 @@
 
                         <x-delete-confirm-button
                           :url="route('collections.destroy', ['collection' => $collection->id]) "
-                          :message=" 'thể loại '.'<b><q>'.$collection->name.'</q></b>' "
+                          :message=" 'tuyển tập '.'<b><q>'.$collection->name.'</q></b>' "
                         >
                           <i class="fa-solid fa-trash" style="font-size: .8rem;"></i>
                         </x-delete-confirm-button>

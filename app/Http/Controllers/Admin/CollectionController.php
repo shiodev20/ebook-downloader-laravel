@@ -139,5 +139,10 @@ class CollectionController extends Controller
   }
 
 
-  public function destroy() {}
+  public function destroy(Collection $collection) {
+    $result = $this->collectionRepository->delete($collection);
+
+    if($result) return redirect()->back()->with('successMessage', 'Xóa tuyển tập thành công');
+    return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+  }
 }

@@ -133,8 +133,36 @@ class CollectionRepository implements ICollectionRepository
     return $collections;
   }
 
-  public function delete($author) {
-    return $author->delete();
+  public function delete($collection) {
+
+    $deletedCoverUrl = '';
+
+    DB::beginTransaction();
+
+    try {
+
+      BookCollection::where('collection_id', '=', $collection->id)->delete();
+
+      Storage::put('deleteFiles/'.basename($collection->cover_url), Storage::disk('public')->get($collection->cover_url));
+      $deletedCoverUrl = 'deleteFiles/'.basename($collection->cover_url);
+
+      Storage::disk('public')->delete($collection->cover_url);
+
+      $collection->delete();
+
+      DB::commit();
+
+      return true;
+    } catch (\Throwable $th) {
+      DB::rollBack();
+
+      if($deletedCoverUrl) {
+        Storage::disk('public')->put('collections/'.$deletedCoverUrl, Storage::get($deletedCoverUrl));
+        Storage::delete($deletedCoverUrl);
+      }
+
+      return false;
+    }
   }
 
   public function deleteBook($collection, $book) {
