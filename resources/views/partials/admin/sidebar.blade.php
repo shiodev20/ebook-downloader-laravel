@@ -11,7 +11,7 @@
     @can('is-masterAdmin')
       {{-- Account --}}
       <li class="nav-item">
-        <a class="nav-link" href="/">
+        <a class="nav-link" href="{{ route('admin.developing') }}">
           <i class="menu-icon fa-solid fa-circle-user"></i>
           <span class="menu-title">Tài khoản</span>
         </a>
@@ -68,12 +68,19 @@
 
     {{-- Banner --}}
     <li class="nav-item">
-      <a class="nav-link" href="{{ route('banners.index') }}">
+      <a class="nav-link" href="{{ route('admin.developing') }}">
         <i class="menu-icon fa-solid fa-images"></i>
         <span class="menu-title">Banner</span>
       </a>
     </li>
 
+    {{-- File --}}
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('admin.developing') }}">
+        <i class="menu-icon fa-solid fa-file"></i>
+        <span class="menu-title">Loại file</span>
+      </a>
+    </li>
   </ul>
   
 </nav>

@@ -13,9 +13,8 @@ use App\Http\Controllers\Auth\LogoutController;
 
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\DownloadController;
-use App\Utils\UppercaseFirstLetter;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,3 +86,7 @@ Route::resource('banners', BannerController::class);
 
 
 Route::get('/downloads/{book}', [DownloadController::class, 'index'])->name('downloads.index');
+
+Route::get('/developing', function() {
+  return view('admin.developing');
+})->middleware(['auth', 'admin'])->name('admin.developing');
