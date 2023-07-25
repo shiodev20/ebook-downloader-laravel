@@ -12,14 +12,11 @@ use Illuminate\Http\Request;
 class GenreController extends Controller
 {
   private $genreRepository;
-  private $bookRepository;
   private $pagination = 15;
 
-  public function __construct(GenreRepository $genreRepository, BookRepository $bookRepository)
-  {
+  public function __construct(GenreRepository $genreRepository) {
     $this->middleware(['auth', 'admin']);
     $this->genreRepository = $genreRepository;
-    $this->bookRepository = $bookRepository;
   }
 
   public function index(Request $request) {
@@ -39,7 +36,6 @@ class GenreController extends Controller
         ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
     }
   }
-
 
   public function show(Genre $genre) {
 
@@ -86,7 +82,6 @@ class GenreController extends Controller
     }
   }
 
-
   public function update(Request $request, Genre $genre) {
     $request->validate(
       ['genre-' . $genre->id => 'required|unique:App\Models\Genre,name'],
@@ -114,21 +109,13 @@ class GenreController extends Controller
     }
   }
   
-
   public function destroy(Genre $genre) {
-    try {
 
-      $deletedGenre = $this->genreRepository->delete($genre);
+    $result = $this->genreRepository->delete($genre);
 
-      return redirect()
-        ->back()
-        ->with('successMessage', 'Xóa thể loại thành công');
-
-    } catch (\Throwable $th) {
-      return redirect()
-        ->back()
-        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
-    }
+    if($result) return redirect()->back()->with('successMessage', 'Xóa thể loại thành công');
+    return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+    
   }
 
   public function deleteBook(Genre $genre, Book $book) {

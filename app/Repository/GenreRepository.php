@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Models\BookGenre;
 use App\Models\Genre;
 use App\Repository\IRepository\IGenreRepository;
+use Illuminate\Support\Facades\DB;
 
 class GenreRepository implements IGenreRepository
 {
@@ -30,7 +31,22 @@ class GenreRepository implements IGenreRepository
 
 
   public function delete($genre) {
-    return $genre->delete();
+
+    DB::beginTransaction();
+    try {
+
+      BookGenre::where('genre_id', '=', $genre->id)->delete();
+      $genre->delete();
+
+      DB::commit();
+      
+      return true;
+
+    } catch (\Throwable $th) {
+      DB::rollBack();
+
+      return false;
+    }
   }
 
 
