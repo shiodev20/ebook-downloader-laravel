@@ -88,7 +88,7 @@
 
                         <x-delete-confirm-button
                           :url="route('quotes.destroy', ['quote' => $quote->id]) "
-                          :message=" 'thể loại '.'<b><q>'.$quote->name.'</q></b>' "
+                          :message=" 'trích dẫn '.'<b><q>'.$quote->content.'</q></b>' "
                         >
                           <i class="fa-solid fa-trash" style="font-size: .8rem;"></i>
                         </x-delete-confirm-button>

@@ -29,7 +29,13 @@ class QuoteRepository implements IRepository
 
 
   public function delete($quote) {
-    return $quote->delete();
+    try {
+      $quote->delete();
+      return true;
+
+    } catch (\Throwable $th) {
+      return false;
+    }
   }
 
 

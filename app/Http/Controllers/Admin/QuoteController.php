@@ -77,8 +77,11 @@ class QuoteController extends Controller
 
   }
 
-  public function destroy() {
+  public function destroy(Quote $quote) {
+    $result = $this->quoteRepository->delete($quote);
 
+    if($result) return redirect()->back()->with('successMessage', 'Xóa trích dẫn thành công');
+    return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
   }
 
   public function search(Request $request) {
