@@ -9,6 +9,7 @@ use App\Repository\IRepository\IBookRepository;
 use App\Repository\GenreRepository;
 use App\Repository\PublisherRepository;
 use App\Repository\AuthorRepository;
+use App\Repository\BannerRepository;
 use App\Repository\BookFileRepository;
 use App\Repository\BookGenreRepository;
 use App\Repository\BookRepository;
@@ -31,6 +32,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(IRepository::class, BookFileRepository::class);
         $this->app->bind(IRepository::class, BookGenreRepository::class);
         $this->app->bind(IRepository::class, QuoteRepository::class);
+        $this->app->bind(IRepository::class, BannerRepository::class);
     }
 
     /**

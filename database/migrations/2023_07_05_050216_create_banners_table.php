@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('cover_url');
+            $table->boolean('status')->default(0);
         });
     }
 

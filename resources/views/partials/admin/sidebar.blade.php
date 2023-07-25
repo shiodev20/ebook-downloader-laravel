@@ -68,7 +68,7 @@
 
     {{-- Banner --}}
     <li class="nav-item">
-      <a class="nav-link" href="">
+      <a class="nav-link" href="{{ route('banners.index') }}">
         <i class="menu-icon fa-solid fa-images"></i>
         <span class="menu-title">Banner</span>
       </a>

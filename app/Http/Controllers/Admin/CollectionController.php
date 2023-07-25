@@ -8,7 +8,6 @@ use App\Models\Collection;
 use App\Repository\BookRepository;
 use App\Repository\CollectionRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class CollectionController extends Controller
 {

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GenreController;
 use App\Http\Controllers\Admin\AuthorController;
+use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\CollectionController;
 use App\Http\Controllers\Admin\PublisherController;
@@ -78,5 +79,11 @@ Route::resource('collections', CollectionController::class);
 
 Route::get('/quotes/search', [QuoteController::class, 'search'])->name('quotes.search');
 Route::resource('quotes', QuoteController::class);
+
+
+Route::get('/banners/search', [BannerController::class, 'search'])->name('banners.search');
+Route::get('/banners/sort', [BannerController::class, 'sort'])->name('banners.sort');
+Route::resource('banners', BannerController::class);
+
 
 Route::get('/downloads/{book}', [DownloadController::class, 'index'])->name('downloads.index');
