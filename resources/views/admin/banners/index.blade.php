@@ -70,6 +70,7 @@
                   <th>STT</th>
                   <th>Hình ảnh</th>
                   <th>Tiêu đề</th>
+                  <th>Trạng thái</th>
                   <th>Lựa chọn</th>
                 </tr>
               </thead>
@@ -84,6 +85,7 @@
                         style="border-radius: 0; height: 70px; width: 300px;">
                     </td>
                     <td class="font-weight-bold">{{ $banner->name }}</td>
+                    <td class="font-weight-bold">{{ $banner->status ? 'Đang cung cấp' : 'Ngừng cung cấp' }}</td>
 
                     <td class="font-weight-bold">
                       <div class="d-flex justify-content-start">

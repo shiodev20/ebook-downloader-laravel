@@ -196,7 +196,7 @@ class BookController extends Controller
     }
   }
 
-  public function updateStatus(Request $request, Book $book) {
+  public function updateStatus(Book $book) {
     try {
       $result = $this->bookRepository->updateStatus($book);
 
