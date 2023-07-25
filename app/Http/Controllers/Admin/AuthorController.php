@@ -117,19 +117,12 @@ class AuthorController extends Controller
 
   
   public function destroy(Author $author) {
-    try {
 
-      $deletedAuthor = $this->authorRepository->delete($author);
+    $result = $this->authorRepository->delete($author);
 
-      return redirect()
-        ->back()
-        ->with('successMessage', 'Xóa tác giả thành công');
+    if($result) return redirect()->back()->with('successMessage', 'Xóa tác giả thành công');
+    return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
 
-    } catch (\Throwable $th) {
-      return redirect()
-        ->back()
-        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
-    }
   }
 
 

@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Models\Author;
 use App\Models\Book;
 use App\Repository\IRepository\IAuthorRepository;
+use Illuminate\Support\Facades\DB;
 
 class AuthorRepository implements IAuthorRepository
 {
@@ -46,7 +47,23 @@ class AuthorRepository implements IAuthorRepository
   }
 
   public function delete($author) {
-    return $author->delete();
+
+    DB::beginTransaction();
+    try {
+
+      Book::where('author_id', '=', $author->id)->update([ 'author_id' => null ]);
+      $author->delete();
+
+      DB::commit();
+      
+      return true;
+
+    } catch (\Throwable $th) {
+      DB::rollBack();
+
+      return false;
+    }
+
   }
 
   public function deleteBook($author, $book) {
