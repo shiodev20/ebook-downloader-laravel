@@ -114,19 +114,10 @@ class PublisherController extends Controller
 
   
   public function destroy(Publisher $publisher) {
-    try {
+    $result = $this->publisherRepository->delete($publisher);
 
-      $deletedPublisher = $this->publisherRepository->delete($publisher);
-
-      return redirect()
-        ->back()
-        ->with('successMessage', 'Xóa nhà xuất bản thành công');
-
-    } catch (\Throwable $th) {
-      return redirect()
-        ->back()
-        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
-    }
+    if($result) return redirect()->back()->with('successMessage', 'Xóa nhà xuất bản thành công');
+    return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
   }
 
 

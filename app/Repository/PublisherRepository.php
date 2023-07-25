@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Models\Book;
 use App\Models\Publisher;
 use App\Repository\IRepository\IPublisherRepository;
+use Illuminate\Support\Facades\DB;
 
 class PublisherRepository implements IPublisherRepository
 {
@@ -45,7 +47,22 @@ class PublisherRepository implements IPublisherRepository
   }
 
   public function delete($publisher) {
-    return $publisher->delete();
+
+    DB::beginTransaction();
+
+    try {
+      Book::where('publisher_id', '=', $publisher->id)->update([ 'publisher_id' => null ]);
+      $publisher->delete();
+      
+      DB::commit();
+
+      return true;
+
+    } catch (\Throwable $th) {
+      DB::rollBack();
+
+      return false;
+    }
   }
 
   public function deleteBook($publisher, $book) {
