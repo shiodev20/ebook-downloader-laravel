@@ -165,9 +165,6 @@
                           </button>
                         </a>
 
-                        {{-- <a href="{{ route('books.updateSort', ['book' => $book->id]) }}" class="btn btn-sm {{ $book->status ? 'btn-danger' : 'btn-success' }}">
-                          <i class="fa-solid {{ $book->status ? 'fa-trash' : 'fa-trash-arrow-up' }}" style="font-size: .8rem;"></i>
-                        </a> --}}
                         
                         <form action="{{ route('books.updateStatus', ['book' => $book->id]) }}" method="POST">
                           @csrf

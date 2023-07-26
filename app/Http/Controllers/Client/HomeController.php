@@ -66,7 +66,7 @@ class HomeController extends Controller
       $books = $books->map(function($book, $key) {
         $temp = $book;
 
-        $temp->author_name = $book->author->name;
+        $temp->author_name = $book->author ? $book->author->name : '';
         $temp->files = $book->files;
 
         return $temp;

@@ -65,7 +65,7 @@
 
                       <div class="book-card_info">
                         <div class="book-card_info_title">{{ $book->title }}</div>
-                        <div class="book-card_info_meta">{{ $book->author->name }}</div>
+                        <div class="book-card_info_meta">{{ $book->author ? $book->author->name : '' }}</div>
                       </div>
 
                     </a>
@@ -128,7 +128,7 @@
 
                       <div class="most-download-book_card_info ms-4 flex-grow-1">
                         <div class="most-download-book_card_title">{{ $book->title }}</div>
-                        <div class="most-download-book_card_meta">{{ $book->author->name }}</div>
+                        <div class="most-download-book_card_meta">{{ $book->author ? $book->author->name : '' }}</div>
 
                         <div class="most-download-book_card_meta most-download-book_card_review">
                           <span>{{ $book->rating == 0 ? 0 : number_format($book->rating, 1, '.', ',') }} <i class='bx bxs-heart'></i></span>
@@ -228,7 +228,10 @@
 
                       <div class="book-card_info">
                         <div class="book-card_info_title">{{ $book->title }}</div>
-                        <div class="book-card_info_meta">{{ $book->author->name }}</div>
+                        <div class="book-card_info_meta">{{ $book->author ? $book->author->name : '' }}</div>
+                        <div class="most-download-book_card_meta most-download-book_card_review">
+                          <span>{{ $book->rating == 0 ? 0 : number_format($book->rating, 1, '.', ',') }} <i class='bx bxs-heart'></i></span>
+                        </div>
                       </div>
 
                     </a>
@@ -318,7 +321,6 @@
       fetch(url)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
         if(data.status) {
           let container = document.querySelector('#mostDownloadBooks .box-content .row');
           container.innerHTML = ''
@@ -328,8 +330,6 @@
             let files = ''
 
             book.files.forEach(file => files += `<div class="most-download-book_card_label" style="background-color: ${file.color}">${file.name}</div>`);
-
-            console.log(files);
 
             const item = 
             `
