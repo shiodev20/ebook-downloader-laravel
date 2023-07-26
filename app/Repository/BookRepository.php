@@ -126,9 +126,10 @@ class BookRepository implements IBookRepository
         $data['slug'] = Str::slug($attributes['title']);
       }
 
-      if($book->num_pages != $attributes['numPages']) $data['num_pages'] = $attributes['numPages'];
-      if($book->author_id != $attributes['author']) $data['author_id'] = $attributes['author'];
-      if($book->publisher_id != $attributes['publisher']) $data['publisher_id'] = $attributes['publisher'];
+      $data['num_pages'] = $attributes['numPages'];
+      $data['author_id'] = $attributes['author'];
+      $data['publisher_id'] = $attributes['publisher'];
+      $data['description'] = $attributes['description'];
 
       if(isset($attributes['cover'])) {
         $currentBookUrl = $book->cover_url;

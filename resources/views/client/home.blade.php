@@ -1,5 +1,9 @@
 @extends('partials.layouts.client')
 
+@section('documentTitle')
+  Trang chủ    
+@endsection
+
 @section('content')
 {{-- banner --}}
 <section id="banner">
@@ -50,7 +54,7 @@
               @foreach ($newestBooks as $book)
                 <div class="swiper-slide slider_item">
                   <div class="book-card">
-                    <a href="./detail.html">
+                    <a href="{{ route('client.detail', ['slug' => $book->slug]) }}">
 
                       <div class="book-card_image">
                         <img src="{{ url('storage/' . $book->cover_url) }}" loading="lazy" />
@@ -95,7 +99,7 @@
   <div class="container mt-5 p-0">
     <div class="row">
       <div class="col">
-        <div class="box py-4 px-4">
+        <div class="box py-4 px-4"  style="min-width: 300px !important;">
 
           <div class="box-header d-flex justify-content-between align-items-center flex-column flex-md-row">
             <h2 class="box_title my-3">tải nhiều nhất</h2>
@@ -189,7 +193,6 @@
   </div>
   </div>
 </section>
-
 
 {{-- recommend books --}}
 <section id="recommendBooks">
@@ -304,8 +307,6 @@
     </div>
   </div>
 </section>
-
-
 @endsection
 
 @push('js')

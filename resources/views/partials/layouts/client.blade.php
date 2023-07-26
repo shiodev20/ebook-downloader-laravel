@@ -8,7 +8,7 @@
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
   @stack('css')
-  <title>{{ env('APP_NAME') }} | Trang chủ</title>
+  <title>{{ env('APP_NAME') }} | @yield('documentTitle')</title>
 </head>
 <body>
   

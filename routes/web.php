@@ -10,7 +10,7 @@ use App\Http\Controllers\Admin\PublisherController;
 use App\Http\Controllers\Admin\QuoteController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
-
+use App\Http\Controllers\client\DetailController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\DownloadController;
 use Illuminate\Http\Request;
@@ -48,6 +48,7 @@ Route::get('/logout', [LogoutController::class, 'index'])->name('auth.logout');
 
 Route::get('/', [HomeController::class, 'index'])->name('client.home');
 Route::get('/mostDownload', [HomeController::class, 'mostDownloadBook'])->name('client.mostDownloadBook');
+Route::get('/book/{slug}', [DetailController::class, 'index'])->name('client.detail');
 
 
 Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');

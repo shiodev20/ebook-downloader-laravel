@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('id', 8)->primary();
             $table->string('title');
             $table->string('slug');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->integer('num_pages')->nullable();
             $table->timestamp('publish_date')->useCurrent();
             $table->integer('downloads')->default(0);
