@@ -12,13 +12,11 @@ use Illuminate\Http\Request;
 class CollectionController extends Controller
 {
   private $collectionRepository;
-  private $bookRepository;
   private $pagination = 5;
 
-  public function __construct(CollectionRepository $collectionRepository, BookRepository $bookRepository) {
+  public function __construct(CollectionRepository $collectionRepository) {
     $this->middleware(['auth', 'admin']);
     $this->collectionRepository = $collectionRepository;
-    $this->bookRepository = $bookRepository;
   }
 
   public function index() {
@@ -26,7 +24,7 @@ class CollectionController extends Controller
     try {
       $query = ['search' => '', 'sort' => ''];
 
-      $collections = $this->collectionRepository->getAll('data', $this->pagination);
+      $collections = $this->collectionRepository->getAll($this->pagination);
 
       return view('admin.collections.index', compact([
         'query',

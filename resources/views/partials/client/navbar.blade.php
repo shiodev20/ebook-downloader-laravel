@@ -17,12 +17,9 @@
             </a>
 
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item pb-2 fs-4" href="#">Trinh thám</a></li>
-              <li><a class="dropdown-item pb-2 fs-4" href="#">Trinh thám</a></li>
-              <li><a class="dropdown-item pb-2 fs-4" href="#">Trinh thám</a></li>
-              <li><a class="dropdown-item pb-2 fs-4" href="#">Trinh thám</a></li>
-              <li><a class="dropdown-item pb-2 fs-4" href="#">Trinh thám</a></li>
-              <li><a class="dropdown-item pb-2 fs-4" href="#">Trinh thám</a></li>
+              @foreach ($genres as $genre)
+                <li><a class="dropdown-item pb-2 fs-4" href="#">{{ $genre->name }}</a></li>
+              @endforeach
             </ul>
           </div>
         </div>

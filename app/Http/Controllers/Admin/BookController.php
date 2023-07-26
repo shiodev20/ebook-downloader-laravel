@@ -47,7 +47,7 @@ class BookController extends Controller
     try {
       $query = ['search' => '', 'sort' => ['download' => '', 'rating' => '']];
       $books = $this->bookRepository->getAll($this->pagination);
-  
+      
       return view('admin.books.index', compact([
         'query',
         'books'

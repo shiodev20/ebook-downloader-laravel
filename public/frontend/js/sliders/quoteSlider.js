@@ -3,7 +3,7 @@ const quoteSlider = new Swiper('#quoteSlider', {
   spaceBetween: 100,
   loop: true,
   autoplay: {
-    delay: 2000,
+    delay: 5000,
   },
   effect: 'fade',
   fadeEffect: {

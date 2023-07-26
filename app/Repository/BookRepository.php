@@ -7,6 +7,7 @@ use App\Models\BookCollection;
 use App\Models\BookFile;
 use App\Models\BookGenre;
 use App\Models\FileType;
+use App\Models\Genre;
 use App\Repository\IRepository\IBookRepository;
 use App\Utils\GenerateId;
 use App\Utils\UppercaseFirstLetter;
@@ -18,19 +19,7 @@ class BookRepository implements IBookRepository
 {
 
   public function getAll($paginate = 0) {
-    $books = Book::orderBy('publish_date', 'desc')->get()->map(function ($book) {
-      $temp = $book;
-      $coverData = Storage::get($book->cover_url);
-      $coverExtension = array_pad(explode('.', $book->cover_url), 2, null);
-      
-
-      $temp->cover = 'data:image/' . $coverExtension[1]. ';base64,' . $coverData;
-
-      return $temp;
-
-    })->paginate($paginate);
-
-    return $books;
+    return Book::orderBy('publish_date', 'desc')->paginate($paginate);
   }
 
   public function getById($id) {
@@ -293,5 +282,26 @@ class BookRepository implements IBookRepository
     return $book->delete();
   }
 
+  public function getMostDownloadBooks($take = 0, $genre = '') {
+
+    $books = [];
+
+    if($genre) {
+      $books = Book::whereRelation('genres', 'genre_id', '=', $genre)->orderBy('downloads', 'desc')->take($take)->get();
+    }
+    else {
+      $books = Book::orderBy('downloads', 'desc')->orderBy('downloads', 'desc')->take($take)->get();
+    }
+
+    return $books;
+  }
+
+  public function getRecommendBooks($paginate) {
+    $books = [];
+
+    $books = Book::orderBy('rating', 'desc')->paginate($paginate);
+
+    return $books;
+  }
 
 }

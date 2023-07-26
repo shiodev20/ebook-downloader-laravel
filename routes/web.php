@@ -47,8 +47,10 @@ Route::post('/login', [LoginController::class, 'index'])->name('auth.login');
 Route::get('/logout', [LogoutController::class, 'index'])->name('auth.logout');
 
 Route::get('/', [HomeController::class, 'index'])->name('client.home');
-Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
+Route::get('/mostDownload', [HomeController::class, 'mostDownloadBook'])->name('client.mostDownloadBook');
 
+
+Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
 
 Route::get('/books/search', [BookController::class, 'search'])->name('books.search');
 Route::get('/books/sort', [BookController::class, 'sort'])->name('books.sort');
@@ -90,3 +92,4 @@ Route::get('/downloads/{book}', [DownloadController::class, 'index'])->name('dow
 Route::get('/developing', function() {
   return view('admin.developing');
 })->middleware(['auth', 'admin'])->name('admin.developing');
+

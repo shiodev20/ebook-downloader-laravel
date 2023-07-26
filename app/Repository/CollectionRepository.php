@@ -13,27 +13,8 @@ use Illuminate\Support\Str;
 class CollectionRepository implements ICollectionRepository
 {
 
-  public function getAll($label = '', $paginate = 0) {
-    $collections = [];
-
-    if($label == 'data') {
-      $collections = Collection::paginate($paginate);
-    }
-    else {
-      $collections = collect(Collection::all())->map(function ($collection) {
-        $temp = $collection;
-        $coverData = Storage::disk('public')->get($collection->cover_url);
-        $coverExtension = array_pad(explode('.', $collection->cover_url), 2, null);
-        
-  
-        $temp->cover = 'data:image/' . $coverExtension[1]. ';base64,' . $coverData;
-  
-        return $temp;
-  
-      });
-    }
-
-    return $collections;
+  public function getAll($paginate = 0) {
+    return Collection::paginate($paginate);
   }
 
   public function getById($id) {
@@ -143,8 +124,8 @@ class CollectionRepository implements ICollectionRepository
 
       BookCollection::where('collection_id', '=', $collection->id)->delete();
 
-      Storage::put('deleteFiles/'.basename($collection->cover_url), Storage::disk('public')->get($collection->cover_url));
-      $deletedCoverUrl = 'deleteFiles/'.basename($collection->cover_url);
+      Storage::put('deletedFiles/'.basename($collection->cover_url), Storage::disk('public')->get($collection->cover_url));
+      $deletedCoverUrl = 'deletedFiles/'.basename($collection->cover_url);
 
       Storage::disk('public')->delete($collection->cover_url);
 
