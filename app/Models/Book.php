@@ -30,7 +30,7 @@ class Book extends Model
     ];
 
     public function reviews(): HasMany {
-        return $this->hasMany(Review::class, 'book_id', 'book');
+        return $this->hasMany(Review::class, 'book_id', 'id');
     }
 
     public function publisher(): BelongsTo {

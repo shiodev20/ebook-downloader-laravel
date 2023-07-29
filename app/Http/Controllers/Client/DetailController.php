@@ -8,8 +8,6 @@ use App\Repository\FileTypeRepository;
 use App\Repository\GenreRepository;
 use Illuminate\Http\Request;
 
-use function PHPUnit\Framework\isNull;
-
 class DetailController extends Controller
 {
   private $bookRepository;
@@ -32,10 +30,20 @@ class DetailController extends Controller
     $genres = $this->genreRepository->getAll();
     $fileTypes = $this->fileTypeRepository->getAll();
 
+    $sameAuthorBooks = $this->bookRepository->getByAuthor($book->author_id, 12);
+    $sameGenreBooks = $this->bookRepository->getSameGenreBooks($book->genres, 12);
+    $recommendBooks = $this->bookRepository->getRecommendBooks(12);
+
+    $reviews = $book->reviews->paginate(1);
+
     return view('client.detail', compact([
       'book',
       'genres',
-      'fileTypes'
+      'fileTypes',
+      'sameAuthorBooks',
+      'sameGenreBooks',
+      'recommendBooks',
+      'reviews'
     ]));
   }
 }

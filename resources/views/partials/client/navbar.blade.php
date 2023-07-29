@@ -5,7 +5,7 @@
       <div class="header_left d-flex align-items-center">
 
         <div class="header_logo me-3">
-          <a href="/views/home.html">
+          <a href="{{ route('client.home') }}">
             <img src="{{ asset('images/logo-waka.png') }}" alt="">
           </a>
         </div>

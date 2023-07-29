@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Book;
 use App\Repository\BookRepository;
 use App\Repository\CollectionRepository;
 use App\Repository\GenreRepository;
@@ -34,8 +35,8 @@ class HomeController extends Controller
       $quotes = $this->quoteRepository->getAll();
 
       $newestBooks = $this->bookRepository->getAll(12);
-      $mostDownloadBooks = $this->bookRepository->getMostDownloadBooks(12);
-      $recommendBooks = $this->bookRepository->getrecommendBooks(12);
+      $mostDownloadBooks = $this->bookRepository->getMostDownloadBooks('all', 12);
+      $recommendBooks = $this->bookRepository->getRecommendBooks(12);
       $collections = $this->collectionRepository->getAll(9);
 
       return view('client.home', compact([
@@ -57,10 +58,10 @@ class HomeController extends Controller
       $books = [];
 
       if($request->query('genre')) {
-        $books = $this->bookRepository->getMostDownloadBooks(12, $request->query('genre'));
+        $books = $this->bookRepository->getMostDownloadBooks($request->query('genre'), 12);
       }
       else {
-        $books = $this->bookRepository->getMostDownloadBooks(12);
+        $books = $this->bookRepository->getMostDownloadBooks('all', 12);
       }
 
       $books = $books->map(function($book, $key) {
@@ -85,4 +86,5 @@ class HomeController extends Controller
       ];
     }
   }
+
 }

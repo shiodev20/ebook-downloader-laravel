@@ -283,26 +283,40 @@ class BookRepository implements IBookRepository
     return $book->delete();
   }
 
-  public function getMostDownloadBooks($take = 0, $genre = '') {
+  public function getMostDownloadBooks($genre, $paginate) {
 
     $books = [];
 
-    if($genre) {
-      $books = Book::whereRelation('genres', 'genre_id', '=', $genre)->orderBy('downloads', 'desc')->take($take)->get();
+    if($genre != 'all') {
+      $books = Book::whereRelation('genres', 'genre_id', '=', $genre)->orderBy('downloads', 'desc')->paginate($paginate);
     }
     else {
-      $books = Book::orderBy('downloads', 'desc')->orderBy('downloads', 'desc')->take($take)->get();
+      $books = Book::orderBy('downloads', 'desc')->orderBy('downloads', 'desc')->paginate($paginate);
     }
 
     return $books;
   }
 
   public function getRecommendBooks($paginate) {
+    return Book::orderBy('rating', 'desc')->paginate($paginate);
+  }
+
+  public function getSameGenreBooks($genres, $paginate) {
     $books = [];
 
-    $books = Book::orderBy('rating', 'desc')->paginate($paginate);
+    foreach ($genres as $genre) {
+      $books = [$this->getByGenre($genre->id)];
+    };
 
-    return $books;
+    dd($books);
+  }
+
+  public function getByAuthor($author, $paginate = 0) {
+    return Book::where('author_id', '=', $author)->paginate($paginate);
+  }
+
+  public function getByGenre($genre, $paginate = 0) {
+   return Genre::where('id', '=', $genre)->first()->books->paginate($paginate);
   }
 
 }
