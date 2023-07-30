@@ -220,7 +220,7 @@
 
               <div class="book-review_bottom py-3">
 
-                @foreach ($book->reviews as $review)
+                @foreach ($reviews as $review)
                 <div class="book-review_review pb-5">
                   <div class="row g-4">
 
@@ -253,11 +253,11 @@
                 </div>   
                 @endforeach
 
-                {{-- @if ($reviews)
+                @if ($reviews->count() > 0)
                   <div class="mt-4 d-flex justify-content-center justify-content-md-end">
                     {{ $reviews->links() }}
                   </div>
-                @endif --}}
+                @endif
 
               </div>
 

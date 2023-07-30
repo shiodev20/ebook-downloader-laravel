@@ -18,7 +18,7 @@ use Illuminate\Support\Str;
 class BookRepository implements IBookRepository
 {
 
-  public function getAll($paginate = 0) {
+  public function getAll() {
     return Book::orderBy('publish_date', 'desc')->get();
   }
 
@@ -285,16 +285,16 @@ class BookRepository implements IBookRepository
     return Book::orderBy('rating', 'desc')->get();
   }
 
-  public function getSameGenreBooks($genres) {
-    $books = [];
+  public function getSameGenreBooks($book) {
+    $books = collect([]);
 
-    foreach ($genres as $genre) {
-      $books = Book::whereRelation('genres', 'genre_id', '=', $genre);
+    foreach ($book->genres as $genre) {
+      $books = $books->merge($this->getByGenre($genre->id));
     };
 
-    dd($books);
+    return $books->filter(fn ($item) => $item->id != $book->id);
   }
-
+  
   public function getByAuthor($author) {
     return Book::where('author_id', '=', $author)->get();
   }

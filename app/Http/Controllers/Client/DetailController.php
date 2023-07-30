@@ -30,9 +30,15 @@ class DetailController extends Controller
     $genres = $this->genreRepository->getAll();
     $fileTypes = $this->fileTypeRepository->getAll();
 
-    $sameAuthorBooks = $this->bookRepository->getByAuthor($book->author_id, 12);
-    $sameGenreBooks = $this->bookRepository->getSameGenreBooks($book->genres, 12);
-    $recommendBooks = $this->bookRepository->getRecommendBooks(12);
+    $sameAuthorBooks = $this->bookRepository->find([
+      ['author_id', '=', $book->author_id],
+      ['id', '<>', $book->id]
+    ])->paginate(12);
+
+    $sameGenreBooks = $this->bookRepository->getSameGenreBooks($book)->paginate(12);
+    $recommendBooks = $this->bookRepository->getAll()->random(2);
+
+    $reviews = $book->reviews->paginate(15);
 
     return view('client.detail', compact([
       'book',
@@ -41,6 +47,7 @@ class DetailController extends Controller
       'sameAuthorBooks',
       'sameGenreBooks',
       'recommendBooks',
+      'reviews'
     ]));
   }
 }

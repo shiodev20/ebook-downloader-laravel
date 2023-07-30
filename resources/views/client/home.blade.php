@@ -127,7 +127,7 @@
               @foreach ($mostDownloadBooks as $book)
                 <div class="col-12 col-md-6 col-lg-4">
                   <div class="most-download-book_card">
-                    <a href="/" class="d-flex">
+                    <a href="{{ route('client.detail', ['slug' => $book->slug]) }}" class="d-flex">
                       <img src="{{ url('storage/' . $book->cover_url) }}" alt="" class="most-download-book_card_cover">
 
                       <div class="most-download-book_card_info ms-4 flex-grow-1">
@@ -202,7 +202,7 @@
 
         <div class="box_header d-flex justify-content-between align-items-center">
           <h2 class="box_title">sách nên đọc</h2>
-          <a href="./list.html" class="box_getAll">xem thêm</a>
+          <a href="/" class="box_getAll">xem thêm</a>
         </div>
 
         <div>
@@ -216,7 +216,7 @@
               @foreach ($recommendBooks as $book)
                 <div class="swiper-slide slider_item">
                   <div class="book-card">
-                    <a href="./detail.html">
+                    <a href="{{ route('client.detail', ['slug' => $book->slug]) }}">
 
                       <div class="book-card_image">
                         <img src="{{ url('storage/' . $book->cover_url) }}" loading="lazy" />
@@ -336,7 +336,7 @@
             `
             <div class="col-12 col-md-6 col-lg-4">
               <div class="most-download-book_card">
-                <a href="/" class="d-flex">
+                <a href="{{ route('client.detail', ['slug' => $book->slug]) }}" class="d-flex">
                   <img src="${coverUrl}" alt="${book.title}" class="most-download-book_card_cover">
 
                   <div class="most-download-book_card_info ms-4 flex-grow-1">

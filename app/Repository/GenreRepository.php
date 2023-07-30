@@ -74,7 +74,6 @@ class GenreRepository implements IGenreRepository
       case 'bookDescending':
         $genres = Genre::all()->sortByDesc(fn ($genre) => $genre->books->count(), SORT_NUMERIC)->values();
         break;
-
       case 'bookAscending':
         $genres = Genre::all()->sortBy(fn ($genre) => $genre->books->count(), SORT_NUMERIC)->values();
         break;
