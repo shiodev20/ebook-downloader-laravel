@@ -317,7 +317,7 @@
 
   <script>
     function getMostDownloadBooks(genre = null) {
-      const url = genre ? '{{ route('client.mostDownloadBook') }}' + `?genre=${genre}` : '{{ route('client.mostDownloadBook') }}'
+      const url = genre ? '{{ route('ajax.mostDownloadBook') }}' + `?genre=${genre}` : '{{ route('ajax.mostDownloadBook') }}'
 
       fetch(url)
       .then(response => response.json())

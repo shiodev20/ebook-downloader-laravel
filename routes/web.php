@@ -8,10 +8,12 @@ use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\CollectionController;
 use App\Http\Controllers\Admin\PublisherController;
 use App\Http\Controllers\Admin\QuoteController;
+use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\client\DetailController;
 use App\Http\Controllers\Client\HomeController;
+use App\Http\Controllers\client\PageController;
 use App\Http\Controllers\DownloadController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -46,9 +48,10 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [LoginController::class, 'index'])->name('auth.login');
 Route::get('/logout', [LogoutController::class, 'index'])->name('auth.logout');
 
-Route::get('/', [HomeController::class, 'index'])->name('client.home');
-Route::get('/mostDownload', [HomeController::class, 'mostDownloadBook'])->name('client.mostDownloadBook');
-Route::get('/book/{slug}', [DetailController::class, 'index'])->name('client.detail');
+Route::get('/', [PageController::class, 'home'])->name('client.home');
+Route::get('/book/{slug}', [PageController::class, 'detail'])->name('client.detail');
+
+Route::get('/mostDownload', [AjaxController::class, 'mostDownloadBook'])->name('ajax.mostDownloadBook');
 
 
 Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');

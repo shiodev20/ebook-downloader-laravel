@@ -1,34 +1,38 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
 use App\Repository\BookRepository;
 use App\Repository\CollectionRepository;
+use App\Repository\FileTypeRepository;
 use App\Repository\GenreRepository;
 use App\Repository\QuoteRepository;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class PageController extends Controller
 {
   private $bookRepository;
   private $genreRepository;
   private $quoteRepository;
   private $collectionRepository;
+  private $fileTypeRepository;
 
   public function __construct(
     BookRepository $bookRepository,
     GenreRepository $genreRepository,
     QuoteRepository $quoteRepository,
-    CollectionRepository $collectionRepository
+    CollectionRepository $collectionRepository,
+    FileTypeRepository $fileTypeRepository
   ) {
     $this->bookRepository = $bookRepository;
     $this->genreRepository = $genreRepository;
     $this->quoteRepository = $quoteRepository;
     $this->collectionRepository = $collectionRepository;
+    $this->fileTypeRepository = $fileTypeRepository;
   }
 
-  public function index() {
+  public function home() {
     try {
       $genres = $this->genreRepository->getAll();
       $quotes = $this->quoteRepository->getAll();
@@ -51,39 +55,38 @@ class HomeController extends Controller
       return redirect()->back()->with('errorMessage', 'lỗi hệ thống vui lòng thử lại sau');
     }
   }
-  
-  public function mostDownloadBook(Request $request) {
+
+  public function detail(string $slug) {
+    
     try {
-      $books = [];
-
-      if($request->query('genre')) {
-        $books = $this->bookRepository->getMostDownloadBooks($request->query('genre'))->paginate(12);
-      }
-      else {
-        $books = $this->bookRepository->getMostDownloadBooks('all')->paginate(12);
-      }
-
-      $books = $books->map(function($book, $key) {
-        $temp = $book;
-
-        $temp->author_name = $book->author ? $book->author->name : '';
-        $temp->files = $book->files;
-
-        return $temp;
-      });
-
-      return [
-        'status' => true,
-        'result' => [
-          'books' => $books,
-        ],
-      ];
+      $book = $this->bookRepository->find([ ['slug', '=', $slug] ])->first();
+  
+      $genres = $this->genreRepository->getAll();
+      $fileTypes = $this->fileTypeRepository->getAll();
+  
+      $sameAuthorBooks = $this->bookRepository->find([
+        ['author_id', '=', $book->author_id],
+        ['id', '<>', $book->id]
+      ])->paginate(12);
+  
+      $sameGenreBooks = $this->bookRepository->getSameGenreBooks($book)->paginate(12);
+      $recommendBooks = $this->bookRepository->getAll()->random(2);
+  
+      $reviews = $book->reviews->paginate(15);
+  
+      return view('client.detail', compact([
+        'book',
+        'genres',
+        'fileTypes',
+        'sameAuthorBooks',
+        'sameGenreBooks',
+        'recommendBooks',
+        'reviews'
+      ]));
 
     } catch (\Throwable $th) {
-      return [
-        'status' => false,
-      ];
+      return redirect()->back()->with('errorMessage', 'lỗi hệ thống vui lòng thử lại sau');
     }
-  }
 
+  }
 }
