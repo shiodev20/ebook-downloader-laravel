@@ -218,46 +218,55 @@
 
               <hr>
 
-              <div class="book-review_bottom py-3">
+              <div id="commentContent" class="book-review_bottom py-3">
 
-                @foreach ($reviews as $review)
-                <div class="book-review_review pb-5">
-                  <div class="row g-4">
+                <div id="comments">
 
-                    <div class="col-sm-12 col-md-3">
-                      <div class="book-review_review_author d-flex flex-row flex-md-column justify-content-between">
-                        <div
-                          class="book-review_review_author_item d-flex flex-row flex-md-column align-items-center  align-items-md-start">
-                          <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32"
-                            class="rounded-circle p-1">
-                          <span class="p-1">{{ $review->user->username}}</span>
+                  {{-- @foreach ($reviews as $review)
+                  <div class="book-review_review pb-5">
+                    <div class="row g-4">
+  
+                      <div class="col-sm-12 col-md-3">
+                        <div class="book-review_review_author d-flex flex-row flex-md-column justify-content-between">
+                          <div
+                            class="book-review_review_author_item d-flex flex-row flex-md-column align-items-center  align-items-md-start">
+                            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32"
+                              class="rounded-circle p-1">
+                            <span class="p-1">{{ $review->user->username}}</span>
+                          </div>
+                          <span class="book-review_review_author_item p-1">{{ date_format(date_create($review->created_at), 'd-m-Y') }}</span>
                         </div>
-                        <span class="book-review_review_author_item p-1">{{ date_format(date_create($review->created_at), 'd-m-Y') }}</span>
+                      </div>
+  
+                      <div class="col-sm-12 col-md-9">
+                        <div class="book-review_review_rating">
+                          @php
+                            for ($i=1; $i <= 5; $i++) {
+                              if($i <= $book->rating)  echo('<i class="bx bxs-heart"></i>');
+                              else echo('<i class="bx bxs-heart" style="color: #6C757D"></i>');
+                            }
+                          @endphp
+                        </div>
+                        <div class="book-review_review_content">
+                          <p>{{ $review->content }}</p>
+                        </div>
                       </div>
                     </div>
+                  </div>   
+                  @endforeach --}}
 
-                    <div class="col-sm-12 col-md-9">
-                      <div class="book-review_review_rating">
-                        @php
-                          for ($i=1; $i <= 5; $i++) {
-                            if($i <= $book->rating)  echo('<i class="bx bxs-heart"></i>');
-                            else echo('<i class="bx bxs-heart" style="color: #6C757D"></i>');
-                          }
-                        @endphp
-                      </div>
-                      <div class="book-review_review_content">
-                        <p>{{ $review->content }}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>   
-                @endforeach
+                </div>
 
-                @if ($reviews->count() > 0)
-                  <div class="mt-4 d-flex justify-content-center justify-content-md-end">
+                <div id="commentPagination" class="mt-4 d-flex justify-content-center justify-content-md-end">
+                  <nav>
+                    <ul class="pagination">
+                      
+                    </ul>
+                  </nav>
+                  {{-- @if ($reviews->count() > 0)
                     {{ $reviews->links() }}
-                  </div>
-                @endif
+                  @endif --}}
+                </div>
 
               </div>
 
@@ -398,4 +407,93 @@
 
 @push('js')
 <script src="{{ asset('frontend/js/sliders/bookSlider.js') }}"></script>
+
+<script>
+  function getPagination(url) {
+    fetch(url)
+    .then(response => response.json())
+    .then(result => {
+      const comments = document.querySelector('#commentContent #comments')
+      comments.innerHTML = ''
+  
+      result.data.forEach((item, idx) => {
+        let commentRating = ``;
+        for (let i = 1; i <= 5; i++) {
+          if(i <= Number(item.rate))  commentRating += '<i class="bx bxs-heart"></i>';
+          else commentRating+= '<i class="bx bxs-heart" style="color: #6C757D"></i>';    
+        }
+  
+        const comment = 
+        `
+          <div class="book-review_review pb-5">
+            <div class="row g-4">
+  
+              <div class="col-sm-12 col-md-3">
+                <div class="book-review_review_author d-flex flex-row flex-md-column justify-content-between">
+                  <div
+                    class="book-review_review_author_item d-flex flex-row flex-md-column align-items-center  align-items-md-start">
+                    <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle p-1">
+                    <span class="p-1">${ item.username }</span>
+                  </div>
+                  <span class="book-review_review_author_item p-1">${item.createdAt}</span>
+                </div>
+              </div>
+  
+              <div class="col-sm-12 col-md-9">
+                <div class="book-review_review_rating">
+                  ${commentRating}
+                </div>
+                <div class="book-review_review_content">
+                  <p>${item.content}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+  
+        comments.innerHTML += comment
+      })
+  
+      const pagination = document.querySelector('#commentPagination .pagination')
+      pagination.innerHTML = ''
+      result.links.forEach((link, idx) => {
+        let linkElement = ``;
+  
+        if(idx == 0) {
+          linkElement = 
+          `
+            <li class="page-item ${link.url ? '' : 'disabled'}" style="cursor: pointer;">
+              <a class="page-link" onclick="getPagination('${link.url ? link.url : ''}')"><i class='bx bx-chevron-left'></i></a>
+            </li>
+          `
+        }
+        else if(idx == result.links.length - 1) {
+          linkElement = 
+          `
+            <li class="page-item ${link.url ? '' : 'disabled'}" style="cursor: pointer;">
+              <a class="page-link" onclick="getPagination('${link.url ? link.url : ''}')"><i class='bx bx-chevron-right'></i></a>
+            </li>
+          `
+        }
+        else {
+          linkElement = 
+          `
+            <li class="page-item ${link.active ? 'active' : ''}" style="cursor: pointer;">
+              <a class="page-link" onclick="getPagination('${link.url ? link.url : ''}')">${link.label}</a>
+            </li>
+          `
+        }
+        
+        pagination.innerHTML += linkElement
+      })
+    })
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const url = '{{ route('ajax.comments', ['book' => $book->id]) }}' + '?page=1'
+    getPagination(url);
+  })
+
+</script>
+
 @endpush

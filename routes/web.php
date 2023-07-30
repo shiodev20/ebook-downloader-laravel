@@ -52,6 +52,7 @@ Route::get('/', [PageController::class, 'home'])->name('client.home');
 Route::get('/book/{slug}', [PageController::class, 'detail'])->name('client.detail');
 
 Route::get('/mostDownload', [AjaxController::class, 'mostDownloadBook'])->name('ajax.mostDownloadBook');
+Route::get('{book}/comments', [AjaxController::class, 'comments'])->name('ajax.comments');
 
 
 Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');

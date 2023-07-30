@@ -72,8 +72,8 @@ class PageController extends Controller
       $sameGenreBooks = $this->bookRepository->getSameGenreBooks($book)->paginate(12);
       $recommendBooks = $this->bookRepository->getAll()->random(2);
   
-      $reviews = $book->reviews->paginate(15);
-  
+      // $reviews = $book->reviews->paginate(1);
+        
       return view('client.detail', compact([
         'book',
         'genres',
@@ -81,7 +81,6 @@ class PageController extends Controller
         'sameAuthorBooks',
         'sameGenreBooks',
         'recommendBooks',
-        'reviews'
       ]));
 
     } catch (\Throwable $th) {
