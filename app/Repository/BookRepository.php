@@ -19,7 +19,7 @@ class BookRepository implements IBookRepository
 {
 
   public function getAll($paginate = 0) {
-    return Book::orderBy('publish_date', 'desc')->paginate($paginate);
+    return Book::orderBy('publish_date', 'desc')->get();
   }
 
   public function getById($id) {
@@ -227,11 +227,11 @@ class BookRepository implements IBookRepository
 
   }
 
-  public function find($expressions = [], $paginate = 0) {
-    return Book::where($expressions)->orderBy('publish_date', 'desc')->paginate($paginate);
+  public function find($expressions = []) {
+    return Book::where($expressions)->orderBy('publish_date', 'desc')->get();
   }
 
-  public function sort($sortBy, $paginate = 0) {
+  public function sort($sortBy) {
     $books = [];
 
     $books = Book::orderBy('downloads', $sortBy['download'] == 'downloadDescending' ? 'desc' : 'asc')
@@ -239,31 +239,19 @@ class BookRepository implements IBookRepository
     ->orderBy('publish_date', 'desc')
     ->get();
 
-    $books = $books->map(function ($book) {
-      $temp = $book;
-      $coverData = Storage::disk('public')->get($book->cover_url);
-      $coverExtension = array_pad(explode('.', $book->cover_url), 2, null);
-      
-
-      $temp->cover = 'data:image/' . $coverExtension[1]. ';base64,' . $coverData;
-
-      return $temp;
-
-    })->paginate($paginate);
-
     return $books;
   }
 
-  public function sortStatus($sortBy, $paginate = 0) {
+  public function sortStatus($sortBy) {
     
     $books = [];
 
     switch ($sortBy) {
       case 'active':
-        $books = Book::where('status', '=', 1)->orderBy('publish_date', 'desc')->paginate($paginate);
+        $books = Book::where('status', '=', 1)->orderBy('publish_date', 'desc')->get();
         break;
       case 'disabled':
-        $books = Book::where('status', '=', 0)->orderBy('publish_date', 'desc')->paginate($paginate);
+        $books = Book::where('status', '=', 0)->orderBy('publish_date', 'desc')->get();
         break;
     }
 
@@ -272,51 +260,47 @@ class BookRepository implements IBookRepository
   }
 
   public function updateStatus($book = null) {
-
-    $result = $book->update(['status' =>  !$book->status]);
-
-    return $result;
-
+    return $book->update(['status' =>  !$book->status]);
   }
 
   public function delete($book) {
     return $book->delete();
   }
 
-  public function getMostDownloadBooks($genre, $paginate) {
+  public function getMostDownloadBooks($genre) {
 
     $books = [];
 
     if($genre != 'all') {
-      $books = Book::whereRelation('genres', 'genre_id', '=', $genre)->orderBy('downloads', 'desc')->paginate($paginate);
+      $books = Book::whereRelation('genres', 'genre_id', '=', $genre)->orderBy('downloads', 'desc')->get();
     }
     else {
-      $books = Book::orderBy('downloads', 'desc')->orderBy('downloads', 'desc')->paginate($paginate);
+      $books = Book::orderBy('downloads', 'desc')->orderBy('downloads', 'desc')->get();
     }
 
     return $books;
   }
 
-  public function getRecommendBooks($paginate) {
-    return Book::orderBy('rating', 'desc')->paginate($paginate);
+  public function getRecommendBooks() {
+    return Book::orderBy('rating', 'desc')->get();
   }
 
-  public function getSameGenreBooks($genres, $paginate) {
+  public function getSameGenreBooks($genres) {
     $books = [];
 
     foreach ($genres as $genre) {
-      $books = [$this->getByGenre($genre->id)];
+      $books = Book::whereRelation('genres', 'genre_id', '=', $genre);
     };
 
     dd($books);
   }
 
-  public function getByAuthor($author, $paginate = 0) {
-    return Book::where('author_id', '=', $author)->paginate($paginate);
+  public function getByAuthor($author) {
+    return Book::where('author_id', '=', $author)->get();
   }
 
-  public function getByGenre($genre, $paginate = 0) {
-   return Genre::where('id', '=', $genre)->first()->books->paginate($paginate);
+  public function getByGenre($genre) {
+   return Genre::where('id', '=', $genre)->first()->books;
   }
 
 }

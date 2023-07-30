@@ -23,7 +23,7 @@ class BookController extends Controller
   private $fileTypeRepository;
   private $collectionRepository;
 
-  private $pagination = 15;
+  private $pagination = 3;
 
   public function __construct(
     BookRepository $bookRepository, 
@@ -46,7 +46,7 @@ class BookController extends Controller
   public function index() {
     try {
       $query = ['search' => '', 'sort' => ['download' => '', 'rating' => '']];
-      $books = $this->bookRepository->getAll($this->pagination);
+      $books = $this->bookRepository->getAll()->paginate($this->pagination);
       
       return view('admin.books.index', compact([
         'query',
@@ -64,8 +64,6 @@ class BookController extends Controller
     $genres = $this->genreRepository->getAll();
     $fileTypes = $this->fileTypeRepository->getAll();
     $collections = $this->collectionRepository->getAll();
-
-    // dd($collections);
 
     return view('admin.books.create', compact([
       'publishers',
@@ -139,7 +137,7 @@ class BookController extends Controller
     try {
       $books = $this->bookRepository->find([
         ['title', 'like', '%' . $query['search'] . '%'],
-      ], $this->pagination);
+      ])->paginate($this->pagination);
 
       return view('admin.books.index', compact([
         'books',
@@ -162,7 +160,7 @@ class BookController extends Controller
     ];
 
     try {
-      $books = $this->bookRepository->sort($query['sort'], $this->pagination);
+      $books = $this->bookRepository->sort($query['sort'])->paginate($this->pagination)->withQueryString();
       
       return view('admin.books.index', compact([
         'books',
@@ -184,7 +182,7 @@ class BookController extends Controller
     ];
 
     try {
-      $books = $this->bookRepository->sortStatus($request->sortBy, $this->pagination);
+      $books = $this->bookRepository->sortStatus($request->sortBy)->paginate($this->pagination)->withQueryString();
       
       return view('admin.books.index', compact([
         'books',

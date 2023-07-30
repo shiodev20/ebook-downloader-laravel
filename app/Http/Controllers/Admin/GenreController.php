@@ -5,14 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\Genre;
-use App\Repository\BookRepository;
 use App\Repository\GenreRepository;
 use Illuminate\Http\Request;
 
 class GenreController extends Controller
 {
   private $genreRepository;
-  private $pagination = 15;
+  private $pagination = 2;
 
   public function __construct(GenreRepository $genreRepository) {
     $this->middleware(['auth', 'admin']);
@@ -23,7 +22,7 @@ class GenreController extends Controller
     try {
       $query = ['search' => '', 'sort' => ''];
 
-      $genres = $this->genreRepository->getAll($this->pagination);
+      $genres = $this->genreRepository->getAll()->paginate($this->pagination);
 
       return view('admin.genres.index', compact([
         'genres',
@@ -48,9 +47,7 @@ class GenreController extends Controller
       ]));
 
     } catch (\Throwable $th) {
-      return redirect()
-        ->back()
-        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+      return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
     }
 
   }
@@ -71,14 +68,11 @@ class GenreController extends Controller
 
       $createdGenre = $this->genreRepository->add($genre);
 
-      return redirect()
-        ->back()
-        ->with('successMessage', 'Thêm thể loại ' . $createdGenre->name . ' thành công');
+      return redirect()->back()->with('successMessage', 'Thêm thể loại ' . $createdGenre->name . ' thành công');
+
     } catch (\Throwable $th) {
 
-      return redirect()
-        ->back()
-        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+      return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
     }
   }
 
@@ -98,14 +92,10 @@ class GenreController extends Controller
 
       $updatedGenre = $this->genreRepository->update($genre, $attributes);
 
-      return redirect()
-        ->back()
-        ->with('successMessage', 'Thể loại được cập nhật thành công');
+      return redirect()->back()->with('successMessage', 'Thể loại được cập nhật thành công');
 
     } catch (\Throwable $th) {
-      return redirect()
-        ->back()
-        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+      return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
     }
   }
   
@@ -138,19 +128,17 @@ class GenreController extends Controller
 
       $genres = $this->genreRepository->find([
         ['name', 'like', '%' . $query['search'] . '%'],
-      ], $this->pagination);
+      ])->paginate($this->pagination);
 
       return view('admin.genres.index', compact([
         'genres',
         'query'
       ]));
+
     } catch (\Throwable $th) {
-      return redirect()
-        ->back()
-        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+      return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
     }
   }
-
 
   public function sort(Request $request) {
     try {
@@ -158,17 +146,15 @@ class GenreController extends Controller
 
       $query['sort'] = $request->query('sortBy');
 
-      $genres = $this->genreRepository->sort($query['sort'], $this->pagination)->withQueryString();
+      $genres = $this->genreRepository->sort($query['sort'])->paginate($this->pagination)->withQueryString();
 
       return view('admin.genres.index', compact([
         'genres',
         'query'
       ]));
+
     } catch (\Throwable $th) {
-      dd($th);
-      return redirect()
-        ->back()
-        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+      return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
     }
   }
 }

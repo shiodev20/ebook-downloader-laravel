@@ -13,8 +13,8 @@ use Illuminate\Support\Str;
 class CollectionRepository implements ICollectionRepository
 {
 
-  public function getAll($paginate = 0) {
-    return Collection::paginate($paginate);
+  public function getAll() {
+    return Collection::all();
   }
 
   public function getById($id) {
@@ -94,20 +94,20 @@ class CollectionRepository implements ICollectionRepository
     }
   }
 
-  public function find($expressions = [], $paginate = 0) {
-    return Collection::where($expressions)->paginate($paginate);
+  public function find($expressions = []) {
+    return Collection::where($expressions)->get();
   }
 
-  public function sort($sortBy, $paginate = 0) {
+  public function sort($sortBy) {
     $collections = [];
 
     switch ($sortBy) {
       case 'bookDescending':
-        $collections = Collection::all()->sortByDesc(fn ($collection) => $collection->books->count(), SORT_NUMERIC)->paginate($paginate);
+        $collections = Collection::all()->sortByDesc(fn ($collection) => $collection->books->count(), SORT_NUMERIC)->values();
         break;
 
       case 'bookAscending':
-        $collections = Collection::all()->sortBy(fn ($collection) => $collection->books->count(), SORT_NUMERIC)->paginate($paginate);
+        $collections = Collection::all()->sortBy(fn ($collection) => $collection->books->count(), SORT_NUMERIC)->values();
         break;
     }
 

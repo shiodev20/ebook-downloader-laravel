@@ -8,8 +8,8 @@ use App\Repository\IRepository\IRepository;
 class QuoteRepository implements IRepository
 {
 
-  public function getAll($paginate = 0) {
-    return Quote::paginate($paginate);
+  public function getAll() {
+    return Quote::all();
   }
 
 
@@ -39,8 +39,8 @@ class QuoteRepository implements IRepository
   }
 
 
-  public function find($expressions = [], $paginate = 0) {
-    return Quote::where($expressions)->paginate($paginate);
+  public function find($expressions = [], ) {
+    return Quote::where($expressions)->get();
   }
   
 }

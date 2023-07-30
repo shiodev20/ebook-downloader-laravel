@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\DB;
 class GenreRepository implements IGenreRepository
 {
 
-  public function getAll($paginate = 0) {
-    return Genre::paginate($paginate);
+  public function getAll() {
+    return Genre::all();
   }
 
 
@@ -66,18 +66,17 @@ class GenreRepository implements IGenreRepository
   }
 
 
-  public function sort($sortBy, $paginate = 0) {
+  public function sort($sortBy) {
 
     $genres = [];
 
     switch ($sortBy) {
       case 'bookDescending':
-        $genres = Genre::all()->sortByDesc(fn ($genre) => $genre->books->count(), SORT_NUMERIC)->paginate($paginate);
-
+        $genres = Genre::all()->sortByDesc(fn ($genre) => $genre->books->count(), SORT_NUMERIC)->values();
         break;
 
       case 'bookAscending':
-        $genres = Genre::all()->sortBy(fn ($genre) => $genre->books->count(), SORT_NUMERIC)->paginate($paginate);
+        $genres = Genre::all()->sortBy(fn ($genre) => $genre->books->count(), SORT_NUMERIC)->values();
         break;
     }
 
@@ -85,8 +84,8 @@ class GenreRepository implements IGenreRepository
   }
 
 
-  public function find($expressions = [], $paginate = 0) {
-    return Genre::where($expressions)->paginate($paginate);
+  public function find($expressions = []) {
+    return Genre::where($expressions)->get();
   }
   
 }

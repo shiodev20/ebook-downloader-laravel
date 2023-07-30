@@ -21,7 +21,7 @@ class QuoteController extends Controller
     try {
       $query = ['search' => ''];
 
-      $quotes = $this->quoteRepository->getAll();
+      $quotes = $this->quoteRepository->getAll()->paginate($this->pagination);
 
       return view('admin.quotes.index', compact([
         'query',
@@ -92,7 +92,7 @@ class QuoteController extends Controller
 
       $quotes = $this->quoteRepository->find([
         ['content', 'like', '%' . $query['search'] . '%'],
-      ], $this->pagination);
+      ])->paginate($this->pagination);
 
       return view('admin.quotes.index', compact([
         'query',

@@ -34,8 +34,6 @@ class DetailController extends Controller
     $sameGenreBooks = $this->bookRepository->getSameGenreBooks($book->genres, 12);
     $recommendBooks = $this->bookRepository->getRecommendBooks(12);
 
-    $reviews = $book->reviews->paginate(1);
-
     return view('client.detail', compact([
       'book',
       'genres',
@@ -43,7 +41,6 @@ class DetailController extends Controller
       'sameAuthorBooks',
       'sameGenreBooks',
       'recommendBooks',
-      'reviews'
     ]));
   }
 }

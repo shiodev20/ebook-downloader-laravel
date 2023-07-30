@@ -14,7 +14,7 @@ class AuthorController extends Controller
 
   private $authorRepository;
   private $bookRepository;
-  private $pagination = 15;
+  private $pagination = 2;
 
   public function __construct(AuthorRepository $authorRepository, BookRepository $bookRepository) {
     $this->middleware(['auth', 'admin']);
@@ -27,23 +27,20 @@ class AuthorController extends Controller
     try {
       $query = ['search' => '', 'sort' => ''];
 
-      $authors = $this->authorRepository->getAll($this->pagination);
+      $authors = $this->authorRepository->getAll()->paginate($this->pagination);
 
       return view('admin.authors.index', compact(['authors', 'query']));
 
     } catch (\Throwable $th) {
-      return redirect()
-        ->back()
-        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+      return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
     }
   }
 
 
   public function show(Author $author) {
-
     try {
 
-      $books = $this->bookRepository->find([['author_id', '=', $author->id]], $this->pagination);
+      $books = $this->bookRepository->find([['author_id', '=', $author->id]])->paginate($this->pagination);
 
       return view('admin.authors.show', compact([
         'author',
@@ -51,9 +48,7 @@ class AuthorController extends Controller
       ]));
 
     } catch (\Throwable $th) {
-      return redirect()
-        ->back()
-        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+      return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
     }
 
   }
@@ -75,15 +70,11 @@ class AuthorController extends Controller
 
       $createdAuthor = $this->authorRepository->add($author);
 
-      return redirect()
-        ->back()
-        ->with('successMessage', 'Thêm tác giả ' . $createdAuthor->name . ' thành công');
+      return redirect()->back()->with('successMessage', 'Thêm tác giả ' . $createdAuthor->name . ' thành công');
 
     } catch (\Throwable $th) {
 
-      return redirect()
-        ->back()
-        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+      return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
     }
   }
 
@@ -104,14 +95,10 @@ class AuthorController extends Controller
 
       $updatedAuthor = $this->authorRepository->update($author, $attributes);
 
-      return redirect()
-        ->back()
-        ->with('successMessage', 'Tác giả được cập nhật thành công');
+      return redirect()->back()->with('successMessage', 'Tác giả được cập nhật thành công');
 
     } catch (\Throwable $th) {
-      return redirect()
-        ->back()
-        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+      return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
     }
   }
 
@@ -148,16 +135,15 @@ class AuthorController extends Controller
 
       $authors = $this->authorRepository->find([
         ['name', 'like', '%' . $query['search'] . '%'],
-      ], $this->pagination);
+      ])->paginate($this->pagination);
 
       return view('admin.authors.index', compact([
         'authors',
         'query'
       ]));
+
     } catch (\Throwable $th) {
-      return redirect()
-        ->back()
-        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+      return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
     }
   }
 
@@ -168,7 +154,7 @@ class AuthorController extends Controller
 
       $query['sort'] = $request->query('sortBy');
 
-      $authors = $this->authorRepository->sort($query['sort'], $this->pagination);
+      $authors = $this->authorRepository->sort($query['sort'])->paginate($this->pagination);
 
       return view('admin.authors.index', compact([
         'authors',
@@ -176,9 +162,7 @@ class AuthorController extends Controller
       ]));
 
     } catch (\Throwable $th) {
-      return redirect()
-        ->back()
-        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+      return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
     }
   }
 }

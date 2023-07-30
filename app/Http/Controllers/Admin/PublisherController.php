@@ -13,7 +13,7 @@ class PublisherController extends Controller
 {
   private $publisherRepository;
   private $bookRepository;
-  private $pagination = 15;
+  private $pagination = 2;
 
   public function __construct(PublisherRepository $publisherRepository, BookRepository $bookRepository) {
     $this->middleware(['auth', 'admin']);
@@ -26,7 +26,7 @@ class PublisherController extends Controller
     try {
       $query = ['search' => '', 'sort' => ''];
 
-      $publishers = $this->publisherRepository->getAll($this->pagination);
+      $publishers = $this->publisherRepository->getAll()->paginate($this->pagination);
 
       return view('admin.publishers.index', compact(['publishers', 'query']));
 
@@ -41,7 +41,7 @@ class PublisherController extends Controller
   public function show(Publisher $publisher) {
     try {
 
-      $books = $this->bookRepository->find([['publisher_id', '=', $publisher->id]], $this->pagination);
+      $books = $this->bookRepository->find([['publisher_id', '=', $publisher->id]])->paginate($this->pagination);
 
       return view('admin.publishers.show', compact([
         'publisher',
@@ -101,14 +101,10 @@ class PublisherController extends Controller
 
       $updatedPublisher = $this->publisherRepository->update($publisher, $attributes);
 
-      return redirect()
-        ->back()
-        ->with('successMessage', 'Nhà xuất bản được cập nhật thành công');
+      return redirect()->back()->with('successMessage', 'Nhà xuất bản được cập nhật thành công');
 
     } catch (\Throwable $th) {
-      return redirect()
-        ->back()
-        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+      return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
     }
   }
 
@@ -143,16 +139,15 @@ class PublisherController extends Controller
 
       $publishers = $this->publisherRepository->find([
         ['name', 'like', '%' . $query['search'] . '%'],
-      ], $this->pagination);
+      ])->paginate($this->pagination);
 
       return view('admin.publishers.index', compact([
         'publishers',
         'query'
       ]));
+
     } catch (\Throwable $th) {
-      return redirect()
-        ->back()
-        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+      return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
     }
   }
 
@@ -163,7 +158,7 @@ class PublisherController extends Controller
 
       $query['sort'] = $request->query('sortBy');
 
-      $publishers = $this->publisherRepository->sort($query['sort'], $this->pagination);
+      $publishers = $this->publisherRepository->sort($query['sort'])->paginate($this->pagination);
 
       return view('admin.publishers.index', compact([
         'publishers',
@@ -171,9 +166,7 @@ class PublisherController extends Controller
       ]));
 
     } catch (\Throwable $th) {
-      return redirect()
-        ->back()
-        ->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+      return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
     }
   }
 }

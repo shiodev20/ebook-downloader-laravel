@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class CollectionController extends Controller
 {
   private $collectionRepository;
-  private $pagination = 5;
+  private $pagination = 2;
 
   public function __construct(CollectionRepository $collectionRepository) {
     $this->middleware(['auth', 'admin']);
@@ -24,7 +24,7 @@ class CollectionController extends Controller
     try {
       $query = ['search' => '', 'sort' => ''];
 
-      $collections = $this->collectionRepository->getAll($this->pagination);
+      $collections = $this->collectionRepository->getAll()->paginate($this->pagination);
 
       return view('admin.collections.index', compact([
         'query',
@@ -92,7 +92,7 @@ class CollectionController extends Controller
       
       $collections = $this->collectionRepository->find([
         ['name', 'like', '%' . $query['search'] . '%'],
-      ], $this->pagination);
+      ])->paginate($this->pagination);
 
       return view('admin.collections.index', compact([
         'query',
@@ -112,7 +112,7 @@ class CollectionController extends Controller
 
       $query['sort'] = $request->query('sortBy');
       
-      $collections = $this->collectionRepository->sort($query['sort'], $this->pagination);
+      $collections = $this->collectionRepository->sort($query['sort'])->paginate($this->pagination);
 
       return view('admin.collections.index', compact([
         'query',

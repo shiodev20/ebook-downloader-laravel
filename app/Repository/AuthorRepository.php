@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\DB;
 class AuthorRepository implements IAuthorRepository
 {
 
-  public function getAll($paginate = 0) {
-    return Author::paginate($paginate);
+  public function getAll() {
+    return Author::all();
   }
 
   public function getById($id) {
@@ -26,20 +26,20 @@ class AuthorRepository implements IAuthorRepository
     return $author->update($attributes);
   }
 
-  public function find($expressions = [], $paginate = 0) {
-    return Author::where($expressions)->paginate($paginate);
+  public function find($expressions = []) {
+    return Author::where($expressions)->get();
   }
 
-  public function sort($sortBy, $paginate = 0) {
+  public function sort($sortBy) {
     $authors = [];
 
     switch ($sortBy) {
       case 'bookDescending':
-        $authors = Author::all()->sortByDesc(fn ($author) => $author->books->count(), SORT_NUMERIC)->paginate($paginate);
+        $authors = Author::all()->sortByDesc(fn ($author) => $author->books->count(), SORT_NUMERIC)->values();
         break;
 
       case 'bookAscending':
-        $authors = Author::all()->sortBy(fn ($author) => $author->books->count(), SORT_NUMERIC)->paginate($paginate);
+        $authors = Author::all()->sortBy(fn ($author) => $author->books->count(), SORT_NUMERIC)->values();
         break;
     }
 
