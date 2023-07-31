@@ -292,7 +292,7 @@ class BookRepository implements IBookRepository
       $books = $books->merge($this->getByGenre($genre->id));
     };
 
-    return $books->filter(fn ($item) => $item->id != $book->id);
+    return $books->filter(fn ($item, $key) => $item->id != $book->id);
   }
   
   public function getByAuthor($author) {
