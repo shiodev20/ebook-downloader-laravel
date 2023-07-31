@@ -8,7 +8,6 @@ use App\Repository\CollectionRepository;
 use App\Repository\FileTypeRepository;
 use App\Repository\GenreRepository;
 use App\Repository\QuoteRepository;
-use Illuminate\Http\Request;
 
 class PageController extends Controller
 {

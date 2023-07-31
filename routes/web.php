@@ -14,6 +14,7 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\client\DetailController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\client\PageController;
+use App\Http\Controllers\Client\ReviewController;
 use App\Http\Controllers\DownloadController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -52,8 +53,9 @@ Route::get('/', [PageController::class, 'home'])->name('client.home');
 Route::get('/book/{slug}', [PageController::class, 'detail'])->name('client.detail');
 
 Route::get('/mostDownload', [AjaxController::class, 'mostDownloadBook'])->name('ajax.mostDownloadBook');
-Route::get('{book}/comments', [AjaxController::class, 'comments'])->name('ajax.comments');
+Route::get('{book}/reviews', [AjaxController::class, 'bookReviews'])->name('ajax.bookReviews');
 
+Route::post('/reviews/{bookId}', [ReviewController::class, 'store'])->name('reviews.store');
 
 Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
 

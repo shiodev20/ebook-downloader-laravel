@@ -48,7 +48,7 @@ class AjaxController extends Controller
     }
   }
 
-  public function comments(Book $book) {
+  public function bookReviews(Book $book) {
     $reviews = $book->reviews;
 
     $reviews = $reviews->map(function($review, $key) {

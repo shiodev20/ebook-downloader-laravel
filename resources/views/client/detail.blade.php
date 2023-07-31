@@ -174,39 +174,46 @@
 
                   <div class="col-sm-12 col-md-9">
                     <div class="book-review_form">
-                      <form action="/">
+                      <form id="reviewForm" action="{{ route('reviews.store', ['bookId' => $book->id]) }}" method="POST">
+                        @csrf
+
                         <div class="mb-3 book-review_form_review">
-                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="review"
-                            placeholder="Đánh giá"></textarea>
+                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content" placeholder="Đánh giá"></textarea>
+                          @error('content')
+                            <div class="invalid-feedback d-block fs-5">{{ $message }}</div>
+                          @enderror
                         </div>
 
                         <div class="mb-3 book-review_form_rating d-flex">
                           <div class="book-review_form_rating_item">
-                            <input id="star1" name="rating" value="1" type="radio">
+                            <input id="star1" name="rate" value="1" type="radio">
                             <label for="star1"><i class="bx bxs-heart"></i></label>
                           </div>
 
                           <div class="book-review_form_rating_item">
-                            <input id="star2" name="rating" value="2" type="radio">
+                            <input id="star2" name="rate" value="2" type="radio">
                             <label for="star2"><i class="bx bxs-heart"></i></label>
                           </div>
 
                           <div class="book-review_form_rating_item">
-                            <input id="star3" name="rating" value="3" type="radio">
+                            <input id="star3" name="rate" value="3" type="radio">
                             <label for="star3"><i class="bx bxs-heart"></i></label>
                           </div>
 
                           <div class="book-review_form_rating_item">
-                            <input id="star4" name="rating" value="4" type="radio">
+                            <input id="star4" name="rate" value="4" type="radio">
                             <label for="star4"><i class="bx bxs-heart"></i></label>
                           </div>
 
                           <div class="book-review_form_rating_item">
-                            <input id="star5" name="rating" value="5" type="radio">
+                            <input id="star5" name="rate" value="5" type="radio">
                             <label for="star5"><i class="bx bxs-heart"></i></label>
                           </div>
 
                         </div>
+                        @error('rate')
+                          <div class="invalid-feedback d-block fs-5">{{ $message }}</div>
+                        @enderror
 
                         <button type="submit" class="btn btn-lg bg-main text-white">Đánh giá</button>
                       </form>
@@ -218,54 +225,19 @@
 
               <hr>
 
-              <div id="commentContent" class="book-review_bottom py-3">
+              <div id="reviewContent" class="book-review_bottom py-3">
 
-                <div id="comments">
-
-                  {{-- @foreach ($reviews as $review)
-                  <div class="book-review_review pb-5">
-                    <div class="row g-4">
-  
-                      <div class="col-sm-12 col-md-3">
-                        <div class="book-review_review_author d-flex flex-row flex-md-column justify-content-between">
-                          <div
-                            class="book-review_review_author_item d-flex flex-row flex-md-column align-items-center  align-items-md-start">
-                            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32"
-                              class="rounded-circle p-1">
-                            <span class="p-1">{{ $review->user->username}}</span>
-                          </div>
-                          <span class="book-review_review_author_item p-1">{{ date_format(date_create($review->created_at), 'd-m-Y') }}</span>
-                        </div>
-                      </div>
-  
-                      <div class="col-sm-12 col-md-9">
-                        <div class="book-review_review_rating">
-                          @php
-                            for ($i=1; $i <= 5; $i++) {
-                              if($i <= $book->rating)  echo('<i class="bx bxs-heart"></i>');
-                              else echo('<i class="bx bxs-heart" style="color: #6C757D"></i>');
-                            }
-                          @endphp
-                        </div>
-                        <div class="book-review_review_content">
-                          <p>{{ $review->content }}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>   
-                  @endforeach --}}
+                <div id="reviews">
 
                 </div>
 
-                <div id="commentPagination" class="mt-4 d-flex justify-content-center justify-content-md-end">
+                <div id="reviewPagination" class="mt-4 d-flex justify-content-center justify-content-md-end">
                   <nav>
                     <ul class="pagination">
                       
                     </ul>
                   </nav>
-                  {{-- @if ($reviews->count() > 0)
-                    {{ $reviews->links() }}
-                  @endif --}}
+                 
                 </div>
 
               </div>
@@ -413,17 +385,17 @@
     fetch(url)
     .then(response => response.json())
     .then(result => {
-      const comments = document.querySelector('#commentContent #comments')
-      comments.innerHTML = ''
+      const reviews = document.querySelector('#reviewContent #reviews')
+      reviews.innerHTML = ''
   
       result.data.forEach((item, idx) => {
-        let commentRating = ``;
+        let reviewRating = ``;
         for (let i = 1; i <= 5; i++) {
-          if(i <= Number(item.rate))  commentRating += '<i class="bx bxs-heart"></i>';
-          else commentRating+= '<i class="bx bxs-heart" style="color: #6C757D"></i>';    
+          if(i <= Number(item.rate))  reviewRating += '<i class="bx bxs-heart"></i>';
+          else reviewRating+= '<i class="bx bxs-heart" style="color: #6C757D"></i>';    
         }
   
-        const comment = 
+        const review = 
         `
           <div class="book-review_review pb-5">
             <div class="row g-4">
@@ -441,7 +413,7 @@
   
               <div class="col-sm-12 col-md-9">
                 <div class="book-review_review_rating">
-                  ${commentRating}
+                  ${reviewRating}
                 </div>
                 <div class="book-review_review_content">
                   <p>${item.content}</p>
@@ -451,10 +423,10 @@
           </div>
         `
   
-        comments.innerHTML += comment
+        reviews.innerHTML += review
       })
   
-      const pagination = document.querySelector('#commentPagination .pagination')
+      const pagination = document.querySelector('#reviewPagination .pagination')
       pagination.innerHTML = ''
       result.links.forEach((link, idx) => {
         let linkElement = ``;
@@ -490,10 +462,32 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    const url = '{{ route('ajax.comments', ['book' => $book->id]) }}' + '?page=1'
+    const url = '{{ route('ajax.bookReviews', ['book' => $book->id]) }}' + '?page=1'
     getPagination(url);
   })
 
 </script>
 
+<script>
+  const reviewTextarea = document.querySelector('#reviewForm textarea[name=content]')
+  const rateRadios = document.querySelectorAll('#reviewForm input[name=rate]')
+
+  reviewTextarea.addEventListener('input', () => {
+    const invalidFeedback = document.querySelector('textarea[name=content] + .invalid-feedback')
+    if(invalidFeedback) {
+      invalidFeedback.style.visibility = 'hidden'
+      invalidFeedback.style.height = '0px'
+    }
+  })
+
+  rateRadios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      const invalidFeedback = document.querySelector('.book-review_form_rating + .invalid-feedback')
+      if(invalidFeedback) {
+        invalidFeedback.style.visibility = 'hidden'
+        invalidFeedback.style.height = '0px'
+      }
+    })
+  })
+</script>
 @endpush
