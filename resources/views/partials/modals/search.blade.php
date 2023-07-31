@@ -28,14 +28,19 @@
 @push('js')
   <script>
     const searchInput = document.querySelector('#searchModal input[name=search]') 
-
+    
     searchInput.addEventListener('input', (e) => {
       const filter = e.target.value
+
       const url = '{{ route('ajax.bookSearch') }}' + `?filter=${filter}`
+
+      displayLoading('#searchModal .search-form_result')
 
       fetch(url)
       .then(response => response.json())
       .then(data => {
+        hideLoading('#searchModal .search-form_result')
+
         const container = document.querySelector('#searchModal .search-form_result')
         container.innerHTML = '' 
 
@@ -71,6 +76,8 @@
           container.innerHTML += item
         })
       })
+      if(filter) {
+      }
 
     })
   </script>

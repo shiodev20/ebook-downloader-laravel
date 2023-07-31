@@ -19,6 +19,19 @@ ul {
   list-style: none;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+  height: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #fefefe;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba($color: $dark-color, $alpha: .4);
+}
+
 .bg-main {
   background-color: $main-color;
 }
@@ -31,4 +44,26 @@ ul {
   color: red;
   font-size: 1.3rem;
   font-style: italic;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 30vh;
+
+  &__content {
+    border: 10px solid #f3f3f3;
+    border-top: 10px solid $main-color;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    animation: loading 2s linear infinite;
+  }
+}
+
+@keyframes loading {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
 }

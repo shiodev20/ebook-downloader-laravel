@@ -393,9 +393,28 @@
 {{-- Pagination --}}
 <script>
   function getPagination(url) {
+
+    displayLoading('#reviewContent')
+
     fetch(url)
     .then(response => response.json())
     .then(result => {
+      hideLoading('#reviewContent')
+
+      const container = document.querySelector('#reviewContent')
+      container.innerHTML = 
+      `
+        <div id="reviews">
+        </div>
+
+        <div id="reviewPagination" class="mt-4 d-flex justify-content-center justify-content-md-end">
+          <nav>
+            <ul class="pagination">
+              
+            </ul>
+          </nav>
+        </div>
+      `
 
       if(result.data.length > 0) {
 

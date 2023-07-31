@@ -80,7 +80,7 @@
 
     <div class="header_top">
       <div class="header_logo">
-        <a href="/views/home.html">
+        <a href="{{ route('client.home') }}">
           <img src="{{ asset('images/logo-waka.png') }}" alt="">
         </a>
       </div>

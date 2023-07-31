@@ -319,12 +319,17 @@
     function getMostDownloadBooks(genre = null) {
       const url = genre ? '{{ route('ajax.mostDownloadBook') }}' + `?genre=${genre}` : '{{ route('ajax.mostDownloadBook') }}'
 
+      let container = document.querySelector('#mostDownloadBooks .box-content .row')
+      container.innerHTML = ''
+
+      displayLoading('#mostDownloadBooks .box-content .row')
+
       fetch(url)
       .then(response => response.json())
       .then(data => {
+        hideLoading('#mostDownloadBooks .box-content .row')
+
         if(data.status) {
-          let container = document.querySelector('#mostDownloadBooks .box-content .row');
-          container.innerHTML = ''
 
           data.result.books.forEach(book => {
             const coverUrl = '{{ url('storage/') }}' + '/' + book.cover_url
@@ -362,7 +367,6 @@
             container.innerHTML += item;
           });
 
-
           document.querySelectorAll('.read-most_nav_link').forEach(link => {
             if(link.classList.contains('active')) link.classList.remove('active');
           })
@@ -373,6 +377,8 @@
           else {
             document.querySelector('.read-most_nav_link.genre-all').classList.add('active')
           }
+
+
         }
       })
 
