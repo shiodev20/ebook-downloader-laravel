@@ -8,6 +8,7 @@ use App\Models\BookFile;
 use App\Models\BookGenre;
 use App\Models\FileType;
 use App\Models\Genre;
+use App\Models\Publisher;
 use App\Repository\IRepository\IBookRepository;
 use App\Utils\GenerateId;
 use App\Utils\UppercaseFirstLetter;
@@ -303,4 +304,7 @@ class BookRepository implements IBookRepository
    return Genre::where('id', '=', $genre)->first()->books;
   }
 
+  public function getByPublisher($publisher) {
+    return Publisher::where('id', '=', $publisher)->first()->books;
+  }
 }

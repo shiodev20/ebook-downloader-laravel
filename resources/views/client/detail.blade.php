@@ -31,7 +31,7 @@
                     </div>
   
                     <div class="book-detail_info_meta">
-                      <div class="book-detail_info_meta_item">Tác giả: <span><a href="/">{{ $book->author ? $book->author->name : '' }}</a></span> </div>
+                      <div class="book-detail_info_meta_item">Tác giả: <span><a href="{{ route('client.booksByAuthor', ['slug' => $book->author->slug]) }}">{{ $book->author ? $book->author->name : '' }}</a></span> </div>
                       <div class="book-detail_info_meta_item">Thể loại: 
                         <span>
                           @foreach ($book->genres as $genre)
@@ -39,7 +39,7 @@
                           @endforeach
                         </span> 
                       </div>
-                      <div class="book-detail_info_meta_item">Nhà xuất bản: <span><a href="/">{{ $book->publisher ? $book->publisher->name : '' }}</a></span></div>
+                      <div class="book-detail_info_meta_item">Nhà xuất bản: <span><a href="{{ route('client.booksByPublisher', ['slug' => $book->publisher->slug]) }}">{{ $book->publisher ? $book->publisher->name : '' }}</a></span></div>
                       <div class="book-detail_info_meta_item">Số trang: <span>{{ $book->num_pages }}</span></div>
                       <div class="book-detail_info_meta_item">Ngày cập nhật: <span>{{ date_format(date_create($book->publish_date), 'd-m-Y') }}</span></div>
                       <div class="book-detail_info_meta_item book-detail_info_meta_description">{{ $book->description }}</div>

@@ -54,6 +54,8 @@ Route::get('/book/{slug}', [PageController::class, 'detail'])->name('client.deta
 
 Route::prefix('page')->group(function() {
   Route::get('/genres/{slug}', [PageController::class, 'booksByGenre'])->name('client.booksByGenre');
+  Route::get('/authors/{slug}', [PageController::class, 'booksByAuthor'])->name('client.booksByAuthor');
+  Route::get('/publishers/{slug}', [PageController::class, 'booksByPublisher'])->name('client.booksByPublisher');
 }); 
 
 
@@ -109,4 +111,3 @@ Route::get('/downloads/{book}', [DownloadController::class, 'index'])->name('dow
 Route::get('/developing', function() {
   return view('admin.developing');
 })->middleware(['auth', 'admin'])->name('admin.developing');
-

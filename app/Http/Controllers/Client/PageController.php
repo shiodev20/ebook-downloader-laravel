@@ -3,16 +3,20 @@
 namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
+use App\Repository\AuthorRepository;
 use App\Repository\BookRepository;
 use App\Repository\CollectionRepository;
 use App\Repository\FileTypeRepository;
 use App\Repository\GenreRepository;
+use App\Repository\PublisherRepository;
 use App\Repository\QuoteRepository;
 
 class PageController extends Controller
 {
   private $bookRepository;
   private $genreRepository;
+  private $authorRepository;
+  private $publisherRepository;
   private $quoteRepository;
   private $collectionRepository;
   private $fileTypeRepository;
@@ -20,12 +24,16 @@ class PageController extends Controller
   public function __construct(
     BookRepository $bookRepository,
     GenreRepository $genreRepository,
+    AuthorRepository $authorRepository,
+    PublisherRepository $publisherRepository,
     QuoteRepository $quoteRepository,
     CollectionRepository $collectionRepository,
     FileTypeRepository $fileTypeRepository
   ) {
     $this->bookRepository = $bookRepository;
     $this->genreRepository = $genreRepository;
+    $this->publisherRepository = $publisherRepository;
+    $this->authorRepository = $authorRepository;
     $this->quoteRepository = $quoteRepository;
     $this->collectionRepository = $collectionRepository;
     $this->fileTypeRepository = $fileTypeRepository;
@@ -71,8 +79,6 @@ class PageController extends Controller
       $sameGenreBooks = $this->bookRepository->getSameGenreBooks($book)->paginate(12);
       $recommendBooks = $this->bookRepository->getAll()->random(2);
   
-      // $reviews = $book->reviews->paginate(1);
-        
       return view('client.detail', compact([
         'book',
         'genres',
@@ -100,7 +106,6 @@ class PageController extends Controller
 
       return view('client.collection', compact([
         'genres',
-        'genre',
         'books',
         'pageTitle'
       ]));
@@ -110,4 +115,46 @@ class PageController extends Controller
     }
   }
    
+  public function booksByAuthor(string $slug) {
+    try {
+      $genres = $this->genreRepository->getAll();
+  
+      $author = $this->authorRepository->find([['slug', '=', $slug]])->first();
+  
+      $books = $this->bookRepository->getByAuthor($author->id)->paginate(2);
+      
+      $pageTitle = $author->name;
+  
+      return view('client.collection', compact([
+        'genres',
+        'author',
+        'books',
+        'pageTitle'
+      ]));
+
+    } catch (\Throwable $th) {
+      return redirect()->back()->with('errorMessage', 'lỗi hệ thống vui lòng thử lại sau');
+    }
+  }
+
+  public function booksByPublisher(string $slug) {
+    $genres = $this->genreRepository->getAll();
+
+    $publisher = $this->publisherRepository->find([['slug', '=', $slug]])->first();
+
+    $books = $this->bookRepository->getByPublisher($publisher->id)->paginate(2);
+    
+    $pageTitle = $publisher->name;
+
+    return view('client.collection', compact([
+      'genres',
+      'books',
+      'pageTitle'
+    ]));
+    try {
+
+    } catch (\Throwable $th) {
+      return redirect()->back()->with('errorMessage', 'lỗi hệ thống vui lòng thử lại sau');
+    }
+  }
 }
