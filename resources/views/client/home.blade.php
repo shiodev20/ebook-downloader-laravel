@@ -336,7 +336,7 @@
             `
             <div class="col-12 col-md-6 col-lg-4">
               <div class="most-download-book_card">
-                <a href="{{ route('client.detail', ['slug' => $book->slug]) }}" class="d-flex">
+                <a href="{{ url('/book') }}${'/' + book.slug}" class="d-flex">
                   <img src="${coverUrl}" alt="${book.title}" class="most-download-book_card_cover">
 
                   <div class="most-download-book_card_info ms-4 flex-grow-1">

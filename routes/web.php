@@ -53,6 +53,7 @@ Route::get('/', [PageController::class, 'home'])->name('client.home');
 Route::get('/book/{slug}', [PageController::class, 'detail'])->name('client.detail');
 
 Route::get('/mostDownload', [AjaxController::class, 'mostDownloadBook'])->name('ajax.mostDownloadBook');
+Route::get('bookSearch', [AjaxController::class, 'bookSearch'])->name('ajax.bookSearch');
 Route::get('{book}/reviews', [AjaxController::class, 'bookReviews'])->name('ajax.bookReviews');
 Route::get('reviews/{review}', [AjaxController::class, 'reviewById'])->name('ajax.reviewById');
 

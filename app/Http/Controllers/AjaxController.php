@@ -64,6 +64,23 @@ class AjaxController extends Controller
     return $reviews->paginate(2);
   }
 
+  public function bookSearch(Request $request) {
+    $books = $this->bookRepository->find([
+      ['title', 'like', '%'.$request->query('filter').'%']
+    ])->take(12);
+
+    $books = $books->map(function($book, $key) {
+      $temp = $book;
+
+      $temp->author_name = $book->author ? $book->author->name : '';
+      $temp->files = $book->files;
+
+      return $temp;
+    });
+
+    return $books;
+  }
+
   public function reviewById(Review $review) {
     return $review;
   }
