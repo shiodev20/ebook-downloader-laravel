@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Review;
 use App\Repository\BookRepository;
 use Illuminate\Http\Request;
 
@@ -61,5 +62,9 @@ class AjaxController extends Controller
     });
 
     return $reviews->paginate(2);
+  }
+
+  public function reviewById(Review $review) {
+    return $review;
   }
 }

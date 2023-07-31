@@ -8090,6 +8090,10 @@ ul {
 .book-review_review_content {
   font-size: 1.5rem; }
 
+.book-review_review_options i {
+  font-size: 1.5rem;
+  color: #6c757d; }
+
 .notification {
   position: fixed;
   bottom: 10px;

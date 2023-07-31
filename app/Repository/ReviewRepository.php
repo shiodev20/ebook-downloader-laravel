@@ -51,16 +51,62 @@ class ReviewRepository implements IRepository
 
 
   public function update($review = null, $attributes = []) {
-    return $review->update($attributes);
+    DB::beginTransaction();
+
+    try {
+      $review->update($attributes);
+
+      $book = Book::find($review->book_id);
+
+      $sumOfRates = $book->reviews->reduce(function($carry, $review) {
+        return $carry + $review->rate;
+      }, 0);
+
+      $rating = $sumOfRates / $book->reviews->count();
+
+      $book->update([
+        'rating' => $rating
+      ]);
+
+      DB::commit();
+
+      return true;
+
+    } catch (\Throwable $th) {
+      DB::rollBack();
+
+      return false;
+    }
   }
 
 
   public function delete($review) {
+
+    DB::beginTransaction();
     try {
+      $bookId = $review->book_id;
+
       $review->delete();
+
+      $book = Book::find($bookId);
+
+      $sumOfRates = $book->reviews->reduce(function($carry, $review) {
+        return $carry + $review->rate;
+      }, 0);
+
+      $rating = $sumOfRates / $book->reviews->count();
+
+      $book->update([
+        'rating' => $rating
+      ]);
+
+      DB::commit();
+
       return true;
 
     } catch (\Throwable $th) {
+      DB::rollback();
+      
       return false;
     }
   }

@@ -41,6 +41,7 @@
             <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
               data-bs-toggle="dropdown" aria-expanded="false">
               <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+              <span class="ms-1 fs-5">{{ session('currentUser')['username'] }}</span>
             </a>
 
             <ul class="dropdown-menu dropdown-menu-end text-small" aria-labelledby="dropdownUser1">
@@ -53,9 +54,9 @@
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item fs-4" href="{{ route('auth.logout') }}">Đăng Xuất</a></li>
             </ul>
+
+           
           </div>
-					
-					<div class="fs-5">{{ session('currentUser')['username'] }}</div>
 
         @else
           <div class="header_option header_account">

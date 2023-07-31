@@ -11,20 +11,21 @@ close.addEventListener('click', () => {
   catalogue.classList.remove('active')
 })
 
-const ratingInputs = document.querySelectorAll('.book-review_form_rating input[type=radio]')
+const createRatingInputs = document.querySelectorAll('#reviewForm .book-review_form_rating input[type=radio]')
 
-ratingInputs.forEach(input => {
+createRatingInputs.forEach(input => {
   input.addEventListener('change', () => {
     const value = input.value
 
-    for (let i = 1; i <= ratingInputs.length; i++) {
-      const inputIcon = ratingInputs[i - 1].nextElementSibling.firstChild;
+    for (let i = 1; i <= createRatingInputs.length; i++) {
+      const inputIcon = createRatingInputs[i - 1].nextElementSibling.firstChild;
       inputIcon.style.color = '#6c757d';
     }
 
     for (let i = 1; i <= value; i++) {
-      const inputIcon = ratingInputs[i - 1].nextElementSibling.firstChild;
+      const inputIcon = createRatingInputs[i - 1].nextElementSibling.firstChild;
       inputIcon.style.color = '#fe7e73';
     }
   })
 })
+

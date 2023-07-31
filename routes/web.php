@@ -54,8 +54,12 @@ Route::get('/book/{slug}', [PageController::class, 'detail'])->name('client.deta
 
 Route::get('/mostDownload', [AjaxController::class, 'mostDownloadBook'])->name('ajax.mostDownloadBook');
 Route::get('{book}/reviews', [AjaxController::class, 'bookReviews'])->name('ajax.bookReviews');
+Route::get('reviews/{review}', [AjaxController::class, 'reviewById'])->name('ajax.reviewById');
 
-Route::post('/reviews/{bookId}', [ReviewController::class, 'store'])->name('reviews.store');
+
+Route::post('/reviews/{book}', [ReviewController::class, 'store'])->name('reviews.store');
+Route::put('/reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
+Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 
 Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
 
