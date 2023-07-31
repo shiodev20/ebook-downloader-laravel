@@ -5,8 +5,6 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Author;
-use App\Models\Book;
-use App\Models\BookGenre;
 use App\Models\FileType;
 use App\Models\Genre;
 use App\Models\Publisher;
@@ -58,7 +56,8 @@ class DatabaseSeeder extends Seeder
     foreach ($genres as $genre) {
       Genre::create([
         'id' => $genre->id,
-        'name' => $genre->name
+        'name' => $genre->name,
+        'slug' => $genre->slug
       ]);
     }
 
@@ -67,6 +66,7 @@ class DatabaseSeeder extends Seeder
       Author::create([
         'id' => $author->id,
         'name' => $author->name,
+        'slug' => $author->slug
       ]);
     }
 
@@ -74,7 +74,8 @@ class DatabaseSeeder extends Seeder
     foreach ($publishers as $publisher) {
       Publisher::create([
         'id' => $publisher->id,
-        'name' => $publisher->name
+        'name' => $publisher->name,
+        'slug' => $publisher->slug
       ]);
     }
 

@@ -8,6 +8,7 @@ use App\Models\Publisher;
 use App\Repository\BookRepository;
 use App\Repository\PublisherRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PublisherController extends Controller
 {
@@ -67,7 +68,8 @@ class PublisherController extends Controller
 
     try {
       $publisher = [
-        'name' => $request->publisher
+        'name' => $request->publisher,
+        'slug' => Str::slug($request->publisher)
       ];
 
       $createdpublisher = $this->publisherRepository->add($publisher);

@@ -51,29 +51,86 @@
   "genres": [
     {
       "id": 1,
-      "name": "Kỹ năng sống"
+      "name": "Kỹ năng sống",
+      "slug": "ky-nang-song"
     },
     {
       "id": 2,
-      "name": "Tâm lý học"
+      "name": "Tâm lý học",
+      "slug": "tam-ly-hoc"
+
     },
     {
       "id": 3,
-      "name": "Quản trị học"
+      "name": "Quản trị học",
+      "slug": "quan-tri-hoc"
+    },
+    {
+      "id": 4,
+      "name": "Hình sự - trinh thám",
+      "slug": "hinh-su-trinh-tham"
+    },
+    {
+      "id": 5,
+      "name": "Văn học",
+      "slug": "van-hoc"
     }
+
   ],
 
   "authors": [
     {
       "id": 1,
-      "name": "Shio Nguyễn"
+      "name": "Chi Nguyễn",
+      "slug": "chi-nguyen"
+    },
+    {
+      "id": 2,
+      "name": "Minato Kanae",
+      "slug": "minato-kanae"
+    },
+    {
+      "id": 3,
+      "name": "Mario Puzo",
+      "slug": "mario-puzo"
+    },
+    {
+      "id": 4,
+      "name": "Hector Malot",
+      "slug": "hector-malot"
+    },
+    {
+      "id": 5,
+      "name": "Hamanaka Aki",
+      "slug": "hanamaki-aki"
+    },
+    {
+      "id": 6,
+      "name": "Jeffrey Archer",
+      "slug": "jeffrey-archer"
+    },
+    {
+      "id": 7,
+      "name": "Dale Carnegie",
+      "slug": "dale-carnegie"
     }
   ],
 
   "publishers": [
     {
       "id": 1,
-      "name": "NXB Nhã Nam"
+      "name": "Nhã Nam",
+      "slug": "nha-nam"
+    },
+    {
+      "id": 2,
+      "name": "Tuổi Trẻ",
+      "slug": "tuoi-tre"
+    },
+    {
+      "id": 3,
+      "name": "Văn Học",
+      "slug": "van-hoc"
     }
   ],
 

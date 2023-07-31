@@ -15,7 +15,8 @@ class Publisher extends Model
 
     protected $fillable = [
         'id',
-        'name'
+        'name',
+        'slug'
     ];
 
     public function books(): HasMany {

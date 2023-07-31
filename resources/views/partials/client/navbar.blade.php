@@ -18,7 +18,7 @@
 
             <ul class="dropdown-menu">
               @foreach ($genres as $genre)
-                <li><a class="dropdown-item pb-2 fs-4" href="#">{{ $genre->name }}</a></li>
+                <li><a class="dropdown-item pb-2 fs-4" href="{{ route('client.booksByGenre', ['slug' => $genre->slug]) }}">{{ $genre->name }}</a></li>
               @endforeach
             </ul>
           </div>

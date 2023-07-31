@@ -87,4 +87,27 @@ class PageController extends Controller
     }
 
   }
+
+  public function booksByGenre(string $slug) {
+    try {
+      $genres = $this->genreRepository->getAll();
+  
+      $genre = $this->genreRepository->find([['slug', '=', $slug]])->first();
+  
+      $books = $this->bookRepository->getByGenre($genre->id)->paginate(2);
+      
+      $pageTitle = $genre->name;
+
+      return view('client.collection', compact([
+        'genres',
+        'genre',
+        'books',
+        'pageTitle'
+      ]));
+
+    } catch (\Throwable $th) {
+      return redirect()->back()->with('errorMessage', 'lỗi hệ thống vui lòng thử lại sau');
+    }
+  }
+   
 }

@@ -11,13 +11,11 @@ use App\Http\Controllers\Admin\QuoteController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
-use App\Http\Controllers\client\DetailController;
-use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\client\PageController;
 use App\Http\Controllers\Client\ReviewController;
 use App\Http\Controllers\DownloadController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,9 +27,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-
 // $bookCovers = Storage::disk('public')->files('bookCovers');
+// $banners = Storage::disk('public')->files('banners');
+// $collections = Storage::disk('public')->files('collections');
 // $deletedFiles = Storage::files('deletedFiles');
 // $epubs = Storage::files('files/EPUB');
 // $pdfs = Storage::files('files/PDF');
@@ -39,6 +37,8 @@ use Illuminate\Support\Facades\Route;
 // $awz3s = Storage::files('files/AWZ3');
 
 // Storage::disk('public')->delete($bookCovers);
+// Storage::disk('public')->delete($banners);
+// Storage::disk('public')->delete($collections);
 // Storage::delete($deletedFiles);
 // Storage::delete($epubs);
 // Storage::delete($pdfs);
@@ -51,6 +51,11 @@ Route::get('/logout', [LogoutController::class, 'index'])->name('auth.logout');
 
 Route::get('/', [PageController::class, 'home'])->name('client.home');
 Route::get('/book/{slug}', [PageController::class, 'detail'])->name('client.detail');
+
+Route::prefix('page')->group(function() {
+  Route::get('/genres/{slug}', [PageController::class, 'booksByGenre'])->name('client.booksByGenre');
+}); 
+
 
 Route::get('/mostDownload', [AjaxController::class, 'mostDownloadBook'])->name('ajax.mostDownloadBook');
 Route::get('bookSearch', [AjaxController::class, 'bookSearch'])->name('ajax.bookSearch');

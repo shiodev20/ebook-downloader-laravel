@@ -7,11 +7,12 @@ use App\Models\Book;
 use App\Models\Genre;
 use App\Repository\GenreRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class GenreController extends Controller
 {
   private $genreRepository;
-  private $pagination = 2;
+  private $pagination = 15;
 
   public function __construct(GenreRepository $genreRepository) {
     $this->middleware(['auth', 'admin']);
@@ -63,7 +64,8 @@ class GenreController extends Controller
 
     try {
       $genre = [
-        'name' => $request->genre
+        'name' => $request->genre,
+        'slug' => Str::slug($request->genre)
       ];
 
       $createdGenre = $this->genreRepository->add($genre);

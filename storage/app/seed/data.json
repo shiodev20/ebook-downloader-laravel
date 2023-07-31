@@ -38,8 +38,18 @@
     },
     {
       "id": "00000003",
-      "username": "Shio Nguyen",
+      "username": "Admin 3",
       "email": "nv3@gmail.com",
+      "password": "$2y$10$2.7RV3.JXzHHztXttyiVB.Gy9/BMmbK5UcH6fWtB0YxYhHSJwOPAy",
+      "status": 1,
+      "role_id": 2,
+      "createdAt": "2023-01-13 07:27:39",
+      "updatedAt": "2023-01-13 07:27:39"
+    },
+    {
+      "id": "00000004",
+      "username": "Nghi Nguyễn",
+      "email": "m1@gmail.com",
       "password": "$2y$10$2.7RV3.JXzHHztXttyiVB.Gy9/BMmbK5UcH6fWtB0YxYhHSJwOPAy",
       "status": 1,
       "role_id": 3,
@@ -51,37 +61,86 @@
   "genres": [
     {
       "id": 1,
-      "name": "Kỹ năng sống"
+      "name": "Kỹ năng sống",
+      "slug": "ky-nang-song"
     },
     {
       "id": 2,
-      "name": "Tâm lý học"
+      "name": "Tâm lý học",
+      "slug": "tam-ly-hoc"
+
     },
     {
       "id": 3,
-      "name": "Quản trị học"
+      "name": "Quản trị học",
+      "slug": "quan-tri-hoc"
     },
     {
       "id": 4,
-      "name": "Hình sự - Trinh thám"
+      "name": "Hình sự - trinh thám",
+      "slug": "hinh-su-trinh-tham"
+    },
+    {
+      "id": 5,
+      "name": "Văn học",
+      "slug": "van-hoc"
     }
+
   ],
 
   "authors": [
     {
       "id": 1,
-      "name": "Minato Kanae"
+      "name": "Chi Nguyễn",
+      "slug": "chi-nguyen"
     },
     {
       "id": 2,
-      "name": "Rosie Nguyễn"
+      "name": "Minato Kanae",
+      "slug": "minato-kanae"
+    },
+    {
+      "id": 3,
+      "name": "Mario Puzo",
+      "slug": "mario-puzo"
+    },
+    {
+      "id": 4,
+      "name": "Hector Malot",
+      "slug": "hector-malot"
+    },
+    {
+      "id": 5,
+      "name": "Hamanaka Aki",
+      "slug": "hanamaki-aki"
+    },
+    {
+      "id": 6,
+      "name": "Jeffrey Archer",
+      "slug": "jeffrey-archer"
+    },
+    {
+      "id": 7,
+      "name": "Dale Carnegie",
+      "slug": "dale-carnegie"
     }
   ],
 
   "publishers": [
     {
       "id": 1,
-      "name": "NXB Nhã Nam"
+      "name": "Nhã Nam",
+      "slug": "nha-nam"
+    },
+    {
+      "id": 2,
+      "name": "Tuổi Trẻ",
+      "slug": "tuoi-tre"
+    },
+    {
+      "id": 3,
+      "name": "Văn Học",
+      "slug": "van-hoc"
     }
   ],
 

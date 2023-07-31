@@ -70,6 +70,10 @@
                       <div class="book-card_info">
                         <div class="book-card_info_title">{{ $book->title }}</div>
                         <div class="book-card_info_meta">{{ $book->author ? $book->author->name : '' }}</div>
+                        <div class="most-download-book_card_meta">{{ number_format($book->downloads, 0, '.', ',') }} luợt tải</div>
+                        <div class="most-download-book_card_meta most-download-book_card_review">
+                          <span>{{ $book->rating == 0 ? 0 : number_format($book->rating, 1, '.', ',') }} <i class='bx bxs-heart'></i></span>
+                        </div>
                       </div>
 
                     </a>
@@ -232,6 +236,7 @@
                       <div class="book-card_info">
                         <div class="book-card_info_title">{{ $book->title }}</div>
                         <div class="book-card_info_meta">{{ $book->author ? $book->author->name : '' }}</div>
+                        <div class="most-download-book_card_meta">{{ number_format($book->downloads, 0, '.', ',') }} luợt tải</div>
                         <div class="most-download-book_card_meta most-download-book_card_review">
                           <span>{{ $book->rating == 0 ? 0 : number_format($book->rating, 1, '.', ',') }} <i class='bx bxs-heart'></i></span>
                         </div>

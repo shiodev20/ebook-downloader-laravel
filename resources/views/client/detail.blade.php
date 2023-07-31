@@ -5,75 +5,77 @@
 @endsection
 
 @section('content')
-  <!-- book dtail -->
-  <section>
+  <!-- book detail -->
+  <section id="bookDetail">
     <div class="container mt-5">
-      <div class="box">
-        <div class="box_content">
-          <div class="book-detail">
-            <div class="row g-4">
-
-              <div class="col-sm-12 col-md-4">
-                <div class="book-detail_cover">
-                  <img src="{{ url('storage/'.$book->cover_url) }}" alt="{{ $book->title }}">
+      <div class="row">
+        <div class="box">
+          <div class="box_content">
+            <div class="book-detail">
+              <div class="row g-4">
+  
+                <div class="col-sm-12 col-md-4">
+                  <div class="book-detail_cover">
+                    <img src="{{ url('storage/'.$book->cover_url) }}" alt="{{ $book->title }}">
+                  </div>
                 </div>
-              </div>
-
-              <div class="col-sm-12 col-md-8">
-                <div class="book-detail_info">
-
-                  <div class="book-detail_info_title">{{$book->title }}</div>
-
-                  <div class="book-detail_info_rating">
-                    <span><i class="bx bxs-heart"></i> {{ $book->rating == 0 ? '0' : $book->rating }}</span> 
-                    ({{ $book->reviews->count() }} đánh giá) | {{ number_format($book->downloads, 0,'.', ',') }} lượt tải
-                  </div>
-
-                  <div class="book-detail_info_meta">
-                    <div class="book-detail_info_meta_item">Tác giả: <span><a href="/">{{ $book->author ? $book->author->name : '' }}</a></span> </div>
-                    <div class="book-detail_info_meta_item">Thể loại: 
-                      <span>
-                        @foreach ($book->genres as $genre)
-                          <a href="/">{{ $genre->name }}</a> {{ $loop->index < $book->genres->count() - 1 ? ',' : '' }}
-                        @endforeach
-                      </span> 
+  
+                <div class="col-sm-12 col-md-8">
+                  <div class="book-detail_info">
+  
+                    <div class="book-detail_info_title">{{$book->title }}</div>
+  
+                    <div class="book-detail_info_rating">
+                      <span><i class="bx bxs-heart"></i> {{ $book->rating == 0 ? '0' : $book->rating }}</span> 
+                      ({{ $book->reviews->count() }} đánh giá) | {{ number_format($book->downloads, 0,'.', ',') }} lượt tải
                     </div>
-                    <div class="book-detail_info_meta_item">Nhà xuất bản: <span><a href="/">{{ $book->publisher ? $book->publisher->name : '' }}</a></span></div>
-                    <div class="book-detail_info_meta_item">Số trang: <span>{{ $book->num_pages }}</span></div>
-                    <div class="book-detail_info_meta_item">Ngày cập nhật: <span>{{ date_format(date_create($book->publish_date), 'd-m-Y') }}</span></div>
-                    <div class="book-detail_info_meta_item book-detail_info_meta_description">{{ $book->description }}</div>
-                  </div>
-
-                  <hr>
-
-                  <div class="book-detail_info_download">
-                    <div class="book-detail_info_download_text">Tải sách:</div>
-                    <div class="book-detail_info_download_options d-flex flex-wrap mt-2">
-
-                      @if ($book->bookFiles->count() > 0 && $book->status) 
-
-                        @foreach ($book->bookFiles as $bookFile)
-                          <a 
-                            href="{{ route('downloads.index', ['book' => $book->id]) .'?url=' . $bookFile->file_url }}" 
-                            class="book-detail_info_download_item"
-                            style="background-color: {{ $bookFile->fileType->color }}"  
-                          >{{ $bookFile->fileType->name }}</a>
-                        @endforeach
-                      
-                      @endif
-
-                      @if ($book->bookFiles->count() == 0 || !$book->status)
-                        @foreach ($fileTypes as $fileType)
-                          <a class="book-detail_info_download_item bg-secondary">{{ $fileType->name }}</a>
-                        @endforeach
-                      @endif
+  
+                    <div class="book-detail_info_meta">
+                      <div class="book-detail_info_meta_item">Tác giả: <span><a href="/">{{ $book->author ? $book->author->name : '' }}</a></span> </div>
+                      <div class="book-detail_info_meta_item">Thể loại: 
+                        <span>
+                          @foreach ($book->genres as $genre)
+                            <a href="{{ route('client.booksByGenre', ['slug' => $genre->slug]) }}">{{ $genre->name }}</a> {{ $loop->index < $book->genres->count() - 1 ? ',' : '' }}
+                          @endforeach
+                        </span> 
+                      </div>
+                      <div class="book-detail_info_meta_item">Nhà xuất bản: <span><a href="/">{{ $book->publisher ? $book->publisher->name : '' }}</a></span></div>
+                      <div class="book-detail_info_meta_item">Số trang: <span>{{ $book->num_pages }}</span></div>
+                      <div class="book-detail_info_meta_item">Ngày cập nhật: <span>{{ date_format(date_create($book->publish_date), 'd-m-Y') }}</span></div>
+                      <div class="book-detail_info_meta_item book-detail_info_meta_description">{{ $book->description }}</div>
+                    </div>
+  
+                    <hr>
+  
+                    <div class="book-detail_info_download">
+                      <div class="book-detail_info_download_text">Tải sách:</div>
+                      <div class="book-detail_info_download_options d-flex flex-wrap mt-2">
+  
+                        @if ($book->bookFiles->count() > 0 && $book->status) 
+  
+                          @foreach ($book->bookFiles as $bookFile)
+                            <a 
+                              href="{{ route('downloads.index', ['book' => $book->id]) .'?url=' . $bookFile->file_url }}" 
+                              class="book-detail_info_download_item"
+                              style="background-color: {{ $bookFile->fileType->color }}"  
+                            >{{ $bookFile->fileType->name }}</a>
+                          @endforeach
                         
+                        @endif
+  
+                        @if ($book->bookFiles->count() == 0 || !$book->status)
+                          @foreach ($fileTypes as $fileType)
+                            <a class="book-detail_info_download_item bg-secondary">{{ $fileType->name }}</a>
+                          @endforeach
+                        @endif
+                          
+                      </div>
                     </div>
+  
                   </div>
-
                 </div>
+  
               </div>
-
             </div>
           </div>
         </div>
@@ -90,7 +92,6 @@
 
           <div class="box_header d-flex justify-content-between align-items-center">
             <h2 class="box_title">sách cùng tác giả</h2>
-            <a href="./list.html" class="box_getAll">xem thêm</a>
           </div>
 
           <div>
@@ -259,7 +260,6 @@
 
           <div class="box_header d-flex justify-content-between align-items-center">
             <h2 class="box_title">sách cùng thể loại</h2>
-            <a href="./list.html" class="box_getAll">xem thêm</a>
           </div>
 
           <div>
@@ -322,7 +322,6 @@
 
           <div class="box_header d-flex justify-content-between align-items-center">
             <h2 class="box_title">Có thể bạn sẽ thích</h2>
-            <a href="./list.html" class="box_getAll">xem thêm</a>
           </div>
 
           <div>
@@ -377,14 +376,15 @@
   </section>
 
   <!-- Modal -->
-<div class="modal fade" id="reviewUpdateModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      
+  <div class="modal fade" id="reviewUpdateModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        
 
+      </div>
     </div>
   </div>
-</div>
+
 @endsection
 
 @push('js')
@@ -428,23 +428,20 @@
             else reviewRating+= '<i class="bx bxs-heart" style="color: #6C757D"></i>';    
           }
           
-          const auth = `{{ session()->has('currentUser') ? 1 : 0 }}`
           let options = ''
-          if(auth) {
-            const deleteUrl = '{{ url('/reviews') }}' + `/${item.id}`
+          const deleteUrl = '{{ url('/reviews') }}' + `/${item.id}`
 
-            options = item.user_id == '{{ session('currentUser')['id'] }}'
-              ? 
-              `
-                <button class="btn p-0" onclick="handleUpdateReviewModal(${item.id})" role="button" data-bs-toggle="modal" data-bs-target="#reviewUpdateModal"><i class='bx bxs-edit'></i></button>
-                <form action="${deleteUrl}" method="POST" class="d-inline">
-                  @method('DELETE')
-                  @csrf
-                  <button type="submit" class="btn p-0 ms-1"><i class='bx bxs-trash'></i></button>
-                </form>
-              `
-              : ''
-          }
+          options = item.user_id == `{{ session()->has('currentUser') ? session('currentUser')['id'] : 0 }}`
+          ? 
+          `
+            <button class="btn p-0" onclick="handleUpdateReviewModal(${item.id})" role="button" data-bs-toggle="modal" data-bs-target="#reviewUpdateModal"><i class='bx bxs-edit'></i></button>
+            <form action="${deleteUrl}" method="POST" class="d-inline">
+              @method('DELETE')
+              @csrf
+              <button type="submit" class="btn p-0 ms-1"><i class='bx bxs-trash'></i></button>
+            </form>
+          `
+          : ''
 
           const review = 
           `

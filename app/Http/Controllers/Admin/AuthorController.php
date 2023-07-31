@@ -8,13 +8,14 @@ use App\Models\Book;
 use App\Repository\AuthorRepository;
 use App\Repository\BookRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class AuthorController extends Controller
 {
 
   private $authorRepository;
   private $bookRepository;
-  private $pagination = 2;
+  private $pagination = 10;
 
   public function __construct(AuthorRepository $authorRepository, BookRepository $bookRepository) {
     $this->middleware(['auth', 'admin']);
@@ -65,7 +66,8 @@ class AuthorController extends Controller
 
     try {
       $author = [
-        'name' => $request->author
+        'name' => $request->author,
+        'slug' => Str::slug($request->author)
       ];
 
       $createdAuthor = $this->authorRepository->add($author);

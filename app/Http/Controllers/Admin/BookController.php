@@ -23,7 +23,7 @@ class BookController extends Controller
   private $fileTypeRepository;
   private $collectionRepository;
 
-  private $pagination = 3;
+  private $pagination = 10;
 
   public function __construct(
     BookRepository $bookRepository, 
