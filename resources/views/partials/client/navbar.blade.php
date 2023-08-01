@@ -38,9 +38,7 @@
         @if (session('currentUser'))
 
           <div class="header_dropdown me-2">
-            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
-              data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
               <span class="ms-1 fs-5">{{ session('currentUser')['username'] }}</span>
             </a>
 
@@ -144,10 +142,8 @@
           @if (session('currentUser'))
 
             <div class="header_dropdown">
-              <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
-                data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32"
-                  class="rounded-circle">
+              <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bx bx-user"></i>
               </a>
               <ul class="dropdown-menu dropdown-menu-end text-small" aria-labelledby="dropdownUser1">
                 <li><a class="dropdown-item" href="#">Tài Khoản</a></li>

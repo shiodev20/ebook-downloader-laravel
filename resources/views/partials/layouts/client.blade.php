@@ -15,6 +15,7 @@
   @include('partials.client.navbar')
   
   @include('partials.modals.login')
+  @include('partials.modals.register')
   @include('partials.modals.search')
 
   @yield('content')

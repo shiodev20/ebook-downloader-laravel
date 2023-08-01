@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\QuoteController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\client\PageController;
 use App\Http\Controllers\Client\ReviewController;
 use App\Http\Controllers\DownloadController;
@@ -47,6 +48,7 @@ use Illuminate\Support\Facades\Storage;
  
 
 Route::post('/login', [LoginController::class, 'index'])->name('auth.login');
+Route::post('/register', [RegisterController::class, 'index'])->name('auth.register');
 Route::get('/logout', [LogoutController::class, 'index'])->name('auth.logout');
 
 Route::get('/', [PageController::class, 'home'])->name('client.home');

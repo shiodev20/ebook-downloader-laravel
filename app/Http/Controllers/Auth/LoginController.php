@@ -60,18 +60,18 @@ class LoginController extends Controller
         $request->session()->put('currentUser', $currentUser);
 
 
-          return ($user->role_id === RoleEnum::MEMBER->value)
-            ? 
-              [
-                'status' => true,
-                'message' => 'Đăng nhập thành công',
-                'redirectUrl' => route('client.home')
-              ]
-            : 
-              [
-                'status' => true,
-                'redirectUrl' => route('admin.dashboard')
-              ];
+        return ($user->role_id === RoleEnum::MEMBER->value)
+          ? 
+            [
+              'status' => true,
+              'message' => 'Đăng nhập thành công',
+              'redirectUrl' => route('client.home')
+            ]
+          : 
+            [
+              'status' => true,
+              'redirectUrl' => route('admin.dashboard')
+            ];
 
       } else {
         return [

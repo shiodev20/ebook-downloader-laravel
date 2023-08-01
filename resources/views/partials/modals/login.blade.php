@@ -1,9 +1,10 @@
-<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
-        <div class="login-form" id="loginForm">
-          <form action="{{ route('auth.login') }}" method="POST">
+        <div class="login-form">
+          
+          <form action="{{ route('auth.login') }}" method="POST" id="loginForm">
             @csrf
 
             <img src="{{ asset('images/logo-waka.png') }}" class="my-4">
@@ -34,7 +35,10 @@
             <button class="btn btn-lg w-100 mb-2 login-form_btn login-form_btn--google">Đăng nhập bằng Google <i class='bx bxl-google'></i></button>
             <button class="btn btn-lg w-100 mb-2 login-form_btn login-form_btn--facebook">Đăng nhập bằng Facebook <i class='bx bxl-facebook'></i></button>
 
-            <div class="login-form_bottom mt-3">Chưa có tài khoản ? <a type="button" data-bs-toggle="modal" data-bs-target="#signupModal">Đăng ký</a></div>
+            <div class="login-form_bottom mt-3">
+              Chưa có tài khoản ? <a type="button" data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal">Đăng ký</a>
+            </div>
+
           </form>
 
         </div>

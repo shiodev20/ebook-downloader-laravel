@@ -351,6 +351,7 @@
   <script src="{{ asset('frontend/js/sliders/quoteSlider.js') }}"></script>
   <script src="{{ asset('frontend/js/sliders/collectionSlider.js') }}"></script>
 
+  {{-- Most download book --}}
   <script>
     function getMostDownloadBooks(genre = null) {
       const url = genre ? '{{ route('ajax.mostDownloadBook') }}' + `?genre=${genre}` : '{{ route('ajax.mostDownloadBook') }}'
