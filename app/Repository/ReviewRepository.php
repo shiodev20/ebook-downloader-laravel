@@ -81,25 +81,26 @@ class ReviewRepository implements IRepository
 
 
   public function delete($review) {
-
+    
     DB::beginTransaction();
     try {
       $bookId = $review->book_id;
 
       $review->delete();
-
+  
       $book = Book::find($bookId);
-
+  
       $sumOfRates = $book->reviews->reduce(function($carry, $review) {
         return $carry + $review->rate;
       }, 0);
-
-      $rating = $sumOfRates / $book->reviews->count();
-
+  
+  
+      $rating = $sumOfRates == 0 ? 0 : ($sumOfRates/ $book->reviews->count());
+  
       $book->update([
         'rating' => $rating
       ]);
-
+  
       DB::commit();
 
       return true;

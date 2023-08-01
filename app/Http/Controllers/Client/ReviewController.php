@@ -78,16 +78,17 @@ class ReviewController extends Controller
   }
 
   public function destroy(Review $review) {
+    if(!Gate::allows('delete-review', $review)) {
+      return redirect()->back()->with('errorMessage', 'Bạn không có quyền xóa');
+    }
+
+    $deletedReview = $this->reviewRepository->delete($review);
+
+    if($deletedReview) return redirect()->back()->with('successMessage', 'Cập nhật đánh giá thành công');
+    return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+
     try {
-      if(!Gate::allows('delete-review', $review)) {
-        return redirect()->back()->with('errorMessage', 'Bạn không có quyền cập nhật');
-      }
-  
-      $deletedReview = $this->reviewRepository->delete($review);
-
-      if($deletedReview) return redirect()->back()->with('successMessage', 'Cập nhật đánh giá thành công');
-      return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
-
+      
     } catch (\Throwable $th) {
       return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
     }
