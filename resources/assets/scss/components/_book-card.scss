@@ -215,3 +215,45 @@
   }
 }
 
+
+.book-card_horizontal {
+  &_title {
+    margin-bottom: 1.5rem;
+    font-size: $subtitle-size;
+    font-style: italic;
+    color: $main-color;
+    text-decoration: underline;
+  }
+
+  &_info {
+    display: flex;
+
+    &_image {
+      flex-basis: 30%;
+      max-width: 120px;
+      max-height: 140px;
+      width: 100%;
+      height: 100%;
+      border-radius: $radius;
+      box-shadow: $box-shadow;
+      
+    }
+
+    &_meta {
+      flex-basis: 70%;
+      margin-left: 2rem;
+
+      &_item {
+        margin: 1rem 0;
+        font-size: $text-size;
+        font-weight: bold;
+        color: $gray-color;
+
+        span {
+          color: $main-color;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}

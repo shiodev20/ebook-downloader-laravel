@@ -29,3 +29,11 @@ createRatingInputs.forEach(input => {
   })
 })
 
+const toastMessage = document.querySelector('.toast-message')
+if(toastMessage) {
+  const toastMessageCloseBtn = document.querySelector('.toast-message_close')
+
+  toastMessageCloseBtn.addEventListener('click', () => {
+    toastMessage.style.left = '-90rem';
+  })
+}

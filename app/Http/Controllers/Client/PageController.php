@@ -45,6 +45,7 @@ class PageController extends Controller
       $genres = $this->genreRepository->getAll();
       $quotes = $this->quoteRepository->getAll();
 
+      $randomBook = $this->bookRepository->getAll()->random(1)->first();
       $newestBooks = $this->bookRepository->getAll()->paginate(12);
       $mostDownloadBooks = $this->bookRepository->getMostDownloadBooks('all')->paginate(12);
       $recommendBooks = $this->bookRepository->getRecommendBooks()->paginate(12);
@@ -56,6 +57,7 @@ class PageController extends Controller
         'newestBooks',
         'mostDownloadBooks',
         'recommendBooks',
+        'randomBook',
         'collections',
       ]));
 

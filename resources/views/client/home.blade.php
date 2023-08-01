@@ -317,6 +317,32 @@
     </div>
   </div>
 </section>
+
+ {{-- Random book --}}
+ <x-toast>
+  <a href="{{ route('client.detail', ['slug' => $randomBook->slug]) }}">
+    <div class="book-card_horizontal">
+      <h1 class="book-card_horizontal_title">Sách cho ngày mới</h1>
+      <div class="book-card_horizontal_info">
+        <img class="book-card_horizontal_info_image" src="{{ url('storage/'.$randomBook->cover_url) }}" alt="{{ $randomBook->title }}">
+
+        <div class="book-card_horizontal_info_meta">
+          <div class="book-card_horizontal_info_meta_item">Tên sách: <span>{{ $randomBook->title }}</span></div>
+          <div class="book-card_horizontal_info_meta_item">Tác giả: <span>{{ $randomBook->author ? $randomBook->author->name : '' }}</span></div>
+          <div class="book-card_horizontal_info_meta_item">Thể loại: 
+            <span>
+              @foreach ($randomBook->genres as $genre)
+                {{ $genre->name }} {{ $loop->index < $randomBook->genres->count() - 1 ? ',' : '' }}
+              @endforeach
+            </span>             
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </a>
+</x-toast>
+
 @endsection
 
 @push('js')
@@ -405,5 +431,13 @@
       })
 
     }
+  </script>
+
+  {{-- toast --}}
+  <script>
+    setTimeout(() => {
+      const toastMessage = document.querySelector('.toast-message')
+      toastMessage.style.left = '2rem';
+    }, 500);
   </script>
 @endpush

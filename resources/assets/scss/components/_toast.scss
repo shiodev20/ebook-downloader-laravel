@@ -1,0 +1,38 @@
+.toast-message {
+  position: fixed;
+  bottom: 5rem;
+  left: -90rem;
+  max-width: 500px; 
+  width: 90%;
+  padding: 3rem 2rem 2rem 2rem;
+  font-size: $text-size;
+  background: $light-color;
+  border-top: 4px solid $main-color;
+  border-radius: $radius;
+  box-shadow: $box-shadow;
+  transition: left 0.5s ease;
+  z-index: 10;
+
+  &_close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: $icon-size;
+    color: $gray-color;
+    cursor: pointer;
+  }
+   
+  &_title {
+    color: $main-color;
+    font-size: $subtitle-size;
+
+    span {
+      font-weight: bold;
+    }
+  }
+
+  &_desc {
+    color: $gray-color;
+    font-style: italic;
+  }
+}

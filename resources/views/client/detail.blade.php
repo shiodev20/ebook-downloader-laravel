@@ -71,7 +71,7 @@
                             @foreach ($book->bookFiles as $bookFile)
                               <a 
                                 href="{{ route('downloads.index', ['book' => $book->id]) .'?url=' . $bookFile->file_url }}" 
-                                class="book-detail_info_download_item"
+                                class="book-detail_info_download_item download-btn"
                                 style="background-color: {{ $bookFile->fileType->color }}"  
                               >{{ $bookFile->fileType->name }}</a>
                             @endforeach
@@ -106,12 +106,15 @@
               </div>
             </div>
 
+           
           </div>
 
         </div>
         
       </div>
     </div>
+
+
   </section>
 
 
@@ -428,259 +431,279 @@
     </div>
   </div>
 
+  {{-- Toast --}}
+  <x-toast>
+    <div class="toast-message_title">- Bạn đã tải sách <span>"{{ $book->title }}"</span></div>
+    <div class="toast-message_desc">Nếu bạn có điều kiện, hãy mua sách giấy để ủng hộ tác giả và nhà xuất bản nhé!</div>
+  </x-toast>
 @endsection
 
 @push('js')
-<script src="{{ asset('frontend/js/sliders/bookSlider.js') }}"></script>
+  <script src="{{ asset('frontend/js/sliders/bookSlider.js') }}"></script>
 
-{{-- Pagination --}}
-<script>
-  function getPagination(url) {
+  {{-- Pagination --}}
+  <script>
+    function getPagination(url) {
 
-    displayLoading('#reviewContent')
+      displayLoading('#reviewContent')
 
-    fetch(url)
-    .then(response => response.json())
-    .then(result => {
-      hideLoading('#reviewContent')
+      fetch(url)
+      .then(response => response.json())
+      .then(result => {
+        hideLoading('#reviewContent')
 
-      const container = document.querySelector('#reviewContent')
-      container.innerHTML = 
-      `
-        <div id="reviews">
-        </div>
+        const container = document.querySelector('#reviewContent')
+        container.innerHTML = 
+        `
+          <div id="reviews">
+          </div>
 
-        <div id="reviewPagination" class="mt-4 d-flex justify-content-center justify-content-md-end">
-          <nav>
-            <ul class="pagination">
-              
-            </ul>
-          </nav>
-        </div>
-      `
+          <div id="reviewPagination" class="mt-4 d-flex justify-content-center justify-content-md-end">
+            <nav>
+              <ul class="pagination">
+                
+              </ul>
+            </nav>
+          </div>
+        `
 
-      if(result.data.length > 0) {
+        if(result.data.length > 0) {
 
-        const reviews = document.querySelector('#reviewContent #reviews')
-        reviews.innerHTML = ''
-    
-        result.data.forEach((item, idx) => {
-          let reviewRating = ``;
-          for (let i = 1; i <= 5; i++) {
-            if(i <= Number(item.rate))  reviewRating += '<i class="bx bxs-heart"></i>';
-            else reviewRating+= '<i class="bx bxs-heart" style="color: #6C757D"></i>';    
-          }
-          
-          let options = ''
-          const deleteUrl = '{{ url('/reviews') }}' + `/${item.id}`
+          const reviews = document.querySelector('#reviewContent #reviews')
+          reviews.innerHTML = ''
+      
+          result.data.forEach((item, idx) => {
+            let reviewRating = ``;
+            for (let i = 1; i <= 5; i++) {
+              if(i <= Number(item.rate))  reviewRating += '<i class="bx bxs-heart"></i>';
+              else reviewRating+= '<i class="bx bxs-heart" style="color: #6C757D"></i>';    
+            }
+            
+            let options = ''
+            const deleteUrl = '{{ url('/reviews') }}' + `/${item.id}`
 
-          options = item.user_id == `{{ session()->has('currentUser') ? session('currentUser')['id'] : 0 }}`
-          ? 
-          `
-            <button class="btn p-0" onclick="handleUpdateReviewModal(${item.id})" role="button" data-bs-toggle="modal" data-bs-target="#reviewUpdateModal"><i class='bx bxs-edit'></i></button>
-            <form action="${deleteUrl}" method="POST" class="d-inline">
-              @method('DELETE')
-              @csrf
-              <button type="submit" class="btn p-0 ms-1"><i class='bx bxs-trash'></i></button>
-            </form>
-          `
-          : ''
+            options = item.user_id == `{{ session()->has('currentUser') ? session('currentUser')['id'] : 0 }}`
+            ? 
+            `
+              <button class="btn p-0" onclick="handleUpdateReviewModal(${item.id})" role="button" data-bs-toggle="modal" data-bs-target="#reviewUpdateModal"><i class='bx bxs-edit'></i></button>
+              <form action="${deleteUrl}" method="POST" class="d-inline">
+                @method('DELETE')
+                @csrf
+                <button type="submit" class="btn p-0 ms-1"><i class='bx bxs-trash'></i></button>
+              </form>
+            `
+            : ''
 
-          const review = 
-          `
-            <div class="book-review_review pb-5">
-              <div class="row g-4">
-    
-                <div class="col-sm-12 col-md-3">
-                  <div class="book-review_review_author d-flex flex-row flex-md-column justify-content-between align-items-center align-items-md-start">
-                    <div
-                      class="book-review_review_author_item d-flex flex-row flex-md-column align-items-center  align-items-md-start">
-                      <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle p-1">
-                      <span class="p-1">${ item.username }</span>
+            const review = 
+            `
+              <div class="book-review_review pb-5">
+                <div class="row g-4">
+      
+                  <div class="col-sm-12 col-md-3">
+                    <div class="book-review_review_author d-flex flex-row flex-md-column justify-content-between align-items-center align-items-md-start">
+                      <div
+                        class="book-review_review_author_item d-flex flex-row flex-md-column align-items-center  align-items-md-start">
+                        <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle p-1">
+                        <span class="p-1">${ item.username }</span>
+                      </div>
+                      <span class="book-review_review_author_item p-1">${item.createdAt}</span>
                     </div>
-                    <span class="book-review_review_author_item p-1">${item.createdAt}</span>
                   </div>
-                </div>
-    
-                <div class="col-sm-12 col-md-9">
-                  <div class="book-review_review_rating">
-                    ${reviewRating}
-                  </div>
+      
+                  <div class="col-sm-12 col-md-9">
+                    <div class="book-review_review_rating">
+                      ${reviewRating}
+                    </div>
 
-                  <div class="book-review_review_content">
-                    <p>${item.content}</p>
-                  </div>
+                    <div class="book-review_review_content">
+                      <p>${item.content}</p>
+                    </div>
 
-                  <div class="book-review_review_options">
-                    ${options}
+                    <div class="book-review_review_options">
+                      ${options}
+                    </div>
+                  
                   </div>
-                 
                 </div>
               </div>
-            </div>
-          `
+            `
+      
+            reviews.innerHTML += review
+          })
+      
+          const pagination = document.querySelector('#reviewPagination .pagination')
+          pagination.innerHTML = ''
     
-          reviews.innerHTML += review
-        })
-    
-        const pagination = document.querySelector('#reviewPagination .pagination')
-        pagination.innerHTML = ''
-  
-        result.links.forEach((link, idx) => {
-          let linkElement = ``;
-    
-          if(idx == 0) {
-            linkElement = 
-            `
-              <li class="page-item ${link.url ? '' : 'disabled'}" style="cursor: pointer;">
-                <a class="page-link" onclick="getPagination('${link.url ? link.url : ''}')"><i class='bx bx-chevron-left'></i></a>
-              </li>
-            `
-          }
-          else if(idx == result.links.length - 1) {
-            linkElement = 
-            `
-              <li class="page-item ${link.url ? '' : 'disabled'}" style="cursor: pointer;">
-                <a class="page-link" onclick="getPagination('${link.url ? link.url : ''}')"><i class='bx bx-chevron-right'></i></a>
-              </li>
-            `
-          }
-          else {
-            linkElement = 
-            `
-              <li class="page-item ${link.active ? 'active' : ''}" style="cursor: pointer;">
-                <a class="page-link" onclick="getPagination('${link.url ? link.url : ''}')">${link.label}</a>
-              </li>
-            `
-          }
-          
-          pagination.innerHTML += linkElement
-        })
+          result.links.forEach((link, idx) => {
+            let linkElement = ``;
+      
+            if(idx == 0) {
+              linkElement = 
+              `
+                <li class="page-item ${link.url ? '' : 'disabled'}" style="cursor: pointer;">
+                  <a class="page-link" onclick="getPagination('${link.url ? link.url : ''}')"><i class='bx bx-chevron-left'></i></a>
+                </li>
+              `
+            }
+            else if(idx == result.links.length - 1) {
+              linkElement = 
+              `
+                <li class="page-item ${link.url ? '' : 'disabled'}" style="cursor: pointer;">
+                  <a class="page-link" onclick="getPagination('${link.url ? link.url : ''}')"><i class='bx bx-chevron-right'></i></a>
+                </li>
+              `
+            }
+            else {
+              linkElement = 
+              `
+                <li class="page-item ${link.active ? 'active' : ''}" style="cursor: pointer;">
+                  <a class="page-link" onclick="getPagination('${link.url ? link.url : ''}')">${link.label}</a>
+                </li>
+              `
+            }
+            
+            pagination.innerHTML += linkElement
+          })
 
-      }
+        }
 
-    })
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const url = '{{ route('ajax.bookReviews', ['book' => $book->id]) }}' + '?page=1'
-    getPagination(url);
-  })
-
-</script>
-
-{{-- Clear create review validation --}}
-<script>
-  const reviewTextarea = document.querySelector('#reviewForm textarea[name=content]')
-  const rateRadios = document.querySelectorAll('#reviewForm input[name=rate]')
-
-  reviewTextarea.addEventListener('input', () => {
-    const invalidFeedback = document.querySelector('textarea[name=content] + .invalid-feedback')
-    if(invalidFeedback) {
-      invalidFeedback.style.visibility = 'hidden'
-      invalidFeedback.style.height = '0px'
+      })
     }
-  })
 
-  rateRadios.forEach(radio => {
-    radio.addEventListener('change', () => {
-      const invalidFeedback = document.querySelector('.book-review_form_rating + .invalid-feedback')
+    document.addEventListener('DOMContentLoaded', () => {
+      const url = '{{ route('ajax.bookReviews', ['book' => $book->id]) }}' + '?page=1'
+      getPagination(url);
+    })
+
+  </script>
+
+  {{-- Clear create review validation --}}
+  <script>
+    const reviewTextarea = document.querySelector('#reviewForm textarea[name=content]')
+    const rateRadios = document.querySelectorAll('#reviewForm input[name=rate]')
+
+    reviewTextarea.addEventListener('input', () => {
+      const invalidFeedback = document.querySelector('textarea[name=content] + .invalid-feedback')
       if(invalidFeedback) {
         invalidFeedback.style.visibility = 'hidden'
         invalidFeedback.style.height = '0px'
       }
     })
-  })
-</script>
 
-{{-- Update review --}}
-<script>
-  function handleUpdateReviewModal(reviewId) {
-    const url = `{{ url('/reviews') }}` + `/${reviewId}`
-
-    fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      const reviewUpdateModal = document.querySelector('#reviewUpdateModal .modal-content')
-
-      const url = '{{ url('/reviews') }}' + `/${data.id}`;
-
-      reviewUpdateModal.innerHTML =
-      `
-        <form id="reviewUpdateForm" action="${url}" method="POST">
-          @method('PUT')
-          @csrf
-
-          <div class="modal-header">
-            <h5 class="modal-title" id="reviewUpdateModalLabel">Cập nhật đánh giá</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-
-          <div class="modal-body">
-              <div class="mb-3 book-review_form_review">
-                <textarea class="form-control" rows="3" name="content" placeholder="Đánh giá">${ data.content }</textarea>
-              </div>
-
-              <div class="mb-3 book-review_form_rating d-flex">
-                <div class="book-review_form_rating_item">
-                  <input id="reviewUpdateStar1" name="rate" value="1" type="radio">
-                  <label for="reviewUpdateStar1"><i class="bx bxs-heart"></i></label>
-                </div>
-
-                <div class="book-review_form_rating_item">
-                  <input id="reviewUpdateStar2" name="rate" value="2" type="radio">
-                  <label for="reviewUpdateStar2"><i class="bx bxs-heart"></i></label>
-                </div>
-
-                <div class="book-review_form_rating_item">
-                  <input id="reviewUpdateStar3" name="rate" value="3" type="radio">
-                  <label for="reviewUpdateStar3"><i class="bx bxs-heart"></i></label>
-                </div>
-
-                <div class="book-review_form_rating_item">
-                  <input id="reviewUpdateStar4" name="rate" value="4" type="radio">
-                  <label for="reviewUpdateStar4"><i class="bx bxs-heart"></i></label>
-                </div>
-
-                <div class="book-review_form_rating_item">
-                  <input id="reviewUpdateStar5" name="rate" value="5" type="radio">
-                  <label for="reviewUpdateStar5"><i class="bx bxs-heart"></i></label>
-                </div>
-
-              </div>
-              @error('rate')
-                <div class="invalid-feedback d-block fs-5">{{ $message }}</div>
-              @enderror
-          </div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary fs-5" data-bs-dismiss="modal">Đóng</button>
-            <button type="submit" class="btn bg-main text-white fs-5">Cập nhật</button>
-          </div>
-
-        </form>
-      `
-
-      const updateRatingInputs = document.querySelectorAll('#reviewUpdateForm .book-review_form_rating input[type=radio]')
-      updateRatingInputs.forEach(input => {
-        input.addEventListener('change', () => {
-          const value = input.value
-          
-          for (let i = 1; i <= updateRatingInputs.length; i++) {
-            const inputIcon = updateRatingInputs[i - 1].nextElementSibling.firstChild;
-            inputIcon.style.color = '#6c757d';
-          }
-
-          for (let i = 1; i <= value; i++) {
-            const inputIcon = updateRatingInputs[i - 1].nextElementSibling.firstChild;
-            inputIcon.style.color = '#fe7e73';
-          }
-        })
+    rateRadios.forEach(radio => {
+      radio.addEventListener('change', () => {
+        const invalidFeedback = document.querySelector('.book-review_form_rating + .invalid-feedback')
+        if(invalidFeedback) {
+          invalidFeedback.style.visibility = 'hidden'
+          invalidFeedback.style.height = '0px'
+        }
       })
-
-
     })
-  }
-</script>
+  </script>
 
+  {{-- Update review --}}
+  <script>
+    function handleUpdateReviewModal(reviewId) {
+      const url = `{{ url('/reviews') }}` + `/${reviewId}`
+
+      fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        const reviewUpdateModal = document.querySelector('#reviewUpdateModal .modal-content')
+
+        const url = '{{ url('/reviews') }}' + `/${data.id}`;
+
+        reviewUpdateModal.innerHTML =
+        `
+          <form id="reviewUpdateForm" action="${url}" method="POST">
+            @method('PUT')
+            @csrf
+
+            <div class="modal-header">
+              <h5 class="modal-title" id="reviewUpdateModalLabel">Cập nhật đánh giá</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="mb-3 book-review_form_review">
+                  <textarea class="form-control" rows="3" name="content" placeholder="Đánh giá">${ data.content }</textarea>
+                </div>
+
+                <div class="mb-3 book-review_form_rating d-flex">
+                  <div class="book-review_form_rating_item">
+                    <input id="reviewUpdateStar1" name="rate" value="1" type="radio">
+                    <label for="reviewUpdateStar1"><i class="bx bxs-heart"></i></label>
+                  </div>
+
+                  <div class="book-review_form_rating_item">
+                    <input id="reviewUpdateStar2" name="rate" value="2" type="radio">
+                    <label for="reviewUpdateStar2"><i class="bx bxs-heart"></i></label>
+                  </div>
+
+                  <div class="book-review_form_rating_item">
+                    <input id="reviewUpdateStar3" name="rate" value="3" type="radio">
+                    <label for="reviewUpdateStar3"><i class="bx bxs-heart"></i></label>
+                  </div>
+
+                  <div class="book-review_form_rating_item">
+                    <input id="reviewUpdateStar4" name="rate" value="4" type="radio">
+                    <label for="reviewUpdateStar4"><i class="bx bxs-heart"></i></label>
+                  </div>
+
+                  <div class="book-review_form_rating_item">
+                    <input id="reviewUpdateStar5" name="rate" value="5" type="radio">
+                    <label for="reviewUpdateStar5"><i class="bx bxs-heart"></i></label>
+                  </div>
+
+                </div>
+                @error('rate')
+                  <div class="invalid-feedback d-block fs-5">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary fs-5" data-bs-dismiss="modal">Đóng</button>
+              <button type="submit" class="btn bg-main text-white fs-5">Cập nhật</button>
+            </div>
+
+          </form>
+        `
+
+        const updateRatingInputs = document.querySelectorAll('#reviewUpdateForm .book-review_form_rating input[type=radio]')
+        updateRatingInputs.forEach(input => {
+          input.addEventListener('change', () => {
+            const value = input.value
+            
+            for (let i = 1; i <= updateRatingInputs.length; i++) {
+              const inputIcon = updateRatingInputs[i - 1].nextElementSibling.firstChild;
+              inputIcon.style.color = '#6c757d';
+            }
+
+            for (let i = 1; i <= value; i++) {
+              const inputIcon = updateRatingInputs[i - 1].nextElementSibling.firstChild;
+              inputIcon.style.color = '#fe7e73';
+            }
+          })
+        })
+
+
+      })
+    }
+  </script>
+
+  {{-- Toast --}}
+  <script>
+    const downloadBtns = document.querySelectorAll('.download-btn')
+    downloadBtns.forEach(button => {
+      button.addEventListener('click', () => {
+        const toastMessage = document.querySelector('.toast-message')
+        toastMessage.style.left = '2rem';
+
+        setTimeout(() => {
+          toastMessage.style.left = '-90rem';
+        }, 5000);
+        
+      })
+    })
+  </script>
 @endpush

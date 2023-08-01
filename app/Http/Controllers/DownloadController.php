@@ -15,8 +15,6 @@ class DownloadController extends Controller
 
   public function index(Request $request, Book $book) {
 
-    dd(auth()->user);
-
     $filename = env('APP_NAME') . '-' . $book->slug . '.' .  pathinfo($request->url, PATHINFO_EXTENSION);
 
     if(Gate::allows('is-member')) {
