@@ -40,7 +40,7 @@
 
         <div class="box_header d-flex justify-content-between align-items-center">
           <h2 class="box_title">sách mới nhất</h2>
-          <a href="./list.html" class="box_getAll">xem thêm</a>
+          <a href="{{ route('client.booksByCollection', ['slug' => 'sach-moi-nhat']) }}" class="box_getAll">xem thêm</a>
         </div>
 
         <div>
@@ -157,8 +157,13 @@
                 </div> 
               @endforeach
 
+              <div class="text-center">
+                <a href="{{ route('client.booksByCollection', ['slug' => 'sach-tai-nhieu-nhat']).'?genre=all' }}" class="box_getAll">xem thêm</a>
+              </div>
             </div>
           </div>
+
+
         </div>
       </div>
     </div>
@@ -166,7 +171,7 @@
 </section>
 
  <!-- Quote -->
- <section id="quote">
+<section id="quote">
   <div class="container-fluid bg-main mt-5">
     <div class="container p-0">
 
@@ -205,8 +210,8 @@
       <div class="box py-4 px-4">
 
         <div class="box_header d-flex justify-content-between align-items-center">
-          <h2 class="box_title">sách nên đọc</h2>
-          <a href="/" class="box_getAll">xem thêm</a>
+          <h2 class="box_title">sách hay nên đọc</h2>
+          <a href="{{ route('client.booksByCollection', ['slug' => 'sach-hay-nen-doc'])}}" class="box_getAll">xem thêm</a>
         </div>
 
         <div>
@@ -324,6 +329,10 @@
     function getMostDownloadBooks(genre = null) {
       const url = genre ? '{{ route('ajax.mostDownloadBook') }}' + `?genre=${genre}` : '{{ route('ajax.mostDownloadBook') }}'
 
+      const collectionUrl = genre 
+        ? '{{ url('/page/collections') }}' + '/sach-tai-nhieu-nhat' + `?genre=${genre}` 
+        : '{{ url('/page/collections') }}' + '/sach-tai-nhieu-nhat' + `?genre=all` 
+
       let container = document.querySelector('#mostDownloadBooks .box-content .row')
       container.innerHTML = ''
 
@@ -371,6 +380,14 @@
 
             container.innerHTML += item;
           });
+
+          container.innerHTML += 
+          `
+            <div class="text-center">
+              <a href="${collectionUrl}" class="box_getAll">xem thêm</a>
+            </div>
+          
+          `
 
           document.querySelectorAll('.read-most_nav_link').forEach(link => {
             if(link.classList.contains('active')) link.classList.remove('active');

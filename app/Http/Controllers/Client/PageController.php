@@ -10,6 +10,7 @@ use App\Repository\FileTypeRepository;
 use App\Repository\GenreRepository;
 use App\Repository\PublisherRepository;
 use App\Repository\QuoteRepository;
+use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
@@ -138,20 +139,59 @@ class PageController extends Controller
   }
 
   public function booksByPublisher(string $slug) {
-    $genres = $this->genreRepository->getAll();
-
-    $publisher = $this->publisherRepository->find([['slug', '=', $slug]])->first();
-
-    $books = $this->bookRepository->getByPublisher($publisher->id)->paginate(2);
-    
-    $pageTitle = $publisher->name;
-
-    return view('client.collection', compact([
-      'genres',
-      'books',
-      'pageTitle'
-    ]));
     try {
+      $genres = $this->genreRepository->getAll();
+  
+      $publisher = $this->publisherRepository->find([['slug', '=', $slug]])->first();
+  
+      $books = $this->bookRepository->getByPublisher($publisher->id)->paginate(2);
+      
+      $pageTitle = $publisher->name;
+  
+      return view('client.collection', compact([
+        'genres',
+        'books',
+        'pageTitle'
+      ]));
+
+    } catch (\Throwable $th) {
+      return redirect()->back()->with('errorMessage', 'lỗi hệ thống vui lòng thử lại sau');
+    }
+  }
+
+  public function booksByCollection(Request $request, string $slug) {
+    try {
+      $genres = $this->genreRepository->getAll();
+      $books = [];
+      $pageTitle = '';
+
+      switch ($slug) {
+        case 'sach-moi-nhat':
+          $pageTitle = 'Sách mới nhất';
+          $books = $this->bookRepository->getAll()->paginate(12);
+          break;
+
+        case 'sach-hay-nen-doc':
+          $pageTitle = 'Sách hay nên đọc';
+          $books = $this->bookRepository->getRecommendBooks()->paginate(12);
+          break;
+        
+        case 'sach-tai-nhieu-nhat':
+          $genre = $request->query('genre');
+
+          $pageTitle = $genre != 'all'
+            ? 'Sách tải nhiều nhất / ' . $this->genreRepository->getById($genre)->name
+            : 'Sách tải nhiều nhất / tất cả';
+
+          $books = $this->bookRepository->getMostDownloadBooks($genre)->paginate(12);
+          break;
+      }
+
+      return view('client.collection', compact([
+        'genres',
+        'books',
+        'pageTitle'
+      ]));
 
     } catch (\Throwable $th) {
       return redirect()->back()->with('errorMessage', 'lỗi hệ thống vui lòng thử lại sau');

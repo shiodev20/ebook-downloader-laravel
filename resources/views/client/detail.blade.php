@@ -31,7 +31,13 @@
                     </div>
   
                     <div class="book-detail_info_meta">
-                      <div class="book-detail_info_meta_item">Tác giả: <span><a href="{{ route('client.booksByAuthor', ['slug' => $book->author->slug]) }}">{{ $book->author ? $book->author->name : '' }}</a></span> </div>
+
+                      <div class="book-detail_info_meta_item">Tác giả: 
+                        @if ($book->author_id)
+                          <span><a href="{{ route('client.booksByAuthor', ['slug' => $book->author->slug]) }}">{{ $book->author->name }}</a></span> 
+                        @endif 
+                      </div>
+
                       <div class="book-detail_info_meta_item">Thể loại: 
                         <span>
                           @foreach ($book->genres as $genre)
@@ -39,7 +45,13 @@
                           @endforeach
                         </span> 
                       </div>
-                      <div class="book-detail_info_meta_item">Nhà xuất bản: <span><a href="{{ route('client.booksByPublisher', ['slug' => $book->publisher->slug]) }}">{{ $book->publisher ? $book->publisher->name : '' }}</a></span></div>
+
+                      <div class="book-detail_info_meta_item">Nhà xuất bản: 
+                        @if ($book->publisher_id)
+                          <span><a href="{{ route('client.booksByPublisher', ['slug' => $book->publisher->slug]) }}">{{ $book->publisher->name }}</a></span>
+                        @endif
+                      </div>
+
                       <div class="book-detail_info_meta_item">Số trang: <span>{{ $book->num_pages }}</span></div>
                       <div class="book-detail_info_meta_item">Ngày cập nhật: <span>{{ date_format(date_create($book->publish_date), 'd-m-Y') }}</span></div>
                       <div class="book-detail_info_meta_item book-detail_info_meta_description">{{ $book->description }}</div>
@@ -121,6 +133,10 @@
                         <div class="book-card_info">
                           <div class="book-card_info_title">{{ $sameAuthorBook->title }}</div>
                           <div class="book-card_info_meta">{{ $sameAuthorBook->author ? $book->author->name : '' }}</div>
+                          <div class="most-download-book_card_meta">{{ number_format($book->downloads, 0, '.', ',') }} luợt tải</div>
+                          <div class="most-download-book_card_meta most-download-book_card_review">
+                            <span>{{ $book->rating == 0 ? 0 : number_format($book->rating, 1, '.', ',') }} <i class='bx bxs-heart'></i></span>
+                          </div>
                         </div>
 
                       </a>
@@ -289,6 +305,10 @@
                         <div class="book-card_info">
                           <div class="book-card_info_title">{{ $sameGenreBook->title }}</div>
                           <div class="book-card_info_meta">{{ $sameGenreBook->author ? $sameGenreBook->author->name : '' }}</div>
+                          <div class="most-download-book_card_meta">{{ number_format($book->downloads, 0, '.', ',') }} luợt tải</div>
+                          <div class="most-download-book_card_meta most-download-book_card_review">
+                            <span>{{ $book->rating == 0 ? 0 : number_format($book->rating, 1, '.', ',') }} <i class='bx bxs-heart'></i></span>
+                          </div>
                         </div>
 
                       </a>
@@ -351,6 +371,10 @@
                         <div class="book-card_info">
                           <div class="book-card_info_title">{{ $recommendBook->title }}</div>
                           <div class="book-card_info_meta">{{ $recommendBook->author ? $recommendBook->author->name : '' }}</div>
+                          <div class="most-download-book_card_meta">{{ number_format($book->downloads, 0, '.', ',') }} luợt tải</div>
+                          <div class="most-download-book_card_meta most-download-book_card_review">
+                            <span>{{ $book->rating == 0 ? 0 : number_format($book->rating, 1, '.', ',') }} <i class='bx bxs-heart'></i></span>
+                          </div>
                         </div>
 
                       </a>

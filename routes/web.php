@@ -56,6 +56,10 @@ Route::prefix('page')->group(function() {
   Route::get('/genres/{slug}', [PageController::class, 'booksByGenre'])->name('client.booksByGenre');
   Route::get('/authors/{slug}', [PageController::class, 'booksByAuthor'])->name('client.booksByAuthor');
   Route::get('/publishers/{slug}', [PageController::class, 'booksByPublisher'])->name('client.booksByPublisher');
+
+  Route::prefix('collections')->group(function() {
+    Route::get('{slug}', [PageController::class, 'booksByCollection'])->name('client.booksByCollection');
+  });
 }); 
 
 
