@@ -12,6 +12,7 @@ use App\Models\Publisher;
 use App\Repository\IRepository\IBookRepository;
 use App\Utils\GenerateId;
 use App\Utils\UppercaseFirstLetter;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -262,6 +263,39 @@ class BookRepository implements IBookRepository
 
   public function updateStatus($book = null) {
     return $book->update(['status' =>  !$book->status]);
+  }
+
+  public function deleteFile($book, $fileType) {
+
+    $deletedFileUrl = '';
+
+    DB::beginTransaction();
+    try {
+      $bookFile = BookFile::where([
+        ['book_id', '=', $book->id],
+        ['file_type_id', '=', $fileType->id]
+      ])->first();
+
+      // Move current book cover to deletedFiles folder of local disk
+      Storage::put('deletedFiles/'. $bookFile->file_url, Storage::get($bookFile->file_url));
+      $deletedFileUrl = 'deletedFiles/'. $bookFile->file_url;
+      Storage::delete($bookFile->file_url);
+
+      $bookFile->delete();
+
+      DB::commit();
+
+      return true;
+
+    } catch (\Throwable $th) {
+      DB::rollBack();
+
+      Storage::put('files/'. explode('/', $deletedFileUrl)[2] . '/' .basename( $deletedFileUrl), Storage::get( $deletedFileUrl));
+      Storage::delete($deletedFileUrl);
+
+      return false;
+    }
+
   }
 
   public function delete($book) {

@@ -83,6 +83,7 @@ Route::get('/books/search', [BookController::class, 'search'])->name('books.sear
 Route::get('/books/sort', [BookController::class, 'sort'])->name('books.sort');
 Route::get('/books/sortStatus', [BookController::class, 'sortStatus'])->name('books.sortStatus');
 Route::put('/books/{book}/sortStatus', [BookController::class, 'updateStatus'])->name('books.updateStatus');
+Route::get('/books/{book}/deleteFile/{fileType}', [BookController::class, 'deleteFile'])->name('books.deleteFile');
 Route::resource('books', BookController::class);
 
 Route::get('/genres/search', [GenreController::class, 'search'])->name('genres.search');

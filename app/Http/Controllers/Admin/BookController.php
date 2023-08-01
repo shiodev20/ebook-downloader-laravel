@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Book;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BookRequest;
+use App\Models\FileType;
 use App\Repository\AuthorRepository;
 use App\Repository\BookRepository;
 use App\Repository\CollectionRepository;
@@ -120,6 +121,14 @@ class BookController extends Controller
 
     if($updatedBook) return redirect()->back()->with('successMessage', 'Cập nhật sách ' . $updatedBook->id . ' thành công');
 
+    return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
+  }
+
+  public function deleteFile(Book $book, FileType $fileType) {
+    
+    $result = $this->bookRepository->deleteFile($book, $fileType);
+
+    if($result) return redirect()->back()->with('successMessage', 'Xóa file thành công');
     return redirect()->back()->with('errorMessage', 'Lỗi hệ thống vui lòng thử lại sau');
   }
 

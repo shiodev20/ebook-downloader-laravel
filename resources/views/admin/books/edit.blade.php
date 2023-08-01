@@ -43,7 +43,6 @@
                 </div>
               </div>
 
-
               {{-- Author --}}
               <div class="col-md-4">
                 <div class="form-group">
@@ -160,8 +159,8 @@
                       <input type="text" class="form-control file-upload-info" disabled style="height: 100%;" value="{{ $fileType->file_name }}">
 
                       @if ($fileType->url)
-                        <a href="" class="btn btn-info py-2" style="border-radius: 0; height: 100%;"><i class="fa-solid fa-download"></i></a>
-                        <a href="" class="btn btn-danger py-2" style="border-radius: 0 15px 15px 0; height: 100%;"><i class="fa-solid fa-trash"></i></a>
+                        <a href="{{ route('downloads.index', ['book' => $book->id]) .'?url=' . $fileType->url }}" class="btn btn-info py-2" style="border-radius: 0; height: 100%;"><i class="fa-solid fa-download"></i></a>
+                        <a href="{{ route('books.deleteFile', ['book' => $book->id, 'fileType' => $fileType->id]) }}" class="btn btn-danger py-2" style="border-radius: 0 15px 15px 0; height: 100%;"><i class="fa-solid fa-trash"></i></a>
                       @else
                         <button class="btn btn-info py-2" style="border-radius: 0; height: 100%;" disabled><i class="fa-solid fa-download"></i></button>
                         <button class="btn btn-danger py-2" style="border-radius: 0 15px 15px 0; height: 100%;" disabled><i class="fa-solid fa-trash"></i></button>
