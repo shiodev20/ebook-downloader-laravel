@@ -62,7 +62,7 @@ Route::prefix('page')->group(function() {
   Route::prefix('collections')->group(function() {
     Route::get('{slug}', [PageController::class, 'booksByCollection'])->name('client.booksByCollection');
   });
-}); 
+});
 
 
 Route::get('/mostDownload', [AjaxController::class, 'mostDownloadBook'])->name('ajax.mostDownloadBook');

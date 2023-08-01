@@ -9,6 +9,8 @@ use App\Policies\ReviewPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
+use function PHPUnit\Framework\isNull;
+
 class AuthServiceProvider extends ServiceProvider
 {
   /**
@@ -25,6 +27,10 @@ class AuthServiceProvider extends ServiceProvider
    */
   public function boot(): void
   {
+    Gate::define('download', function (User $user) {
+      return isset($user);
+    });
+
     Gate::define('is-masterAdmin', function (User $user) {
       return $user->role_id === RoleEnum::MASTER_ADMIN->value;
     });
@@ -33,6 +39,10 @@ class AuthServiceProvider extends ServiceProvider
       return $user->role_id === RoleEnum::MASTER_ADMIN->value || $user->role_id === RoleEnum::ADMIN->value;
     });
 
+    Gate::define('is-member', function (User $user) {
+      return $user->role_id === RoleEnum::MEMBER->value;
+    });
+    
     Gate::define('create-review', [ReviewPolicy::class, 'create']);
     Gate::define('update-review', [ReviewPolicy::class, 'update']);
     Gate::define('delete-review', [ReviewPolicy::class, 'delete']);

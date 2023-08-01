@@ -9,8 +9,11 @@
   <section id="bookDetail">
     <div class="container mt-5">
       <div class="row">
+
         <div class="box">
+
           <div class="box_content">
+
             <div class="book-detail">
               <div class="row g-4">
   
@@ -55,6 +58,7 @@
                       <div class="book-detail_info_meta_item">Số trang: <span>{{ $book->num_pages }}</span></div>
                       <div class="book-detail_info_meta_item">Ngày cập nhật: <span>{{ date_format(date_create($book->publish_date), 'd-m-Y') }}</span></div>
                       <div class="book-detail_info_meta_item book-detail_info_meta_description">{{ $book->description }}</div>
+
                     </div>
   
                     <hr>
@@ -62,26 +66,38 @@
                     <div class="book-detail_info_download">
                       <div class="book-detail_info_download_text">Tải sách:</div>
                       <div class="book-detail_info_download_options d-flex flex-wrap mt-2">
-  
-                        @if ($book->bookFiles->count() > 0 && $book->status) 
-  
+                        @if ($book->status)
+                          @can('download')
+                            @foreach ($book->bookFiles as $bookFile)
+                              <a 
+                                href="{{ route('downloads.index', ['book' => $book->id]) .'?url=' . $bookFile->file_url }}" 
+                                class="book-detail_info_download_item"
+                                style="background-color: {{ $bookFile->fileType->color }}"  
+                              >{{ $bookFile->fileType->name }}</a>
+                            @endforeach
+                          @endcan
+
+                          @cannot('download')
+                            @if ($book->status)
+                              @foreach ($book->bookFiles as $bookFile)
+                                <a 
+                                  class="book-detail_info_download_item"
+                                  style="background-color: {{ $bookFile->fileType->color }}; cursor: pointer;"  
+                                  onclick=""
+                                >{{ $bookFile->fileType->name }}</a>
+                              @endforeach
+                            @endif
+                          @endcan
+
+                        @else
+
                           @foreach ($book->bookFiles as $bookFile)
-                            <a 
-                              href="{{ route('downloads.index', ['book' => $book->id]) .'?url=' . $bookFile->file_url }}" 
-                              class="book-detail_info_download_item"
-                              style="background-color: {{ $bookFile->fileType->color }}"  
-                            >{{ $bookFile->fileType->name }}</a>
+                            <a class="book-detail_info_download_item bg-secondary">{{  $bookFile->fileType->name }}</a>
                           @endforeach
-                        
+
                         @endif
-  
-                        @if ($book->bookFiles->count() == 0 || !$book->status)
-                          @foreach ($fileTypes as $fileType)
-                            <a class="book-detail_info_download_item bg-secondary">{{ $fileType->name }}</a>
-                          @endforeach
-                        @endif
-                          
                       </div>
+
                     </div>
   
                   </div>
@@ -89,8 +105,11 @@
   
               </div>
             </div>
+
           </div>
+
         </div>
+        
       </div>
     </div>
   </section>
