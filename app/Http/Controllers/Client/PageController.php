@@ -95,6 +95,21 @@ class PageController extends Controller
 
   }
 
+  public function collections() {
+    try {
+      $genres = $this->genreRepository->getAll();
+      $collections = $this->collectionRepository->getAll()->paginate(9);
+  
+      return view('client.collections.index', compact([
+        'genres',
+        'collections'
+      ]));
+
+    } catch (\Throwable $th) {
+      return redirect()->back()->with('errorMessage', 'lỗi hệ thống vui lòng thử lại sau');
+    }
+  }
+
   public function booksByGenre(string $slug) {
     try {
       $genres = $this->genreRepository->getAll();
@@ -185,6 +200,14 @@ class PageController extends Controller
 
           $books = $this->bookRepository->getMostDownloadBooks($genre)->paginate(12);
           break;
+        case 'tuyen-tap-hay':
+          $collectionSlug = $request->query('collection');
+          $collection = $this->collectionRepository->find([[ 'slug',  '=', $collectionSlug ]])->first();
+
+          $books = $collection->books->paginate(12);
+          $pageTitle = $collection->name;
+
+          break;
       }
 
       return view('client.collection', compact([
@@ -197,4 +220,5 @@ class PageController extends Controller
       return redirect()->back()->with('errorMessage', 'lỗi hệ thống vui lòng thử lại sau');
     }
   }
+
 }

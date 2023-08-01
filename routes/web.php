@@ -53,6 +53,8 @@ Route::get('/', [PageController::class, 'home'])->name('client.home');
 Route::get('/book/{slug}', [PageController::class, 'detail'])->name('client.detail');
 
 Route::prefix('page')->group(function() {
+  Route::get('/tuyen-tap-hay', [PageController::class, 'collections'])->name('client.collections');
+
   Route::get('/genres/{slug}', [PageController::class, 'booksByGenre'])->name('client.booksByGenre');
   Route::get('/authors/{slug}', [PageController::class, 'booksByAuthor'])->name('client.booksByAuthor');
   Route::get('/publishers/{slug}', [PageController::class, 'booksByPublisher'])->name('client.booksByPublisher');

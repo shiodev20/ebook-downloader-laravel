@@ -277,7 +277,7 @@
 
         <div class="box_header d-flex justify-content-between align-items-center">
           <h2 class="box_title">tuyển tập hay</h2>
-          <a href="/" class="box_getAll">xem thêm</a>
+          <a href="{{ route('client.collections') }}" class="box_getAll">xem thêm</a>
         </div>
 
         <div>
@@ -292,7 +292,7 @@
               @foreach ($collections as $collection)
                 <div class="swiper-slide slider_item">
                   <div class="collection-card">
-                    <a href="/">
+                    <a href="{{ route('client.booksByCollection', ['slug' => 'tuyen-tap-hay']).'?collection='.$collection->slug }}">
                       <img class="collection-card_cover" src="{{ url('storage/' . $collection->cover_url) }}" />
                       <div class="collection-card_label"><span>{{ $collection->books->count() }}</span></div>
                       <div class="collection-card_text"><p>{{ $collection->name }}</p></div>
