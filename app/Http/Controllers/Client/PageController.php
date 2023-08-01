@@ -67,6 +67,8 @@ class PageController extends Controller
   }
 
   public function detail(string $slug) {
+    $book = $this->bookRepository->find([ ['slug', '=', $slug] ])->first();
+    $sameGenreBooks = $this->bookRepository->getSameGenreBooks($book)->paginate(12);
     
     try {
       $book = $this->bookRepository->find([ ['slug', '=', $slug] ])->first();
@@ -79,7 +81,6 @@ class PageController extends Controller
         ['id', '<>', $book->id]
       ])->paginate(12);
   
-      $sameGenreBooks = $this->bookRepository->getSameGenreBooks($book)->paginate(12);
       $recommendBooks = $this->bookRepository->getAll()->random(2);
   
       return view('client.detail', compact([

@@ -67,6 +67,7 @@
                       <div class="book-detail_info_download_text">Tải sách:</div>
                       <div class="book-detail_info_download_options d-flex flex-wrap mt-2">
                         @if ($book->status)
+                        
                           @can('download')
                             @foreach ($book->bookFiles as $bookFile)
                               <a 

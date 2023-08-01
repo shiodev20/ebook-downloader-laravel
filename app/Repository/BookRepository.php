@@ -289,11 +289,22 @@ class BookRepository implements IBookRepository
   public function getSameGenreBooks($book) {
     $books = collect([]);
 
-    foreach ($book->genres as $genre) {
-      $books = $books->merge($this->getByGenre($genre->id));
-    };
+    for ($i=0; $i < $book->genres->count(); $i++) { 
+      $booksByGenre = $this->getByGenre($book->genres[$i]->id);
 
-    return $books->filter(fn ($item, $key) => $item->id != $book->id);
+      $temp = collect([]);
+      for ($j=0; $j < $booksByGenre->count(); $j++) {
+        $isContain = $books->contains(fn ($book) => $book->id == $booksByGenre[$j]->id);
+
+        if(!$isContain) {
+          $temp->push($booksByGenre[$j]);
+        }
+      }
+
+      $books = $books->merge($temp);
+    }
+
+    return $books->filter(fn($item) => $item->id != $book->id);
   }
   
   public function getByAuthor($author) {
