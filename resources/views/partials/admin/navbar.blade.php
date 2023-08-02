@@ -23,6 +23,10 @@
             <i class="ti-settings text-primary"></i>
             Thông tin tài khoản
           </a>
+          <a class="dropdown-item" href="{{ route('client.home') }}">
+            <i class="ti-home text-primary"></i>
+            Trang người dùng
+          </a>
           <a class="dropdown-item" href="{{ route('auth.logout') }}">
             <i class="ti-power-off text-primary"></i>
             Đăng xuất
