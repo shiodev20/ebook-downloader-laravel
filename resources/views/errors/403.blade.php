@@ -29,7 +29,7 @@
               </div>
               <div class="row mt-5">
                 <div class="col-12 text-center mt-xl-2">
-                  <a class="text-dark font-weight-medium" href="/">Trở về trang chủ</a>
+                  <a class="text-dark font-weight-medium" href="{{ route('client.home') }}">Trở về trang chủ</a>
                 </div>
               </div>
               <div class="row mt-5">

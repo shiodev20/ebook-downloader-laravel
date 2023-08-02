@@ -42,17 +42,15 @@ class PageController extends Controller
 
   public function home() {
     try {
-      $genres = $this->genreRepository->getAll();
       $quotes = $this->quoteRepository->getAll();
-
+  
       $randomBook = $this->bookRepository->getAll()->random(1)->first();
       $newestBooks = $this->bookRepository->getAll()->paginate(12);
       $mostDownloadBooks = $this->bookRepository->getMostDownloadBooks('all')->paginate(12);
       $recommendBooks = $this->bookRepository->getRecommendBooks()->paginate(12);
       $collections = $this->collectionRepository->getAll()->paginate(9);
-
+  
       return view('client.home', compact([
-        'genres',
         'quotes',
         'newestBooks',
         'mostDownloadBooks',
@@ -70,7 +68,6 @@ class PageController extends Controller
     
     try {
       $book = $this->bookRepository->find([ ['slug', '=', $slug] ])->first();
-      $genres = $this->genreRepository->getAll();
       $fileTypes = $this->fileTypeRepository->getAll();
       
       $sameAuthorBooks = $this->bookRepository->find([
@@ -82,7 +79,6 @@ class PageController extends Controller
   
       return view('client.detail', compact([
         'book',
-        'genres',
         'fileTypes',
         'sameAuthorBooks',
         'sameGenreBooks',
@@ -97,11 +93,9 @@ class PageController extends Controller
 
   public function collections() {
     try {
-      $genres = $this->genreRepository->getAll();
       $collections = $this->collectionRepository->getAll()->paginate(9);
   
       return view('client.collections.index', compact([
-        'genres',
         'collections'
       ]));
 
@@ -112,8 +106,6 @@ class PageController extends Controller
 
   public function booksByGenre(string $slug) {
     try {
-      $genres = $this->genreRepository->getAll();
-  
       $genre = $this->genreRepository->find([['slug', '=', $slug]])->first();
   
       $books = $this->bookRepository->getByGenre($genre->id)->paginate(18);
@@ -121,7 +113,6 @@ class PageController extends Controller
       $pageTitle = $genre->name;
 
       return view('client.collection', compact([
-        'genres',
         'books',
         'pageTitle'
       ]));
@@ -133,8 +124,6 @@ class PageController extends Controller
    
   public function booksByAuthor(string $slug) {
     try {
-      $genres = $this->genreRepository->getAll();
-  
       $author = $this->authorRepository->find([['slug', '=', $slug]])->first();
   
       $books = $this->bookRepository->getByAuthor($author->id)->paginate(18);
@@ -142,7 +131,6 @@ class PageController extends Controller
       $pageTitle = $author->name;
   
       return view('client.collection', compact([
-        'genres',
         'author',
         'books',
         'pageTitle'
@@ -155,8 +143,6 @@ class PageController extends Controller
 
   public function booksByPublisher(string $slug) {
     try {
-      $genres = $this->genreRepository->getAll();
-  
       $publisher = $this->publisherRepository->find([['slug', '=', $slug]])->first();
   
       $books = $this->bookRepository->getByPublisher($publisher->id)->paginate(18);
@@ -164,7 +150,6 @@ class PageController extends Controller
       $pageTitle = $publisher->name;
   
       return view('client.collection', compact([
-        'genres',
         'books',
         'pageTitle'
       ]));
@@ -176,7 +161,6 @@ class PageController extends Controller
 
   public function booksByCollection(Request $request, string $slug) {
     try {
-      $genres = $this->genreRepository->getAll();
       $books = [];
       $pageTitle = '';
 
@@ -211,7 +195,6 @@ class PageController extends Controller
       }
 
       return view('client.collection', compact([
-        'genres',
         'books',
         'pageTitle'
       ]));

@@ -82,14 +82,13 @@
                           {{--  is Guest --}}
                           @cannot('download')
                             <div class="d-flex flex-column">
-                              <h3 class="color-main fw-bold fst-italic mb-3">Vui lòng đăng nhập để tải sách</h3>
-
                               <div>
                                 @foreach ($book->bookFiles as $bookFile)
                                   <a 
                                     class="book-detail_info_download_item"
                                     style="background-color: {{ $bookFile->fileType->color }}; cursor: pointer;"  
-                                    onclick=""
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#authRequireModal"
                                   >{{ $bookFile->fileType->name }}</a>
                                 @endforeach
                               </div>
@@ -110,7 +109,7 @@
                         @endif
                       </div>
                     </div>
-  
+
                   </div>
                 </div>
   
@@ -448,6 +447,29 @@
     <div class="toast-message_title">- Bạn đã tải sách <span>"{{ $book->title }}"</span></div>
     <div class="toast-message_desc">Nếu bạn có điều kiện, hãy mua sách giấy để ủng hộ tác giả và nhà xuất bản nhé!</div>
   </x-toast>
+
+  <!-- Modal -->
+  <div class="modal fade" id="authRequireModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="height: 70px !important;">
+          <div class="fs-3 fw-bold">
+            Vui lòng 
+            <span role="button" class="color-main fst-italic" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">đăng nhập</span>
+            để tải sách!
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
 
 @push('js')

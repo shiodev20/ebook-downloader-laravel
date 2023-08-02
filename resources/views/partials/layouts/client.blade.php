@@ -20,7 +20,6 @@
 
   @yield('content')
   
-
   @include('partials.client.footer')
 
   <x-flash-message></x-flash-message>
