@@ -24,7 +24,7 @@
             </div>
 
             <div class="text-end py-2">
-              <a href="/" class="auth-form_forgot">Quên mật khẩu?</a>
+              <a href="{{ route('password.request') }}" class="auth-form_forgot">Quên mật khẩu?</a>
             </div>
 
             <button type="submit" class="auth-form_btn btn btn-lg text-white bg-main w-100">Đăng nhập</button>

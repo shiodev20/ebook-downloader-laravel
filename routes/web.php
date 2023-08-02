@@ -12,6 +12,7 @@ use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\client\PageController;
 use App\Http\Controllers\Client\ReviewController;
 use App\Http\Controllers\DownloadController;
@@ -49,6 +50,13 @@ use Illuminate\Support\Facades\Storage;
 Route::post('/login', [LoginController::class, 'index'])->name('auth.login');
 Route::post('/register', [RegisterController::class, 'index'])->name('auth.register');
 Route::get('/logout', [LogoutController::class, 'index'])->name('auth.logout');
+
+
+Route::get('/forgot-password', [ResetPasswordController::class, 'passwordResetRequest'])->name('password.request');
+Route::post('/forgot-password', [ResetPasswordController::class, 'passwordResetSendEmail'])->name('password.email');
+Route::get('/reset-password/{token}', [ResetPasswordController::class, 'passwordReset'])->name('password.reset');
+Route::post('/reset-password', [ResetPasswordController::class, 'passwordUpdate'])->name('password.update');
+
 
 Route::get('/', [PageController::class, 'home'])->name('client.home');
 Route::get('/book/{slug}', [PageController::class, 'detail'])->name('client.detail');
