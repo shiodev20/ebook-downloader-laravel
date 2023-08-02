@@ -67,21 +67,18 @@ class PageController extends Controller
   }
 
   public function detail(string $slug) {
-    $book = $this->bookRepository->find([ ['slug', '=', $slug] ])->first();
-    $sameGenreBooks = $this->bookRepository->getSameGenreBooks($book)->paginate(12);
     
     try {
       $book = $this->bookRepository->find([ ['slug', '=', $slug] ])->first();
-  
       $genres = $this->genreRepository->getAll();
       $fileTypes = $this->fileTypeRepository->getAll();
-  
+      
       $sameAuthorBooks = $this->bookRepository->find([
         ['author_id', '=', $book->author_id],
         ['id', '<>', $book->id]
       ])->paginate(12);
-  
-      $recommendBooks = $this->bookRepository->getAll()->random(2);
+      $sameGenreBooks = $this->bookRepository->getSameGenreBooks($book)->paginate(12);
+      $recommendBooks = $this->bookRepository->getRecommendBooks()->paginate(12);
   
       return view('client.detail', compact([
         'book',
@@ -119,7 +116,7 @@ class PageController extends Controller
   
       $genre = $this->genreRepository->find([['slug', '=', $slug]])->first();
   
-      $books = $this->bookRepository->getByGenre($genre->id)->paginate(2);
+      $books = $this->bookRepository->getByGenre($genre->id)->paginate(18);
       
       $pageTitle = $genre->name;
 
@@ -140,7 +137,7 @@ class PageController extends Controller
   
       $author = $this->authorRepository->find([['slug', '=', $slug]])->first();
   
-      $books = $this->bookRepository->getByAuthor($author->id)->paginate(2);
+      $books = $this->bookRepository->getByAuthor($author->id)->paginate(18);
       
       $pageTitle = $author->name;
   
@@ -162,7 +159,7 @@ class PageController extends Controller
   
       $publisher = $this->publisherRepository->find([['slug', '=', $slug]])->first();
   
-      $books = $this->bookRepository->getByPublisher($publisher->id)->paginate(2);
+      $books = $this->bookRepository->getByPublisher($publisher->id)->paginate(18);
       
       $pageTitle = $publisher->name;
   
@@ -186,12 +183,12 @@ class PageController extends Controller
       switch ($slug) {
         case 'sach-moi-nhat':
           $pageTitle = 'Sách mới nhất';
-          $books = $this->bookRepository->getAll()->paginate(12);
+          $books = $this->bookRepository->getAll()->paginate(18);
           break;
 
         case 'sach-hay-nen-doc':
           $pageTitle = 'Sách hay nên đọc';
-          $books = $this->bookRepository->getRecommendBooks()->paginate(12);
+          $books = $this->bookRepository->getRecommendBooks()->paginate(18);
           break;
         
         case 'sach-tai-nhieu-nhat':
@@ -201,13 +198,13 @@ class PageController extends Controller
             ? 'Sách tải nhiều nhất / ' . $this->genreRepository->getById($genre)->name
             : 'Sách tải nhiều nhất / tất cả';
 
-          $books = $this->bookRepository->getMostDownloadBooks($genre)->paginate(12);
+          $books = $this->bookRepository->getMostDownloadBooks($genre)->paginate(18);
           break;
         case 'tuyen-tap-hay':
           $collectionSlug = $request->query('collection');
           $collection = $this->collectionRepository->find([[ 'slug',  '=', $collectionSlug ]])->first();
 
-          $books = $collection->books->paginate(12);
+          $books = $collection->books->paginate(18);
           $pageTitle = $collection->name;
 
           break;

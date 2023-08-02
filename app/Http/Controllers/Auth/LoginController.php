@@ -15,8 +15,7 @@ class LoginController extends Controller
     $this->middleware(['guest']);
   }
 
-  public function index(Request $request)
-  {
+  public function index(Request $request) {
 
     try {
       $validator = Validator::make(

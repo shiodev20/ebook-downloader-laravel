@@ -14,7 +14,7 @@ class PublisherController extends Controller
 {
   private $publisherRepository;
   private $bookRepository;
-  private $pagination = 2;
+  private $pagination = 10;
 
   public function __construct(PublisherRepository $publisherRepository, BookRepository $bookRepository) {
     $this->middleware(['auth', 'admin']);

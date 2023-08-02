@@ -61,7 +61,7 @@ class AjaxController extends Controller
       return $temp;
     });
 
-    return $reviews->paginate(2);
+    return $reviews->paginate(6);
   }
 
   public function bookSearch(Request $request) {

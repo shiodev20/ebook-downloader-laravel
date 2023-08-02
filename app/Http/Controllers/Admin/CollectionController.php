@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class CollectionController extends Controller
 {
   private $collectionRepository;
-  private $pagination = 2;
+  private $pagination = 6;
 
   public function __construct(CollectionRepository $collectionRepository) {
     $this->middleware(['auth', 'admin']);

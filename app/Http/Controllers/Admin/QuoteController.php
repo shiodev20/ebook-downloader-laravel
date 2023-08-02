@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 class QuoteController extends Controller
 {
   private $quoteRepository;
-  private $pagination = 10;
+  private $pagination = 8;
 
   public function __construct(QuoteRepository $quoteRepository) {
     $this->quoteRepository = $quoteRepository;

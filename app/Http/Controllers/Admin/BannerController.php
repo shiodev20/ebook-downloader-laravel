@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class BannerController extends Controller
 {
   private $bannerRepository;
-  private $pagination = 10;
+  private $pagination = 8;
 
   public function __construct(BannerRepository $bannerRepository) {
     $this->middleware(['auth', 'admin']);

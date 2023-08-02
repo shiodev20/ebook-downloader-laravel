@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 class GenreController extends Controller
 {
   private $genreRepository;
-  private $pagination = 15;
+  private $pagination = 10;
 
   public function __construct(GenreRepository $genreRepository) {
     $this->middleware(['auth', 'admin']);
