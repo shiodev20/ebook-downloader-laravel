@@ -8,7 +8,7 @@
             @csrf
 
             <div class="auth-form_logo text-center">
-              <img src="{{ asset('images/logo-waka.png') }}" class="my-4">
+              <img src="{{ asset('images/logo.png') }}" alt="shiobook" width="150px" class="my-4">
             </div>
 
             <div class="bg-danger text-white p-3 rounded fs-5 auth-error" style="display: none"></div>

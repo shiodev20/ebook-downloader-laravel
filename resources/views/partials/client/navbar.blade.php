@@ -6,7 +6,7 @@
 
         <div class="header_logo me-3">
           <a href="{{ route('client.home') }}">
-            <img src="{{ asset('images/logo-waka.png') }}" alt="">
+            <img src="{{ asset('images/logo.png') }}" alt="shiobook" width="150px">
           </a>
         </div>
 
@@ -79,7 +79,7 @@
     <div class="header_top">
       <div class="header_logo">
         <a href="{{ route('client.home') }}">
-          <img src="{{ asset('images/logo-waka.png') }}" alt="">
+          <img src="{{ asset('images/logo.png') }}" alt="shiobook" width="150px">
         </a>
       </div>
     </div>
