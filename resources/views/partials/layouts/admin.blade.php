@@ -8,8 +8,7 @@
   <link rel="icon" href="{{ asset('backend/images/logo-mini.svg') }}">
   <link rel="stylesheet" href="{{ asset('backend/vendors/feather/feather.css') }}">
   <link rel="stylesheet" href="{{ asset('backend/vendors/ti-icons/css/themify-icons.css') }}">
-  <link rel="stylesheet" href="{{ asset('backend/vendors/font-awesome/css/all.min.css') }}
-  ">
+  <link rel="stylesheet" href="{{ asset('backend/vendors/font-awesome/css/all.min.css') }}">
   <link rel="stylesheet" href="{{ asset('backend/vendors/css/vendor.bundle.base.css') }}">
 
   <link rel="stylesheet" href="{{ asset('backend/vendors/select2/select2.min.css') }}">

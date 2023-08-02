@@ -1,7 +1,7 @@
 @extends('partials.layouts.page')
 
 @section('documentTitle')
-  403   
+  404
 @endsection
 
 @section('content')
@@ -10,21 +10,24 @@
   <div>
     <div>
       <div class="container-fluid page-body-wrapper full-page-wrapper">
-
+        
+        
         <div class="content-wrapper d-flex align-items-center text-center error-page">
+          
           <div class="row flex-grow">
+
+            
             <div class="col-lg-7 mx-auto" style="color: #3DA174;">
               <div class="mb-5">
                 <img src="{{ asset('images/logo-waka.png') }}" alt="">
               </div>
-
               <div class="row align-items-center d-flex flex-row">
                 <div class="col-lg-6 text-lg-right pr-lg-4">
-                  <h1 class="display-1 mb-0">403</h1>
+                  <h1 class="display-1 mb-0">404</h1>
                 </div>
                 <div class="col-lg-6 error-page-divider text-lg-left pl-lg-4">
                   <h2>Xin lỗi!</h2>
-                  <h3 class="font-weight-light">Bạn không có quyền truy cập</h3>
+                  <h3 class="font-weight-light">Trang bạn tìm kiếm không tồn tại.</h3>
                 </div>
               </div>
               <div class="row mt-5">
@@ -34,7 +37,7 @@
               </div>
               <div class="row mt-5">
                 <div class="col-12 mt-xl-2">
-                  <p class=" font-weight-medium text-center">Copyright &copy; 2023 {{ env('APP_NAME') }} All rights reserved.</p>
+                  <p class="font-weight-medium text-center">Copyright &copy; 2023 {{ env('APP_NAME') }} All rights reserved.</p>
                 </div>
               </div>
             </div>
