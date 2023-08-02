@@ -68,6 +68,7 @@
                       <div class="book-detail_info_download_options d-flex flex-wrap mt-2">
                         @if ($book->status)
                         
+                          {{-- is Auth --}}
                           @can('download')
                             @foreach ($book->bookFiles as $bookFile)
                               <a 
@@ -78,27 +79,36 @@
                             @endforeach
                           @endcan
 
+                          {{--  is Guest --}}
                           @cannot('download')
-                            @if ($book->status)
-                              @foreach ($book->bookFiles as $bookFile)
-                                <a 
-                                  class="book-detail_info_download_item"
-                                  style="background-color: {{ $bookFile->fileType->color }}; cursor: pointer;"  
-                                  onclick=""
-                                >{{ $bookFile->fileType->name }}</a>
-                              @endforeach
-                            @endif
+                            <div class="d-flex flex-column">
+                              <h3 class="color-main fw-bold fst-italic mb-3">Vui lòng đăng nhập để tải sách</h3>
+
+                              <div>
+                                @foreach ($book->bookFiles as $bookFile)
+                                  <a 
+                                    class="book-detail_info_download_item"
+                                    style="background-color: {{ $bookFile->fileType->color }}; cursor: pointer;"  
+                                    onclick=""
+                                  >{{ $bookFile->fileType->name }}</a>
+                                @endforeach
+                              </div>
+                            </div>
                           @endcan
 
                         @else
+                          <div class="d-flex flex-column">
+                            <h3 class="color-main fw-bold fst-italic mb-3">Sách đã ngừng cung cấp</h3>
 
-                          @foreach ($book->bookFiles as $bookFile)
-                            <a class="book-detail_info_download_item bg-secondary">{{  $bookFile->fileType->name }}</a>
-                          @endforeach
+                            <div>
+                              @foreach ($book->bookFiles as $bookFile)
+                                <a class="book-detail_info_download_item bg-secondary">{{  $bookFile->fileType->name }}</a>
+                              @endforeach
+                            </div>
 
+                          </div>
                         @endif
                       </div>
-
                     </div>
   
                   </div>
@@ -106,7 +116,6 @@
   
               </div>
             </div>
-
            
           </div>
 
@@ -422,7 +431,8 @@
     </div>
   </section>
 
-  <!-- Modal -->
+
+  <!-- Review Update Modal -->
   <div class="modal fade" id="reviewUpdateModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -431,6 +441,7 @@
       </div>
     </div>
   </div>
+
 
   {{-- Toast --}}
   <x-toast>
@@ -574,7 +585,6 @@
       const url = '{{ route('ajax.bookReviews', ['book' => $book->id]) }}' + '?page=1'
       getPagination(url);
     })
-
   </script>
 
   {{-- Clear create review validation --}}
@@ -685,8 +695,6 @@
             }
           })
         })
-
-
       })
     }
   </script>
