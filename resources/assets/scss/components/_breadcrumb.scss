@@ -1,0 +1,31 @@
+
+.breadcrumb {
+  margin: 2rem 0;
+  padding-left: 2rem;
+  font-size: $text-size;
+  font-weight: bold;
+
+  i {
+    position: relative;
+    top: 1px;
+    font-size: 2rem;
+  }
+
+  &_item {
+    a {
+      color: $main-color; 
+    }
+
+    &.active {
+      color: $dark-color;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

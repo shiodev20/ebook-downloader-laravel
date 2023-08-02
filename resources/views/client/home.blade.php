@@ -98,77 +98,77 @@
     </div>
   </section>
 
-{{-- most download books --}}
-<section id="mostDownloadBooks">
-  <div class="container mt-5 p-0">
-    <div class="row">
-      <div class="col">
-        <div class="box py-4 px-4"  style="min-width: 300px !important;">
+  {{-- most download books --}}
+  <section id="mostDownloadBooks">
+    <div class="container mt-5 p-0">
+      <div class="row">
+        <div class="col">
+          <div class="box py-4 px-4"  style="min-width: 300px !important;">
 
-          <div class="box-header d-flex justify-content-between align-items-center flex-column flex-md-row">
-            <h2 class="box_title my-3">tải nhiều nhất</h2>
+            <div class="box-header d-flex justify-content-between align-items-center flex-column flex-md-row">
+              <h2 class="box_title my-3">tải nhiều nhất</h2>
 
-            <ul class="read-most_nav nav nav-pills">
-              <li class="read-most_nav_item nav-item" onclick="getMostDownloadBooks()">
-                <a class="read-most_nav_link nav-link active genre-{{'all'}}"  aria-current="page" style="cursor: pointer">Tất Cả</a>
-              </li>
-              @foreach ($genres as $genre)
-                <li class="read-most_nav_item nav-item" onclick="getMostDownloadBooks('{{ $genre->id }}')">
-                  <a class="read-most_nav_link nav-link genre-{{$genre->id}}" style="cursor: pointer">{{ $genre->name }}</a>
+              <ul class="read-most_nav nav nav-pills">
+                <li class="read-most_nav_item nav-item" onclick="getMostDownloadBooks()">
+                  <a class="read-most_nav_link nav-link active genre-{{'all'}}"  aria-current="page" style="cursor: pointer">Tất Cả</a>
                 </li>
-              @endforeach
-            </ul>
+                @foreach ($genres as $genre)
+                  <li class="read-most_nav_item nav-item" onclick="getMostDownloadBooks('{{ $genre->id }}')">
+                    <a class="read-most_nav_link nav-link genre-{{$genre->id}}" style="cursor: pointer">{{ $genre->name }}</a>
+                  </li>
+                @endforeach
+              </ul>
 
-          </div>
+            </div>
 
-          <div>
-            <hr class="divider">
-          </div>
+            <div>
+              <hr class="divider">
+            </div>
 
-          <div class="box-content">
-            <div class="row g-4">
+            <div class="box-content">
+              <div class="row g-4">
 
-              @foreach ($mostDownloadBooks as $book)
-                <div class="col-12 col-md-6 col-lg-4">
-                  <div class="most-download-book_card">
-                    <a href="{{ route('client.detail', ['slug' => $book->slug]) }}" class="d-flex">
-                      <img src="{{ url('storage/' . $book->cover_url) }}" alt="" class="most-download-book_card_cover">
+                @foreach ($mostDownloadBooks as $book)
+                  <div class="col-12 col-md-6 col-lg-4">
+                    <div class="most-download-book_card">
+                      <a href="{{ route('client.detail', ['slug' => $book->slug]) }}" class="d-flex">
+                        <img src="{{ url('storage/' . $book->cover_url) }}" alt="" class="most-download-book_card_cover">
 
-                      <div class="most-download-book_card_info ms-4 flex-grow-1">
-                        <div class="most-download-book_card_title">{{ $book->title }}</div>
-                        <div class="most-download-book_card_meta">{{ $book->author ? $book->author->name : '' }}</div>
+                        <div class="most-download-book_card_info ms-4 flex-grow-1">
+                          <div class="most-download-book_card_title">{{ $book->title }}</div>
+                          <div class="most-download-book_card_meta">{{ $book->author ? $book->author->name : '' }}</div>
 
-                        <div class="most-download-book_card_meta most-download-book_card_review">
-                          <span>{{ $book->rating == 0 ? 0 : number_format($book->rating, 1, '.', ',') }} <i class='bx bxs-heart'></i></span>
+                          <div class="most-download-book_card_meta most-download-book_card_review">
+                            <span>{{ $book->rating == 0 ? 0 : number_format($book->rating, 1, '.', ',') }} <i class='bx bxs-heart'></i></span>
+                          </div>
+
+                          <div class="most-download-book_card_meta">{{ number_format($book->downloads, 0, '.', ',') }} luợt tải</div>
+
+                          <div
+                            class="most-download-book_card_meta most-download-book_card_labels d-flex align-items-center flex-wrap">
+                            @foreach ($book->files as $file)
+                              <div class="most-download-book_card_label" style="background-color: {{ $file->color }}">{{ $file->name }}</div>
+                            @endforeach
+                          </div>
+
                         </div>
+                      </a>
+                    </div>
+                  </div> 
+                @endforeach
 
-                        <div class="most-download-book_card_meta">{{ number_format($book->downloads, 0, '.', ',') }} luợt tải</div>
-
-                        <div
-                          class="most-download-book_card_meta most-download-book_card_labels d-flex align-items-center flex-wrap">
-                          @foreach ($book->files as $file)
-                            <div class="most-download-book_card_label" style="background-color: {{ $file->color }}">{{ $file->name }}</div>
-                          @endforeach
-                        </div>
-
-                      </div>
-                    </a>
-                  </div>
-                </div> 
-              @endforeach
-
-              <div class="text-center">
-                <a href="{{ route('client.booksByCollection', ['slug' => 'sach-tai-nhieu-nhat']).'?genre=all' }}" class="box_getAll">xem thêm</a>
+                <div class="text-center">
+                  <a href="{{ route('client.booksByCollection', ['slug' => 'sach-tai-nhieu-nhat']).'?genre=all' }}" class="box_getAll">xem thêm</a>
+                </div>
               </div>
             </div>
+
+
           </div>
-
-
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
   <!-- Quote -->
   <section id="quote">

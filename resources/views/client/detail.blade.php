@@ -5,7 +5,22 @@
 @endsection
 
 @section('content')
-  <!-- book detail -->
+
+  {{-- breadcrumbs --}}
+  <section id="breadcrumbs">
+    <div class="container mt-5">
+      <div class="row">
+        <div class="box">
+          <div class="box-content">
+            {{ Breadcrumbs::render('book', $book) }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  {{-- Book detail --}}
   <section id="bookDetail">
     <div class="container mt-5">
       <div class="row">

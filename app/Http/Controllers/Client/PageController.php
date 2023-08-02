@@ -11,6 +11,9 @@ use App\Repository\GenreRepository;
 use App\Repository\PublisherRepository;
 use App\Repository\QuoteRepository;
 use Illuminate\Http\Request;
+use Monolog\Handler\DeduplicationHandler;
+
+use function Psy\debug;
 
 class PageController extends Controller
 {
@@ -108,14 +111,14 @@ class PageController extends Controller
   public function booksByGenre(string $slug) {
     try {
       $genre = $this->genreRepository->find([['slug', '=', $slug]])->first();
-  
       $books = $this->bookRepository->getByGenre($genre->id)->paginate(18);
-      
       $pageTitle = $genre->name;
+      $model = $genre;
 
       return view('client.collection', compact([
         'books',
-        'pageTitle'
+        'pageTitle',
+        'model',
       ]));
 
     } catch (\Throwable $th) {
@@ -126,15 +129,14 @@ class PageController extends Controller
   public function booksByAuthor(string $slug) {
     try {
       $author = $this->authorRepository->find([['slug', '=', $slug]])->first();
-  
       $books = $this->bookRepository->getByAuthor($author->id)->paginate(18);
-      
       $pageTitle = $author->name;
+      $model = $author;
   
       return view('client.collection', compact([
-        'author',
         'books',
-        'pageTitle'
+        'pageTitle',
+        'model',
       ]));
 
     } catch (\Throwable $th) {
@@ -145,14 +147,14 @@ class PageController extends Controller
   public function booksByPublisher(string $slug) {
     try {
       $publisher = $this->publisherRepository->find([['slug', '=', $slug]])->first();
-  
       $books = $this->bookRepository->getByPublisher($publisher->id)->paginate(18);
-      
       $pageTitle = $publisher->name;
-  
+      $model = $publisher;
+
       return view('client.collection', compact([
         'books',
-        'pageTitle'
+        'pageTitle',
+        'model'
       ]));
 
     } catch (\Throwable $th) {
@@ -164,6 +166,7 @@ class PageController extends Controller
     try {
       $books = [];
       $pageTitle = '';
+      $model = $slug;
 
       switch ($slug) {
         case 'sach-moi-nhat':
@@ -197,7 +200,8 @@ class PageController extends Controller
 
       return view('client.collection', compact([
         'books',
-        'pageTitle'
+        'pageTitle',
+        'model'
       ]));
 
     } catch (\Throwable $th) {

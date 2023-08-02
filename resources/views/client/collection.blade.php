@@ -5,6 +5,19 @@
 @endsection
 
 @section('content')
+ {{-- breadcrumbs --}}
+  <section id="breadcrumbs">
+    <div class="container mt-5">
+      <div class="row">
+        <div class="box">
+          <div class="box-content">
+            {{ Breadcrumbs::render('page', $model) }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="page">
     <div class="container mt-5 shadow-sm">
       <div class="row">

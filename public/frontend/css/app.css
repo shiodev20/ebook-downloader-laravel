@@ -7940,7 +7940,7 @@ ul {
   display: flex; }
   .book-card_horizontal_info_image {
     flex-basis: 30%;
-    max-width: 120px;
+    max-width: 100px;
     max-height: 140px;
     width: 100%;
     height: 100%;
@@ -8202,3 +8202,21 @@ ul {
   .toast-message_desc {
     color: #6c757d;
     font-style: italic; }
+
+.breadcrumb {
+  margin: 2rem 0;
+  padding-left: 2rem;
+  font-size: 1.5rem;
+  font-weight: bold; }
+  .breadcrumb i {
+    position: relative;
+    top: 1px;
+    font-size: 2rem; }
+  .breadcrumb_item a {
+    color: #3DA174; }
+  .breadcrumb_item.active {
+    color: #333; }
+    .breadcrumb_item.active:hover {
+      text-decoration: none; }
+  .breadcrumb_item:hover {
+    text-decoration: underline; }
