@@ -16,6 +16,8 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\client\PageController;
 use App\Http\Controllers\Client\ReviewController;
 use App\Http\Controllers\DownloadController;
+use App\Models\Book;
+use App\Models\Genre;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -46,7 +48,10 @@ use Illuminate\Support\Facades\Storage;
 // Storage::delete($pdfs);
 // Storage::delete($mobis); 
 // Storage::delete($awz3s);
- 
+
+
+
+
 Route::post('/login', [LoginController::class, 'index'])->name('auth.login');
 Route::post('/register', [RegisterController::class, 'index'])->name('auth.register');
 Route::get('/logout', [LogoutController::class, 'index'])->name('auth.logout');
@@ -63,6 +68,9 @@ Route::get('/book/{slug}', [PageController::class, 'detail'])->name('client.deta
 
 
 Route::get('/mostDownload', [AjaxController::class, 'mostDownloadBook'])->name('ajax.mostDownloadBook');
+Route::get('/mostDownloadGenre', [AjaxController::class, 'mostDownloadGenre'])->name('ajax.mostDownloadGenre');
+Route::get('/mostLoved', [AjaxController::class, 'mostLovedBook'])->name('ajax.mostLovedBook');
+Route::get('/mostLovedGenre', [AjaxController::class, 'mostLovedGenre'])->name('ajax.mostLovedGenre');
 Route::get('bookSearch', [AjaxController::class, 'bookSearch'])->name('ajax.bookSearch');
 Route::get('{book}/reviews', [AjaxController::class, 'bookReviews'])->name('ajax.bookReviews');
 Route::get('reviews/{review}', [AjaxController::class, 'reviewById'])->name('ajax.reviewById');

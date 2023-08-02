@@ -12,7 +12,6 @@ use App\Models\Publisher;
 use App\Repository\IRepository\IBookRepository;
 use App\Utils\GenerateId;
 use App\Utils\UppercaseFirstLetter;
-use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
