@@ -42,14 +42,15 @@ class PageController extends Controller
 
   public function home() {
     try {
-      $quotes = $this->quoteRepository->getAll();
-  
+      
       $randomBook = $this->bookRepository->getAll()->random(1)->first();
       $newestBooks = $this->bookRepository->getAll()->paginate(12);
       $mostDownloadBooks = $this->bookRepository->getMostDownloadBooks('all')->paginate(12);
       $recommendBooks = $this->bookRepository->getRecommendBooks()->paginate(12);
       $collections = $this->collectionRepository->getAll()->paginate(9);
-  
+      $quotes = $this->quoteRepository->getAll();
+      
+
       return view('client.home', compact([
         'quotes',
         'newestBooks',

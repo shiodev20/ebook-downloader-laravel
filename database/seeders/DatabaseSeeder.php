@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Author;
+use App\Models\Book;
 use App\Models\FileType;
 use App\Models\Genre;
 use App\Models\Publisher;
@@ -86,6 +87,16 @@ class DatabaseSeeder extends Seeder
         'id' => $fileType->id,
         'name' => $fileType->name,
         'color' => $fileType->color,
+      ]);
+    }
+
+    $books = $seedDataDecode->books;
+    foreach ($books as $book) {
+      Book::create([
+        'id' => $book->id,
+        'title' => $book->title,
+        'slug' => $book->slug,
+        'cover_url' => $book->cover_url
       ]);
     }
   }

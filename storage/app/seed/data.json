@@ -165,5 +165,49 @@
       "name": "AWZ3",
       "color": "#0dcaf0"
     }
+  ],
+
+  "qoutes": [
+    {
+      "id": 1,
+      "content": "Mạnh dạn nói ‘Tôi đã sai’ là cách ta chấp nhận đối mặt với tình huống khó khăn. Việc đó có phần mạo hiểm nhưng những gì ta nhận được sẽ vượt ngoài sự mong đợi.",
+      "author": "William Feather"
+    },
+    {
+      "id": 2,
+      "content": "Trong đời người, có hai con đường bằng phẳng không trở ngại: Một là đi tới lý tưởng, một là đi tới cái chết.",
+      "author": "Lev Tolstoy"
+    },
+    {
+      "id": 3,
+      "content": "Nếu bạn muốn thành công, bạn nên tìm ra những con đường mới, thay vì đi trên những con đường mòn của sự thành công được chấp nhận.",
+      "author": "John D. Rockefeller"
+    },
+    {
+      "id": 4,
+      "content": "Nếu bạn không thích cái gì đó, hãy thay đổi nó. Nếu bạn không thể thay đổi nó, hãy thay đổi thái độ của bạn.",
+      "author": "Maya Angelou"
+    }
+  ],
+
+  "books": [
+    {
+      "id": "00000001",
+      "title": "Thú Tội",
+      "slug": "thu-toi",
+      "cover_url": "bookCovers/thu-toi.png"
+    },
+    {
+      "id": "00000002",
+      "title": "Bố Già",
+      "slug": "bo-gia",
+      "cover_url": "bookCovers/bo-gia.png"
+    },
+    {
+      "id": "00000003",
+      "title": "Tuổi Trẻ Đáng Giá Bao Nhiêu",
+      "slug": "tuoi-tre-dang-gia-bao-nhieu",
+      "cover_url": "bookCovers/tuoi-tre-dang-gia-bao-nhieu.png"
+    }
   ]
 }
