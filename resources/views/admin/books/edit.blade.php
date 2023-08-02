@@ -232,6 +232,43 @@
 
               </div>
 
+              <hr>
+
+              <div class="row">
+                <div class="col">
+                  @foreach ($book->reviews as $review)
+                    <div class="book-review_review pb-5 w-100">
+                      <div class="row g-4">
+            
+                        <div class="col-sm-12 col-md-3">
+  
+                          <div class="book-review_review_author d-flex flex-row flex-md-column justify-content-between align-items-center align-items-md-start">
+  
+                            <div class="book-review_review_author_item d-flex flex-row flex-md-column align-items-center align-items-md-start">
+                              <span class="p-1 fs-4 font-weight-bold">{{ $review->user->username }}</span>
+                            </div>
+  
+                            <span class="book-review_review_author_item p-1">{{ date_format(date_create($review->created_at), 'd-m-Y') }}</span>
+  
+                          </div>
+  
+                        </div>
+                        
+                        <div class="col-sm-12 col-md-9">
+                          <div class="book-review_review_rating" style="color: #fe7e73;">
+                            <span>{{ $review->rate }} <i class="fa-solid fa-heart" style="font-size: .8rem"></i></span>
+                          </div>
+                          <div class="book-review_review_content">
+                            <p>{{ $review->content }}</p>
+                          </div>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  @endforeach
+                </div>
+              </div>
+
             </div>
           </div>
 

@@ -442,7 +442,7 @@
 @push('js')
   <script src="{{ asset('frontend/js/sliders/bookSlider.js') }}"></script>
 
-  {{-- Pagination --}}
+  {{-- Fetching Review --}}
   <script>
     function getPagination(url) {
 
@@ -504,8 +504,7 @@
                     <div class="book-review_review_author d-flex flex-row flex-md-column justify-content-between align-items-center align-items-md-start">
                       <div
                         class="book-review_review_author_item d-flex flex-row flex-md-column align-items-center  align-items-md-start">
-                        <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle p-1">
-                        <span class="p-1">${ item.username }</span>
+                        <span class="p-1 fs-4 fw-bold">${ item.username }</span>
                       </div>
                       <span class="book-review_review_author_item p-1">${item.createdAt}</span>
                     </div>

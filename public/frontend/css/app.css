@@ -7704,22 +7704,22 @@ ul {
 .modal#loginModal .modal-content, .modal#registerModal .modal-content {
   padding: 1rem; }
 
-.modal#loginModal .login-form input, .modal#registerModal .login-form input {
+.modal#loginModal .auth-form input, .modal#registerModal .auth-form input {
   font-size: 1.5rem;
   padding: 1rem; }
 
-.modal#loginModal .login-form_forgot, .modal#registerModal .login-form_forgot {
+.modal#loginModal .auth-form_forgot, .modal#registerModal .auth-form_forgot {
   font-size: 1.3rem;
   color: #3DA174; }
-  .modal#loginModal .login-form_forgot:hover, .modal#registerModal .login-form_forgot:hover {
+  .modal#loginModal .auth-form_forgot:hover, .modal#registerModal .auth-form_forgot:hover {
     text-decoration: underline; }
 
-.modal#loginModal .login-form_divider, .modal#registerModal .login-form_divider {
+.modal#loginModal .auth-form_divider, .modal#registerModal .auth-form_divider {
   position: relative;
   padding: 2rem; }
-  .modal#loginModal .login-form_divider hr, .modal#registerModal .login-form_divider hr {
+  .modal#loginModal .auth-form_divider hr, .modal#registerModal .auth-form_divider hr {
     margin: 0; }
-  .modal#loginModal .login-form_divider div, .modal#registerModal .login-form_divider div {
+  .modal#loginModal .auth-form_divider div, .modal#registerModal .auth-form_divider div {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -7729,25 +7729,25 @@ ul {
     transform: translate(-50%, -50%);
     z-index: 10; }
 
-.modal#loginModal .login-form_btn, .modal#registerModal .login-form_btn {
+.modal#loginModal .auth-form_btn, .modal#registerModal .auth-form_btn {
   padding: 1rem;
   color: #FEFEFE;
   font-size: 1.5rem;
   font-weight: 600; }
-  .modal#loginModal .login-form_btn i, .modal#registerModal .login-form_btn i {
+  .modal#loginModal .auth-form_btn i, .modal#registerModal .auth-form_btn i {
     position: relative;
     top: .2rem;
     font-size: 1.7rem; }
-  .modal#loginModal .login-form_btn--facebook, .modal#registerModal .login-form_btn--facebook {
+  .modal#loginModal .auth-form_btn--facebook, .modal#registerModal .auth-form_btn--facebook {
     background-color: #3b5998; }
-  .modal#loginModal .login-form_btn--google, .modal#registerModal .login-form_btn--google {
+  .modal#loginModal .auth-form_btn--google, .modal#registerModal .auth-form_btn--google {
     background-color: #dd4b39; }
 
-.modal#loginModal .login-form_bottom, .modal#registerModal .login-form_bottom {
+.modal#loginModal .auth-form_bottom, .modal#registerModal .auth-form_bottom {
   font-size: 1.3rem; }
-  .modal#loginModal .login-form_bottom a, .modal#registerModal .login-form_bottom a {
+  .modal#loginModal .auth-form_bottom a, .modal#registerModal .auth-form_bottom a {
     color: #3DA174; }
-    .modal#loginModal .login-form_bottom a:hover, .modal#registerModal .login-form_bottom a:hover {
+    .modal#loginModal .auth-form_bottom a:hover, .modal#registerModal .auth-form_bottom a:hover {
       text-decoration: underline; }
 
 .slider:hover .slider_navigation {

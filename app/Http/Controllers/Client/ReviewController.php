@@ -63,7 +63,6 @@ class ReviewController extends Controller
       $request->validate(
         [
           'content' => 'required',
-          'rate' => 'required'
         ],
       );
 
