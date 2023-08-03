@@ -11,6 +11,12 @@
               <img src="{{ asset('images/logo.png') }}" alt="shiobook" width="150px" class="my-4">
             </div>
 
+            <div class="bg-main text-white p-3 rounded fs-5">
+              tài khoản admin: <br>
+              email: nv2@gmail.com <br>
+              password: 123456
+            </div>
+
             <div class="bg-danger text-white p-3 rounded fs-5 auth-error" style="display: none"></div>
 
             <div class="auth-form_input my-4">
@@ -24,7 +30,7 @@
             </div>
 
             <div class="text-end py-2">
-              <a href="{{ route('password.request') }}" class="auth-form_forgot">Quên mật khẩu?</a>
+              <a role="button" data-bs-toggle="modal" data-bs-target="#unavailableModal" data-bs-dismiss="modal" class="auth-form_forgot">Quên mật khẩu?</a>
             </div>
 
             <button type="submit" class="auth-form_btn btn btn-lg text-white bg-main w-100">Đăng nhập</button>
@@ -34,8 +40,8 @@
               <hr>
             </div>
 
-            <button class="btn btn-lg w-100 mb-2 auth-form_btn auth-form_btn--google">Đăng nhập bằng Google <i class='bx bxl-google'></i></button>
-            <button class="btn btn-lg w-100 mb-2 auth-form_btn auth-form_btn--facebook">Đăng nhập bằng Facebook <i class='bx bxl-facebook'></i></button>
+            <a data-bs-toggle="modal" data-bs-target="#developingModal" data-bs-dismiss="modal" class="btn btn-lg w-100 mb-2 auth-form_btn auth-form_btn--google">Đăng nhập bằng Google <i class='bx bxl-google'></i></a>
+            <a data-bs-toggle="modal" data-bs-target="#developingModal" data-bs-dismiss="modal" class="btn btn-lg w-100 mb-2 auth-form_btn auth-form_btn--facebook">Đăng nhập bằng Facebook <i class='bx bxl-facebook'></i></a>
 
             <div class="auth-form_bottom mt-4 text-center">
               Chưa có tài khoản ? <a type="button" data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal">Đăng ký</a>
@@ -49,6 +55,49 @@
   </div>
 </div>
 
+<!-- unvaliable Modal -->
+<div class="modal fade" id="unavailableModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style="height: 100px !important;">
+        <div class="fs-3 fw-bold">
+          Chức năng "Quên mật khẩu" không hiệu lực ở chế độ này.
+        </div>
+        <div  class="fs-5">
+          Bạn có thể truy cập link demo này để xem mô tả chức năng: <a href="" class="color-main">Link Demo</a>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- developing Modal -->
+<div class="modal fade" id="developingModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style="height: 70px !important;">
+        <div class="fs-3 fw-bold">
+          Chức năng này đang được phát triển.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
   const loginForm = document.querySelector('#loginForm')
