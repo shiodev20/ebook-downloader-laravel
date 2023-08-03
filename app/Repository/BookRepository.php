@@ -233,13 +233,21 @@ class BookRepository implements IBookRepository
     return Book::where($expressions)->orderBy('publish_date', 'desc')->get();
   }
 
-  public function sort($sortBy) {
+  public function sort($sortBy = []) {
     $books = [];
 
-    $books = Book::orderBy('downloads', $sortBy['download'] == 'downloadDescending' ? 'desc' : 'asc')
-    ->orderBy('rating', $sortBy['rating'] == 'ratingDescending' ? 'desc' : 'asc')
-    ->orderBy('publish_date', 'desc')
-    ->get();
+    if($sortBy['rating'] == null) {
+      $books = Book::orderBy('downloads', $sortBy['download'] == 'downloadDescending' ? 'desc' : 'asc')->orderBy('publish_date', 'desc')->get();
+    }
+    else if($sortBy['download'] == null) {
+      $books = Book::orderBy('rating', $sortBy['rating'] == 'ratingDescending' ? 'desc' : 'asc')->orderBy('publish_date', 'desc')->get();
+    }
+    else {
+      $books = Book::orderBy('downloads', $sortBy['download'] == 'downloadDescending' ? 'desc' : 'asc')
+      ->orderBy('rating', $sortBy['rating'] == 'ratingDescending' ? 'desc' : 'asc')
+      ->orderBy('publish_date', 'desc')
+      ->get();
+    }
 
     return $books;
   }

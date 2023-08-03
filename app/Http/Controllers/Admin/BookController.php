@@ -170,7 +170,7 @@ class BookController extends Controller
 
     try {
       $books = $this->bookRepository->sort($query['sort'])->paginate($this->pagination)->withQueryString();
-      
+
       return view('admin.books.index', compact([
         'books',
         'query'
