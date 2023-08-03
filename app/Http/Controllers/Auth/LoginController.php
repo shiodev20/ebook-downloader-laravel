@@ -64,7 +64,7 @@ class LoginController extends Controller
             [
               'status' => true,
               'message' => 'Đăng nhập thành công',
-              'redirectUrl' => route('client.home')
+              'redirectUrl' => url()->previous()
             ]
           : 
             [

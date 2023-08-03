@@ -230,7 +230,7 @@
       "title": "Tuổi Trẻ Đáng Giá Bao Nhiêu",
       "slug": "tuoi-tre-dang-gia-bao-nhieu",
       "cover_url": "bookCovers/tuoi-tre-dang-gia-bao-nhieu.png",
-      "rating": 0,
+      "rating": 4,
       "downloads": 78,
       "author_id": 1,
       "publisher_id": 1
@@ -321,6 +321,15 @@
       "rate": 3,
       "book_id": "00000001",
       "user_id": "00000005",
+      "createdAt": "2023-01-13 08:27:39",
+      "updatedAt": "2023-01-13 08:27:39"
+    },
+    {
+      "id": 3,
+      "content": "Bổ ích",
+      "rate": 4,
+      "book_id": "00000003",
+      "user_id": "00000004",
       "createdAt": "2023-01-13 08:27:39",
       "updatedAt": "2023-01-13 08:27:39"
     }

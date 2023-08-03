@@ -147,7 +147,7 @@
                 <label class="form-label font-weight-bold" for="bookFiles">File sách</label>
 
                 @foreach ($fileTypes as $fileType)
-                  <div class="form-group mb-3" style="height: 30px; width: 100%; max-width: 700px;">
+                  <div class="form-group mb-4" style="height: 30px; width: 100%; max-width: 700px;">
                     <input type="file" name="{{ $fileType->name }}" class="file-upload-default" style="height: 100%;">
 
                     <div class="input-group col-xs-12" style="height: 100%;">
@@ -167,7 +167,7 @@
                       @endif
                     </div>
                     @error($fileType->name)
-                      <div class="invalid-feedback d-block">{{ $message }}</div>
+                      <div class="invalid-feedback d-block m-0">{{ $message }}</div>
                     @enderror
                   </div>
                 @endforeach

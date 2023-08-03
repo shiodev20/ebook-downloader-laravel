@@ -48,8 +48,8 @@
           <hr>
 
           {{-- book Options --}}
-          <div class="mb-4 d-flex justify-content-between align-items-center">
-            <div>
+          <div class="mb-4 d-flex justify-content-between align-items-center flex-wrap">
+            <div class="my-1">
               <a href="{{ route('books.index') }}" class="btn btn-primary btn-sm mr-2">Tất cả</a>
 
               <select class="custom-select custom-select-sm" style="width: 170px;" id="statusSort" name="statusSort">
@@ -59,7 +59,7 @@
               </select>
             </div>
 
-            <div>
+            <div class="my-1">
               <form action="{{ route('books.sort') }}" method="GET">
                 <select class="custom-select custom-select-sm mr-2" style="width: 170px;" id="downloadSort" name="downloadSort">
                   @if ($query['sort']['download'] == 'downloadDescending')

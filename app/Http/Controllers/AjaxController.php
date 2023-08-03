@@ -103,22 +103,22 @@ class AjaxController extends Controller
   }
 
   public function mostLovedGenre() {
+    $genres = Genre::all();
+    
+    $genres = $genres->map(function($genre) {
+      $sumOfRating = $genre->books->reduce(fn ($carry, $book) => $carry + $book->rating);
+      $genre->sum = $genre->books->count() > 0 ? round($sumOfRating / $genre->books->count(), 1) : 0;
+
+      return $genre;
+    });
+
+    return [
+      'status' => true,
+      'result' => [
+        'genres' => $genres->sortByDesc(fn ($genre) => $genre->sum, SORT_NUMERIC)->values()->take(3),
+      ],
+    ];
     try {
-      $genres = Genre::all();
-      
-      $genres = $genres->map(function($genre) {
-        $sumOfRating = $genre->books->reduce(fn ($carry, $book) => $carry + $book->rating);
-        $genre->sum = round($sumOfRating / $genre->books->count(), 1);
-
-        return $genre;
-      });
-
-      return [
-        'status' => true,
-        'result' => [
-          'genres' => $genres->sortByDesc(fn ($genre) => $genre->sum, SORT_NUMERIC)->values()->take(3),
-        ],
-      ];
 
     } catch (\Throwable $th) {
       return [

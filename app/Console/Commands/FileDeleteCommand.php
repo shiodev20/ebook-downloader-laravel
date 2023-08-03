@@ -19,7 +19,7 @@ class FileDeleteCommand extends Command
    *
    * @var string
    */
-  protected $description = 'Command description';
+  protected $description = 'Remove unuse files at specific time';
 
   /**
    * Execute the console command.

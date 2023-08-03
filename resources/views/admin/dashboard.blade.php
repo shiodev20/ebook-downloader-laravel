@@ -134,19 +134,13 @@
             hoverOffset: 4
           }]
         },
-        // options: {
-        //   scales: {
-        //     y: {
-        //       beginAtZero: true
-        //     }
-        //   }
-        // }
       });
     })
 
     fetch(mostLovedGenreUrl)
     .then(response => response.json())
     .then(data => {
+      console.log(data);
       const mostDownloadGenreChart = document.getElementById('mostLovedGenres');
 
       const labels = data.result.genres.map(genre => genre.name);
@@ -167,13 +161,6 @@
             hoverOffset: 4
           }]
         },
-        // options: {
-        //   scales: {
-        //     y: {
-        //       beginAtZero: true
-        //     }
-        //   }
-        // }
       });
     })
 
