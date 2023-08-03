@@ -19,3 +19,18 @@
 
 
 ## Một số hình ảnh của website
+
+### Trang chủ
+![ShioBook-homepage](markdown/screen/homepage.png)
+
+### Chi tiết sách
+![ShioBook-book](markdown/screen/detail.png)
+
+### Trang quản trị
+![ShioBook-dashboard](markdown/screen/dashboard.png)
+
+### Trang quản lý sách
+![ShioBook-bookManage](markdown/screen/book-manage.png)
+
+### Trang thông tin sách
+![ShioBook-bookManage](markdown/screen/book-detail.png)
