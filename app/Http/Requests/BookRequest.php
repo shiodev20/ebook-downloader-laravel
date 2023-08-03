@@ -46,8 +46,6 @@ class BookRequest extends FormRequest
 
     return [
       'title.required' => 'Vui lòng nhập tên sách',
-
-      // 'cover.required' => 'Vui lòng tải ảnh bìa',
       'cover.image' => 'Vui lòng chọn file có định dạng png/jpg'
     ];
   }

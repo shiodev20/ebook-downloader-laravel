@@ -48,8 +48,6 @@ use Illuminate\Support\Facades\Storage;
 // Storage::delete($awz3s);
 
 
-
-
 Route::post('/login', [LoginController::class, 'index'])->name('auth.login');
 Route::post('/register', [RegisterController::class, 'index'])->name('auth.register');
 Route::get('/logout', [LogoutController::class, 'index'])->name('auth.logout');
