@@ -112,10 +112,9 @@
 
               <div class="header_catalogue_body">
                 <ul>
-                  <li class="header_catalogue_item"><a href="/" class="header_catalogue_link">Kỹ năng sống</a></li>
-                  <li class="header_catalogue_item"><a href="/" class="header_catalogue_link">Kinh tế</a></li>
-                  <li class="header_catalogue_item"><a href="/" class="header_catalogue_link">Tiểu thuyết</a></li>
-                  <li class="header_catalogue_item"><a href="/" class="header_catalogue_link">Văn học</a></li>
+                  @foreach ($genres as $genre)
+                    <li class="header_catalogue_item"><a href="{{ route('client.booksByGenre', ['slug' => $genre->slug]) }}" class="header_catalogue_link">{{ $genre->name }}</a></li>
+                  @endforeach
                 </ul>
               </div>
 

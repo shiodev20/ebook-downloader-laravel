@@ -25,11 +25,15 @@
   }
 
   &_text {
+    margin: auto;
+    max-width: 900px;
     font-size: $subicon-size;
   }
 
   &_author {
+    margin-top: 1rem;
     font-size: $text-size;
+    font-style: italic;
   }
 
   @include media-breakpoint-down(md)  {

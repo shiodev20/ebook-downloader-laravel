@@ -132,11 +132,13 @@ Route::prefix('admin')->group(function() {
   Route::get('/banners/sort', [BannerController::class, 'sort'])->name('banners.sort');
   Route::resource('banners', BannerController::class);
 
+  Route::get('/developing', function() {
+    return view('admin.developing');
+  })->middleware(['auth', 'admin'])->name('admin.developing');
+
 });
 
 
 Route::get('/downloads/{book}', [DownloadController::class, 'index'])->name('downloads.index');
 
-Route::get('/developing', function() {
-  return view('admin.developing');
-})->middleware(['auth', 'admin'])->name('admin.developing');
+

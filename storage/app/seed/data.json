@@ -55,6 +55,16 @@
       "role_id": 3,
       "createdAt": "2023-01-13 07:27:39",
       "updatedAt": "2023-01-13 07:27:39"
+    },
+    {
+      "id": "00000005",
+      "username": "Shio Nguyễn",
+      "email": "m2@gmail.com",
+      "password": "$2y$10$2.7RV3.JXzHHztXttyiVB.Gy9/BMmbK5UcH6fWtB0YxYhHSJwOPAy",
+      "status": 1,
+      "role_id": 3,
+      "createdAt": "2023-01-13 07:27:39",
+      "updatedAt": "2023-01-13 07:27:39"
     }
   ],
 
@@ -84,8 +94,12 @@
       "id": 5,
       "name": "Văn học",
       "slug": "van-hoc"
+    },
+    {
+      "id": 6,
+      "name": "Kinh tế",
+      "slug": "kinh-te"
     }
-
   ],
 
   "authors": [
@@ -167,7 +181,7 @@
     }
   ],
 
-  "qoutes": [
+  "quotes": [
     {
       "id": 1,
       "content": "Mạnh dạn nói ‘Tôi đã sai’ là cách ta chấp nhận đối mặt với tình huống khó khăn. Việc đó có phần mạo hiểm nhưng những gì ta nhận được sẽ vượt ngoài sự mong đợi.",
@@ -195,19 +209,120 @@
       "id": "00000001",
       "title": "Thú Tội",
       "slug": "thu-toi",
-      "cover_url": "bookCovers/thu-toi.png"
+      "cover_url": "bookCovers/thu-toi.png",
+      "rating": 3.5,
+      "downloads": 379,
+      "author_id": 2,
+      "publisher_id": 1
     },
     {
       "id": "00000002",
       "title": "Bố Già",
       "slug": "bo-gia",
-      "cover_url": "bookCovers/bo-gia.png"
+      "cover_url": "bookCovers/bo-gia.png",
+      "rating": 0,
+      "downloads": 473,
+      "author_id": 3,
+      "publisher_id": 3
     },
     {
       "id": "00000003",
       "title": "Tuổi Trẻ Đáng Giá Bao Nhiêu",
       "slug": "tuoi-tre-dang-gia-bao-nhieu",
-      "cover_url": "bookCovers/tuoi-tre-dang-gia-bao-nhieu.png"
+      "cover_url": "bookCovers/tuoi-tre-dang-gia-bao-nhieu.png",
+      "rating": 0,
+      "downloads": 78,
+      "author_id": 1,
+      "publisher_id": 1
+    },
+    {
+      "id": "00000004",
+      "title": "Tiếng Thét",
+      "slug": "tieng-thet",
+      "cover_url": "bookCovers/tieng-thet.png",
+      "rating": 0,
+      "downloads": 121,
+      "author_id": 5,
+      "publisher_id": 3
+    },
+    {
+      "id": "00000005",
+      "title": "Hai Số Phận",
+      "slug": "hai-so-phan",
+      "cover_url": "bookCovers/hai-so-phan.png",
+      "rating": 0,
+      "downloads": 124,
+      "author_id": 6,
+      "publisher_id": 3
+    }
+  ],
+
+  "bookGenres": [
+    {
+      "id": 1,
+      "book_id": "00000002",
+      "genre_id": 4
+    },
+    {
+      "id": 2,
+      "book_id": "00000001",
+      "genre_id": 4
+    },
+    {
+      "id": 3,
+      "book_id": "00000003",
+      "genre_id": 1
+    },
+    {
+      "id": 4,
+      "book_id": "00000003",
+      "genre_id": 2
+    },
+    {
+      "id": 5,
+      "book_id": "00000004",
+      "genre_id": 4
+    },
+    {
+      "id": 6,
+      "book_id": "00000005",
+      "genre_id": 4
+    }
+  ],
+
+  "collections": [
+    {
+      "id": 1,
+      "name": "Trinh Thám Hay Nhất",
+      "slug": "trinh-tham-hay-nhat",
+      "cover_url": "collections/trinh-tham-hay-nhat.png"
+    },
+    {
+      "id": 2,
+      "name": "Giáo Dục Giới Tính Cho Trẻ",
+      "slug": "giao-duc-gioi-tinh-cho-tre",
+      "cover_url": "collections/giao-duc-gioi-tinh-cho-tre.jpg"
+    }
+  ],
+
+  "reviews": [
+    {
+      "id": 1,
+      "content": "Hay",
+      "rate": 4,
+      "book_id": "00000001",
+      "user_id": "00000004",
+      "createdAt": "2023-01-13 08:27:39",
+      "updatedAt": "2023-01-13 08:27:39"
+    },
+    {
+      "id": 2,
+      "content": "Tạm",
+      "rate": 3,
+      "book_id": "00000001",
+      "user_id": "00000005",
+      "createdAt": "2023-01-13 08:27:39",
+      "updatedAt": "2023-01-13 08:27:39"
     }
   ]
 }

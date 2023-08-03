@@ -7915,7 +7915,7 @@ ul {
     font-size: 1rem;
     font-weight: 500; }
   .search-book_card_review {
-    color: #fbb96b; }
+    color: #fe7e73; }
   .search-book_card_label {
     font-size: 1rem;
     padding: .2rem .5rem;
@@ -8036,9 +8036,13 @@ ul {
   .quote_item {
     padding: 5rem 0; }
   .quote_text {
+    margin: auto;
+    max-width: 900px;
     font-size: 2rem; }
   .quote_author {
-    font-size: 1.5rem; }
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    font-style: italic; }
   @media (max-width: 767.98px) {
     .quote_ico {
       font-size: 2rem; }

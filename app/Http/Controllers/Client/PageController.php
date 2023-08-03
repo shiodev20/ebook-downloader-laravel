@@ -11,9 +11,6 @@ use App\Repository\GenreRepository;
 use App\Repository\PublisherRepository;
 use App\Repository\QuoteRepository;
 use Illuminate\Http\Request;
-use Monolog\Handler\DeduplicationHandler;
-
-use function Psy\debug;
 
 class PageController extends Controller
 {
