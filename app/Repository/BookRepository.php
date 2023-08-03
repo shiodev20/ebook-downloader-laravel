@@ -65,7 +65,7 @@ class BookRepository implements IBookRepository
         }
       }
 
-      // Add book genre
+      // Add book collection
       if (isset($attributes['collections'])) {
         foreach ($attributes['collections'] as $collection) {
           BookCollection::create(['book_id' => $book->id, 'collection_id' => $collection]);
@@ -76,7 +76,8 @@ class BookRepository implements IBookRepository
       $fileTypes = FileType::all();
       foreach ($fileTypes as $fileType) {
         if (isset($attributes[$fileType->name])) {
-          $bookFileUrl = 'files/' . $fileType->name . '/' . $book->slug . '-' . time() . '.' . $attributes[$fileType->name]->extension();
+
+          $bookFileUrl = 'files/' . $fileType->name . '/' . $book->slug . '-' . time() . '.' . $attributes[$fileType->name]->getClientOriginalExtension();
 
           BookFile::create([
             'book_id' => $bookId,
@@ -157,7 +158,7 @@ class BookRepository implements IBookRepository
           $bookFile = BookFile::where([ ['book_id', '=', $book->id], ['file_type_id', '=', $fileType->id] ])->first();
 
           if($bookFile) {
-            $newFileUrl = 'files/' . $fileType->name . '/' . $book->slug . '-' . time() . '.' . $attributes[$fileType->name]->extension();
+            $newFileUrl = 'files/' . $fileType->name . '/' . $book->slug . '-' . time() . '.' . $attributes[$fileType->name]->getClientOriginalExtension();
 
             Storage::put($newFileUrl, file_get_contents($attributes[$fileType->name]));
             array_push($storedFiles, $newFileUrl);
@@ -170,7 +171,7 @@ class BookRepository implements IBookRepository
             $bookFile->update(['file_url' => $newFileUrl]);
           }
           else {
-            $newFileUrl = 'files/' . $fileType->name . '/' . $book->slug . '-' . time() . '.' . $attributes[$fileType->name]->extension();
+            $newFileUrl = 'files/' . $fileType->name . '/' . $book->slug . '-' . time() . '.' . $attributes[$fileType->name]->getClientOriginalExtension();
 
             BookFile::create([
               'book_id' => $book->id,

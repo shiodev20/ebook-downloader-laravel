@@ -14,7 +14,7 @@ class BookFileExtension implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if($attribute !== strtoupper($value->extension())) {
+        if($attribute !== strtoupper($value->getClientOriginalExtension())) {
             $fail('Vui lòng chọn file có định dạng '.$attribute);
         }
     }
