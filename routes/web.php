@@ -13,7 +13,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\client\PageController;
+use App\Http\Controllers\Client\PageController;
 use App\Http\Controllers\Client\ReviewController;
 use App\Http\Controllers\DownloadController;
 use Illuminate\Support\Facades\Route;
