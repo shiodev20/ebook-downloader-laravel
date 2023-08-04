@@ -103,51 +103,51 @@ class DatabaseSeeder extends Seeder
       ]);
     }
 
-    $books = $seedDataDecode->books;
-    foreach ($books as $book) {
-      Book::create([
-        'id' => $book->id,
-        'title' => $book->title,
-        'slug' => $book->slug,
-        'cover_url' => $book->cover_url,
-        'rating' => $book->rating,
-        'downloads' => $book->downloads,
-        'author_id' => $book->author_id,
-        'publisher_id' => $book->publisher_id
-      ]);
-    }
+    // $books = $seedDataDecode->books;
+    // foreach ($books as $book) {
+    //   Book::create([
+    //     'id' => $book->id,
+    //     'title' => $book->title,
+    //     'slug' => $book->slug,
+    //     'cover_url' => $book->cover_url,
+    //     'rating' => $book->rating,
+    //     'downloads' => $book->downloads,
+    //     'author_id' => $book->author_id,
+    //     'publisher_id' => $book->publisher_id
+    //   ]);
+    // }
 
-    $bookGenres = $seedDataDecode->bookGenres;
-    foreach ($bookGenres as $bookGenre) {
-      BookGenre::create([
-        'id' => $bookGenre->id,
-        'book_id' => $bookGenre->book_id,
-        'genre_id' => $bookGenre->genre_id,
-      ]);
-    }
+    // $bookGenres = $seedDataDecode->bookGenres;
+    // foreach ($bookGenres as $bookGenre) {
+    //   BookGenre::create([
+    //     'id' => $bookGenre->id,
+    //     'book_id' => $bookGenre->book_id,
+    //     'genre_id' => $bookGenre->genre_id,
+    //   ]);
+    // }
 
-    $collections = $seedDataDecode->collections;
-    foreach ($collections as $collection) {
-      Collection::create([
-        'id' => $collection->id,
-        'name' => $collection->name,
-        'slug' => $collection->slug,
-        'cover_url' => $collection->cover_url,
-      ]);
-    }
+    // $collections = $seedDataDecode->collections;
+    // foreach ($collections as $collection) {
+    //   Collection::create([
+    //     'id' => $collection->id,
+    //     'name' => $collection->name,
+    //     'slug' => $collection->slug,
+    //     'cover_url' => $collection->cover_url,
+    //   ]);
+    // }
 
     
-    $reviews = $seedDataDecode->reviews;
-    foreach ($reviews as $review) {
-      Review::create([
-        'id' => $review->id,
-        'content' => $review->content,
-        'rate' => $review->rate,
-        'book_id' => $review->book_id,
-        'user_id' => $review->user_id,
-        'created_at' => $review->createdAt,
-        'created_at' => $review->createdAt,
-      ]);
-    }
+    // $reviews = $seedDataDecode->reviews;
+    // foreach ($reviews as $review) {
+    //   Review::create([
+    //     'id' => $review->id,
+    //     'content' => $review->content,
+    //     'rate' => $review->rate,
+    //     'book_id' => $review->book_id,
+    //     'user_id' => $review->user_id,
+    //     'created_at' => $review->createdAt,
+    //     'created_at' => $review->createdAt,
+    //   ]);
+    // }
   }
 }

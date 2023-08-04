@@ -28,7 +28,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
 Route::post('/login', [LoginController::class, 'index'])->name('auth.login');
 Route::post('/register', [RegisterController::class, 'index'])->name('auth.register');
 Route::get('/logout', [LogoutController::class, 'index'])->name('auth.logout');

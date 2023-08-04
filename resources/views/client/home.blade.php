@@ -319,6 +319,7 @@
   </section>
 
  {{-- Random book --}}
+ @if ($randomBook)
   <x-toast>
     <a href="{{ route('client.detail', ['slug' => $randomBook->slug]) }}">
       <div class="book-card_horizontal">
@@ -342,6 +343,7 @@
       </div>
     </a>
   </x-toast>
+ @endif
 
 @endsection
 
