@@ -17,7 +17,6 @@ use App\Http\Controllers\Client\PageController;
 use App\Http\Controllers\Client\ReviewController;
 use App\Http\Controllers\DownloadController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,25 +28,6 @@ use Illuminate\Support\Facades\Storage;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-// $bookCovers = Storage::disk('public')->files('bookCovers');
-// $banners = Storage::disk('public')->files('banners');
-// $collections = Storage::disk('public')->files('collections');
-// $deletedFiles = Storage::files('deletedFiles');
-// $epubs = Storage::files('files/EPUB');
-// $pdfs = Storage::files('files/PDF');
-// $mobis = Storage::files('files/MOBI');
-// $awz3s = Storage::files('files/AWZ3');
-
-// Storage::disk('public')->delete($bookCovers);
-// Storage::disk('public')->delete($banners);
-// Storage::disk('public')->delete($collections);
-// Storage::delete($deletedFiles);
-// Storage::delete($epubs);
-// Storage::delete($pdfs);
-// Storage::delete($mobis); 
-// Storage::delete($awz3s);
-
-
 Route::post('/login', [LoginController::class, 'index'])->name('auth.login');
 Route::post('/register', [RegisterController::class, 'index'])->name('auth.register');
 Route::get('/logout', [LogoutController::class, 'index'])->name('auth.logout');

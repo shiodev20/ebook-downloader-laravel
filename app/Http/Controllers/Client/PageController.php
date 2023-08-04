@@ -42,8 +42,8 @@ class PageController extends Controller
 
   public function home() {
     try {
-      
-      $randomBook = $this->bookRepository->getAll()->random(1)->first();
+      $randomBook = null;
+      if($this->bookRepository->getAll()->count() > 0) $randomBook = $this->bookRepository->getAll()->random(1)->first();
       $newestBooks = $this->bookRepository->getAll()->paginate(12);
       $mostDownloadBooks = $this->bookRepository->getMostDownloadBooks('all')->paginate(12);
       $recommendBooks = $this->bookRepository->getRecommendBooks()->paginate(12);
