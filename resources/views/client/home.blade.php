@@ -106,14 +106,14 @@
           <div class="box py-4 px-4"  style="min-width: 300px !important;">
 
             <div class="box-header d-flex justify-content-between align-items-center flex-column flex-md-row">
-              <h2 class="box_title my-3">sách tải nhiều nhất</h2>
+              <h2 class="box_title my-3" class="flex-basis: 300px !important;">sách tải nhiều nhất</h2>
 
-              <ul class="read-most_nav nav nav-pills">
-                <li class="read-most_nav_item nav-item" onclick="getMostDownloadBooks()">
+              <ul class="read-most_nav nav nav-pills flex-md-nowrap" style="overflow-x: scroll; max-width: 900px;">
+                <li class="read-most_nav_item nav-item text-nowrap" onclick="getMostDownloadBooks()">
                   <a class="read-most_nav_link nav-link active genre-{{'all'}}"  aria-current="page" style="cursor: pointer">Tất Cả</a>
                 </li>
                 @foreach ($genres as $genre)
-                  <li class="read-most_nav_item nav-item" onclick="getMostDownloadBooks('{{ $genre->id }}')">
+                  <li class="read-most_nav_item nav-item text-nowrap" onclick="getMostDownloadBooks('{{ $genre->id }}')">
                     <a class="read-most_nav_link nav-link genre-{{$genre->id}}" style="cursor: pointer">{{ $genre->name }}</a>
                   </li>
                 @endforeach

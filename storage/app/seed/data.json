@@ -82,8 +82,8 @@
     },
     {
       "id": 3,
-      "name": "Quản trị học",
-      "slug": "quan-tri-hoc"
+      "name": "Quản trị - lãnh đạo",
+      "slug": "quan-tri-lanh-dao"
     },
     {
       "id": 4,
@@ -92,13 +92,43 @@
     },
     {
       "id": 5,
-      "name": "Văn học",
-      "slug": "van-hoc"
+      "name": "Văn học kinh điển",
+      "slug": "van-hoc-kinh-dien"
     },
     {
       "id": 6,
       "name": "Kinh tế",
       "slug": "kinh-te"
+    },
+    {
+      "id": 7,
+      "name": "Tiểu thuyết",
+      "slug": "tieu-thuyet"
+    },
+    {
+      "id": 8,
+      "name": "Giả tưởng - kinh dị",
+      "slug": "gia-tuong-kinh-di"
+    },
+    {
+      "id": 9,
+      "name": "Khởi nghiệp - làm giàu",
+      "slug": "khoi-nghiep-lam-giau"
+    },
+    {
+      "id": 10,
+      "name": "Tài chính - ngân hàng",
+      "slug": "tai-chinh-ngan-hang"
+    },
+    {
+      "id": 11,
+      "name": "Lịch sử - chính trị",
+      "slug": "lich-su-chinh-tri"
+    },
+    {
+      "id": 12,
+      "name": "Ngoại ngữ",
+      "slug": "ngoai-ngu"
     }
   ],
 
